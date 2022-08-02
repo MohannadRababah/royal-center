@@ -24,15 +24,25 @@ const Offices = () => {
     axios
       .post("http://localhost:3001/deleteOffice", { officeNumber: officeNumber })
       .then((res) => {
-        axios
-          .get("http://localhost:3001/get_All_Offices")
-          .then((res) => {
-            console.log(res);
-            setOffices(res.data.data);
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
+        if (res.data.success) {
+          axios
+            .get("http://localhost:3001/get_All_Offices")
+            .then((res) => {
+              if (res.data.success) {
+                console.log(res);
+                setOffices(res.data.data);
+              }
+              else {
+                console.log(res.data.message);
+              }
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+        }
+        else {
+          console.log(res.data.message);
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -43,8 +53,13 @@ const Offices = () => {
     axios
       .get("http://localhost:3001/get_All_Offices")
       .then((res) => {
-        console.log(res);
-        setOffices(res.data.data);
+        if (res.data.success) {
+          console.log(res);
+          setOffices(res.data.data)
+        }
+        else{
+          console.log(res.data.message);
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -53,7 +68,7 @@ const Offices = () => {
   return (
     <Box>
       <Container >
-        <Button startIcon={<Add/>}  onClick={()=>{
+        <Button startIcon={<Add />} onClick={() => {
           nav('/officeManagment')
         }}>new Office</Button>
       </Container>

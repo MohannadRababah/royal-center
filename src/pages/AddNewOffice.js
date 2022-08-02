@@ -33,6 +33,7 @@ const AddNewOffice = () => {
           officeNumber: values.officeNumber,
           officeArea: values.officeArea,
           officePrice: values.officePrice,
+          officeOwner: values.officeOwner,
           rented: location?.state?.office?.rented,
         })
         .then((res) => {
@@ -49,6 +50,7 @@ const AddNewOffice = () => {
           officeNumber: values.officeNumber,
           officeArea: values.officeArea,
           officePrice: values.officePrice,
+          officeOwner: values.officeOwner,
         })
         .then((res) => {
           console.log(res);
@@ -98,6 +100,13 @@ const AddNewOffice = () => {
                     required
                     name="officePrice"
                     label="office price"
+                  ></TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    name="officeOwner"
+                    label="office owner"
                   ></TextField>
                 </Grid>
                 <Grid textAlign="right" item xs={12}>

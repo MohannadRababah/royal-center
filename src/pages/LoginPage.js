@@ -16,9 +16,12 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        if(res.data.success)
-        nav('/dashboard',{state:{email:values.email.toLowerCase().trim()}})
-        setErrMsg(res.data.message)
+        if(res.data.success){
+          nav('/dashboard',{state:{email:values.email.toLowerCase().trim()}})
+        }
+        else{
+          setErrMsg(res.data.message)
+        }
       })
       .catch((err) => {
         console.log(err);

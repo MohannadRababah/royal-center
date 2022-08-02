@@ -44,6 +44,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
             <TableCell width={200}>office number</TableCell>
             <TableCell width={200}>office area</TableCell>
             <TableCell width={200}>rented</TableCell>
+            <TableCell width={200}>owner</TableCell>
             <TableCell sx={{ display: show ? "none" : null }} width={200}>
               Action
             </TableCell>
@@ -58,6 +59,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
                 <TableCell width={200}>
                   {office.rented ? "yes" : "no"}
                 </TableCell>
+                <TableCell width={200}>{office.owner}</TableCell>
                 <TableCell sx={{ display: show ? "none" : null }} width={200}>
                   
                 <Button startIcon={<Delete/>} onClick={()=>{setOpen(true);setOfficeNumber(office.officeNumber)}}>remove office</Button>
@@ -68,6 +70,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
             );
           })}
           <TableRow sx={{ display: !show ? "none" : null }}>
+            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell>
