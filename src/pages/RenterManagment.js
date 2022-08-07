@@ -15,14 +15,23 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import uploadDocument from "../utils/uploadDocument";
 const RenterManagment = () => {
 
     const [msg, setMsg] = useState('')
     const location = useLocation()
     const nav = useNavigate()
+    const [toUploadIDFile, setToUploadIDFile] = useState(location?.state?.renter?.idDocument ? location?.state?.renter?.idDocument : '');
+
     console.log(location?.state?.renter);
 
 
+    const uploadFile = async (file) => {
+        console.log(file);
+        const res = await uploadDocument(file?.target?.files[0])
+        if (res)
+          return res;
+    }
     const handleClose = () => {
         if (msg === "Renters Data Updated")
             nav("/Renters");
@@ -30,15 +39,24 @@ const RenterManagment = () => {
     };
 
 
-    const onSubmit = (values) => {
+    const onSubmit = async (values) => {
         console.log(values, 'values');
+        var tempFileContract
+        if(toUploadIDFile?.target){
+        tempFileContract = await uploadFile(toUploadIDFile)
+        }
+        else{
+        tempFileContract=toUploadIDFile
+        }
 
         axios
             .post("http://localhost:3001/editRenter", {
                 _id: values._id,
                 name: values.name,
                 phone: values.phone,
-                email: values.email
+                email: values.email,
+                idDocument: tempFileContract
+
             })
             .then((res) => {
                 if (res.data.success) {
@@ -101,7 +119,13 @@ const RenterManagment = () => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormLabel>ID</FormLabel>
-                                    <Container><input type='file' /></Container>
+                                    <Container>
+                                        <input 
+                                            type='file'
+                                            name="renterID"
+                                            onChange={(e) => { setToUploadIDFile(e) }}
+                                        />
+                                    </Container>
                                 </Grid>
                                 <Grid textAlign="right" item xs={12}>
                                     <Button type="submit" variant="outlined">

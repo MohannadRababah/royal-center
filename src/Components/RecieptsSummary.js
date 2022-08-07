@@ -1,15 +1,17 @@
-import { Container, Divider, Grid, Typography } from "@mui/material"
+import { Button, Container, Divider, Grid, Typography } from "@mui/material"
+import { useNavigate } from "react-router";
 import RecieptSchema from "../schema/RecieptSchema"
 
 
 const RecieptsSummary = ({ reciepts, setReciepts }) => {
     console.log(reciepts);
+    const nav=useNavigate()
     return (
-        <Container sx={{backgroundColor:'white',paddingBottom:'30px',paddingTop:'5px'}}>
+        <>
 
             {
                 reciepts.map((item, idx) => (
-                    <><Grid container spacing={3} margin={3} >
+                    <>
                         {
                             RecieptSchema.map((schema) => (
                                 item[schema.name] ?
@@ -20,12 +22,17 @@ const RecieptsSummary = ({ reciepts, setReciepts }) => {
                                     : null
                             ))
                         }
-                       
-                    </Grid> <Divider/></>
+                        <Grid item xs={12} textAlign='right'>
+                            <Container>
+                                <Button variant="outlined" onClick={()=>nav('/recieptManagment',{state:{initVal:item}})}>Edit</Button>
+                            </Container>
+                        </Grid>
+
+                        <Grid item xs={12}><Divider /></Grid></>
                 ))
             }
 
-        </Container>
+        </>
     )
 }
 

@@ -1,3 +1,4 @@
+import { Height } from "@mui/icons-material";
 import {
   AppBar,
   Button,
@@ -9,12 +10,18 @@ import {
   MenuList,
   FormLabel,
   Divider,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import OfficesSummary from "../Components/OfficesSummary";
+import createBackUp from "../utils/createBackUp";
 
 const Dashboard = () => {
   const nav = useNavigate();
@@ -57,11 +64,11 @@ const Dashboard = () => {
     axios
       .get("http://localhost:3001/get_Offices")
       .then((res) => {
-        if(res.data.success){
+        if (res.data.success) {
           console.log(res);
           setOffices(res.data.data);
         }
-        else{
+        else {
           console.log(res.data.message);
         }
       })
@@ -72,10 +79,10 @@ const Dashboard = () => {
     axios
       .get("http://localhost:3001/get_Required_Payments")
       .then((res) => {
-        if(res.data.success){
+        if (res.data.success) {
           setRequiredPayments(res.data.data)
         }
-        else{
+        else {
           console.log(res.data.message);
         }
       })
@@ -94,74 +101,102 @@ const Dashboard = () => {
         <Container >
           <OfficesSummary data={offices} show={true} />
         </Container>
-        <Box sx={{ position: 'fixed', right: '0' }}>
+        <Box sx={{ position: 'fixed', left: '0' }}>
           <MenuList
             sx={{
               backgroundColor: "#121212",
               borderTopLeftRadius: "10px",
               borderBottomLeftRadius: "10px",
+              marginTop: '-100px',
+              paddingTop: '70px',
+              height: '100vh',
             }}
           >
             <MenuItem
-              sx={{ color: "#F05454", margin: "15px" }}
+              sx={{ color: "#e9ce7f", margin: "15px" }}
               onClick={() => nav("/offices")}
             >
-              Offices
+              PROPERTIES
             </MenuItem>
             <MenuItem
-              sx={{ color: "#F05454", margin: "15px" }}
+              sx={{ color: "#e9ce7f", margin: "15px" }}
               onClick={() => nav("/contracts")}
             >
-              Contracts
+              CONTRACTS
             </MenuItem>
             <MenuItem
-              sx={{ color: "#F05454", margin: "15px" }}
+              sx={{ color: "#e9ce7f", margin: "15px" }}
               onClick={() => nav('/Renters')}
             >
-              Renters Info
+              RENTER`S INFO
             </MenuItem>
             <MenuItem
-              sx={{ color: "#F05454", margin: "15px" }}
+              sx={{ color: "#e9ce7f", margin: "15px" }}
               onClick={() => nav('/oldContratcs')}
             >
-              Old Contracts
+              OLD CONTRACTS
             </MenuItem>
             <MenuItem
-              sx={{ color: "#F05454", margin: "15px" }}
+              sx={{ color: "#e9ce7f", margin: "15px" }}
               onClick={() => nav('/officesPayments')}
             >
-              Offices Payments
+              PROPERTY PAYMENTS
             </MenuItem>
             <MenuItem
-              sx={{ color: "#F05454", margin: "15px" }}
+              sx={{ color: "#e9ce7f", margin: "15px" }}
               onClick={() => nav('/reciepts')}
             >
-              Reciepts
+              RECIEPTS
             </MenuItem>
+
+            <MenuItem
+              sx={{ color: "#e9ce7f", margin: "15px", marginTop: '100px',border:1 }}
+              onClick={  async() => {
+                createBackUp()
+              }}
+            >
+                 CREATE BACKUP 
+            </MenuItem>
+            
+
           </MenuList>
         </Box>
       </Box>
       <Container sx={{ marginTop: '100px' }}>
-        <Box border={1} sx={{ backgroundColor: 'white', width: '60%', minWidth: '350px', margin: 'auto' }}>
+        <Box border={1} sx={{ backgroundColor: 'white', width: '60%', minWidth: '350px', margin: 'auto', mb: '30px' }}>
           <Container sx={{ textAlign: 'center' }}>
-            <Typography variant="h4">Offices payments</Typography>
+            <Typography variant="h4">Property Payments</Typography>
           </Container>
-          {
-            requiredPayments.map(item => {
-              var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (12 / (item.paymentPeriod)) + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
-              return <Box margin={3}><Box margin='10px' display='flex' justifyContent='space-evenly'>
-                <FormLabel> Office Number : </FormLabel>{item.officeNumber}
-                <FormLabel > Required Payment : </FormLabel> {item.totalPayment / item.paymentPeriod}
-                <FormLabel> Payment Date : </FormLabel> {date.getDate()}/{date.getMonth()}/{date.getFullYear()}
-              </Box>
-                {/* <Container sx={{ textAlign: 'right', marginBottom: '10px' }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell> Property Number : </TableCell>
+                <TableCell> Required Payment : </TableCell>
+                <TableCell> Payment Date : </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                requiredPayments.map(item => {
+                  var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (12 / (item.paymentPeriod)) + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
+                  return <TableRow>
+                    <TableCell>{item.officeNumber}</TableCell>
+                    <TableCell>{item.totalPayment / item.paymentPeriod}</TableCell>
+                    <TableCell>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</TableCell>
+                  </TableRow>
+
+
+                  {/* <Container sx={{ textAlign: 'right', marginBottom: '10px' }}>
                   <Button variant="outlined" sx={{ height: '20px' }} onClick={() => {
                     addPayment(item.officeNumber, item.payed)
                   }}>Add Payment</Button>
                 </Container> */}
-                <Divider /></Box>
-            })
-          }
+                  <Divider />
+                })
+              }
+            </TableBody>
+          </Table>
+
         </Box>
       </Container>
     </div>

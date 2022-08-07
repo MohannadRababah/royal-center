@@ -2,6 +2,7 @@ import { Delete, Edit, More, MoreVert } from "@mui/icons-material";
 import {
   Box,
   Button,
+  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,6 +14,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -22,29 +24,33 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
   const [open, setOpen] = useState(false);
   const [officeNumber, setOfficeNumber] = useState();
 
-  const handleClose=()=>{
+  const handleClose = () => {
     setOpen(false)
   }
 
 
   return (
-    <Box border={1} width={"60%"} sx={{ margin: "auto", minWidth: "350px", backgroundColor:'white' }}>
+    <Box border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white',mb:'30px',borderRadius:'10px' }}>
+      <Container sx={{ textAlign: 'center',mb:'30px' }}>
+        <Typography variant="h4">Properties</Typography>
+      </Container>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           Are you sure you want to delete the office?
         </DialogContent>
-        <DialogActions sx={{display:'flex', justifyContent:'space-between'}}>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button onClick={handleClose}>cancel</Button>
-          <Button onClick={()=>{removeOffice(officeNumber);handleClose()}}>Delete</Button>
+          <Button onClick={() => { removeOffice(officeNumber); handleClose() }}>Delete</Button>
         </DialogActions>
       </Dialog>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell width={200}>office number</TableCell>
-            <TableCell width={200}>office area</TableCell>
+            <TableCell width={200}>Property number</TableCell>
+            <TableCell width={200}>Property area</TableCell>
             <TableCell width={200}>rented</TableCell>
             <TableCell width={200}>owner</TableCell>
+            <TableCell sx={{ display: show ? "none" : null }} width={200}>sold</TableCell>
             <TableCell sx={{ display: show ? "none" : null }} width={200}>
               Action
             </TableCell>
@@ -60,11 +66,12 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
                   {office.rented ? "yes" : "no"}
                 </TableCell>
                 <TableCell width={200}>{office.owner}</TableCell>
+                <TableCell sx={{ display: show ? "none" : null }} width={200}>{office.sold ? 'yes' : 'no'}</TableCell>
                 <TableCell sx={{ display: show ? "none" : null }} width={200}>
-                  
-                <Button startIcon={<Delete/>} onClick={()=>{setOpen(true);setOfficeNumber(office.officeNumber)}}>remove office</Button>
-                <Button startIcon={<Edit/>} onClick={()=>{nav('/officeManagment',{state:{office:office}})}}>edit office</Button>
-                
+
+                  <Button disabled={office.rented} startIcon={<Delete />} onClick={() => { setOpen(true); setOfficeNumber(office.officeNumber) }}>remove office</Button>
+                  <Button startIcon={<Edit />} onClick={() => { nav('/officeManagment', { state: { office: office } }) }}>edit office</Button>
+
                 </TableCell>
               </TableRow>
             );
@@ -80,7 +87,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
                   nav("/offices");
                 }}
               >
-                عرض جميع المكاتب
+                عرض جميع الممتلكات
               </Button>
             </TableCell>
           </TableRow>

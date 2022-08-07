@@ -88,8 +88,8 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
   };
 
   return (
-    <Box>
-      <Dialog fullWidth open={msg ? true : false} onClose={handleClose}>
+    <Box mb='30px'>
+      {/* <Dialog fullWidth open={msg ? true : false} onClose={handleClose}>
         <DialogContent sx={{ textAlign: 'center' }}>
           {msg}
         </DialogContent>
@@ -97,7 +97,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
           <Button onClick={handleClose}>cancel</Button>
           <Button onClick={() => { addPayment(officeNumber, payed); handleClose() }}>confirm</Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
 
       {edit && <><Dialog fullWidth open={open} onClose={handleClose}>
         <DialogContent>
@@ -109,7 +109,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
         </DialogActions>
       </Dialog>
         <Button
-          sx={{ marginLeft: "300px" }}
+          sx={{ marginLeft: "17%" }}
           onClick={() => {
             nav("/contractManagment");
           }}
@@ -137,7 +137,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
           return (
             <Container key={idx} sx={{ mt: "30px" }}>
               <Typography variant="h5" marginBottom={3}>
-                Contract info for office: {item.officeNumber}
+                Contract info for Property: {item.officeNumber}
               </Typography>
               <Grid container spacing={4}>
                 {ContractSchema.map((schema, index) => {
@@ -174,13 +174,13 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
                   </Typography>
                 } */}
                 {edit && <Grid item xs={12} marginTop={5} display='flex' justifyContent='space-evenly'>
-                  <Button sx={{ marginRight: "70px" }} variant="outlined" onClick={() => {
+                  {/* <Button sx={{ marginRight: "70px" }} variant="outlined" onClick={() => {
                     setOfficeNumber(item.officeNumber)
                     setPayed(item.payed)
                     setMsg("Confirm the payment.")
                   }}>
                     add payment
-                  </Button>
+                  </Button> */}
                   <Button sx={{ marginRight: "70px" }} variant="outlined" onClick={() => {
                     nav('/contractManagment', { state: { contract: item } })
                   }}>

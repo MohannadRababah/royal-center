@@ -49,6 +49,7 @@ const Offices = () => {
       });
   };
 
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/get_All_Offices")
@@ -57,7 +58,7 @@ const Offices = () => {
           console.log(res);
           setOffices(res.data.data)
         }
-        else{
+        else {
           console.log(res.data.message);
         }
       })
@@ -67,18 +68,22 @@ const Offices = () => {
   }, []);
   return (
     <Box>
-      <Container >
-        <Button startIcon={<Add />} onClick={() => {
-          nav('/officeManagment')
-        }}>new Office</Button>
-      </Container>
-      <OfficesSummary
-        data={offices}
-        show={false}
-        removeOffice={(officeNumber) => {
-          removeOffice(officeNumber);
-        }}
-      />
+      <Grid container spacing={3}>
+        <Grid item xs={6} textAlign='center'>
+          <Button startIcon={<Add />} onClick={() => {
+            nav('/officeManagment')
+          }}>new Office</Button>
+        </Grid>
+        <Grid item xs={12}>
+          <OfficesSummary
+            data={offices}
+            show={false}
+            removeOffice={(officeNumber) => {
+              removeOffice(officeNumber);
+            }}
+          />
+        </Grid>
+      </Grid>
     </Box>
   );
 };

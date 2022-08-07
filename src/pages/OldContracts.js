@@ -1,4 +1,4 @@
-import { Alert } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
 import ContractsSummary from "../Components/ContractsSummary"
@@ -22,7 +22,7 @@ const OldContracts = () => {
           setContracts(res.data.data);
           setErrMsg('')
         }
-        else{
+        else {
           setErrMsg(res.data.message)
         }
       })
@@ -34,6 +34,9 @@ const OldContracts = () => {
   return (
     <>
       {errMsg && <Alert variant='outlined' severity="error">{errMsg}</Alert>}
+      <Box textAlign='center' margin={3}>
+        <Typography variant="h4">Old Contracts</Typography>
+      </Box>
       <ContractsSummary rentersData={contracts} edit={false} data={contracts} />
     </>
   )

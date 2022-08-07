@@ -1,9 +1,11 @@
+import { CloudDownload } from "@mui/icons-material";
+import { Button } from "@mui/material";
 import { v4 as uuid } from "uuid";
 
 const schema= [
   {
     id: uuid(),
-    label: "Office Number:",
+    label: "Property Number:",
     name: "officeNumber",
   },
   {
@@ -52,6 +54,7 @@ const schema= [
     id: uuid(),
     label: "Contract Document:",
     name: "contractDocument",
+    attFun:(value)=> <a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a> //<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}>Open</a>
   },
   {
     id: uuid(),

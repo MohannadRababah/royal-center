@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Form } from "react-final-form";
 import { useNavigate } from "react-router";
 
-const Login = () => {
+const Login = ({setEmail}) => {
     const nav=useNavigate()
     const [errMsg,setErrMsg]=useState('')
   const onSubmit = (values) => {
@@ -17,6 +17,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if(res.data.success){
+          setEmail(values.email.toLowerCase().trim())
           nav('/dashboard',{state:{email:values.email.toLowerCase().trim()}})
         }
         else{
@@ -29,7 +30,7 @@ const Login = () => {
   };
   return (
     <div >
-      <Container><Typography marginTop={5} align='center' variant="h4">♛Royal Center♛</Typography></Container>
+      <Container ><Typography marginTop={5} align='center' variant="h4">♛Royal Center♛</Typography></Container>
         {errMsg&&<Alert sx={{width:'80%',margin:'auto'}} variant='outlined' severity='error'>{errMsg}</Alert>}
       <Container
         sx={{

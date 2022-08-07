@@ -28,7 +28,7 @@ const Renters = () => {
             {
                 errMsg && <Alert variant='outlined' severity='error'>{errMsg}</Alert>
             }
-            <Box textAlign='center' margin={3}>
+            <Box textAlign='center' margin={3} mb='70px'>
                 <Typography variant="h4">Renters Information</Typography>
             </Box>
             <RentersSummary data={renters} />

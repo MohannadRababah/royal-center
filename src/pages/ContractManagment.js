@@ -1,7 +1,7 @@
 import { Box, FormControl, FormLabel, Input, MenuItem, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { Field, Form } from "react-final-form";
-import { TextField, Select } from "mui-rff";
+import { TextField, Select, DatePicker } from "mui-rff";
 import {
   Alert,
   Button,
@@ -14,7 +14,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import uploadDocument from "../utils/uploadDocument";
-import { Add } from "@mui/icons-material";
+import { Add, CloudDownload } from "@mui/icons-material";
+import { OnChange } from "react-final-form-listeners";
+import downloadDoc1 from "../utils/downloadDocument";
 
 const ContractManagment = () => {
   const location = useLocation();
@@ -22,42 +24,92 @@ const ContractManagment = () => {
   const [msg, setMsg] = useState("");
   const [initVal, setInitVal] = useState(location?.state?.contract);
   const [newRenter, setNewRenter] = useState(false);
-  const [renters, setRenters] = useState([{name:'mohannad',phone:'099'}]);
+  const [renters, setRenters] = useState([]);
+  const [toUploadContractFile, setToUploadContractFile] = useState(location?.state?.contract?.contractDocument ? location?.state?.contract?.contractDocument : '');
+  const [toUploadIDFile, setToUploadIDFile] = useState();
 
-  const uploadFile = (file) => {
-    const fileToUpload = uploadDocument(file.target.files[0]).finally(() => {
-      axios
-        .post("http://localhost:3001/uploadFile", {
-          file: fileToUpload,
-        })
-        .then((res) => {
-          console.log(res);
-          console.log(fileToUpload, "kkkk");
-        })
-        .catch((err) => {
-          console.log(err);
-          // setMsg(err);
-        });
-    });
+  const defaultStartEndDate=new Date()
+
+  const uploadFile = async (file) => {
+    console.log(file);
+    const res = await uploadDocument(file?.target?.files[0])
+    if (res)
+      return res;
+    //   axios
+    //     .post("http://localhost:3001/uploadFile", {
+    //       file: fileToUpload,
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //       console.log(fileToUpload, "kkkk");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       // setMsg(err);
+    //     });
+
   };
-
+console.log(location?.state?.contract?.contractDocument );
   const handleClose = () => {
     if (msg === "Contract has been added" || msg === "Contract data updated")
       nav("/contracts");
     else setMsg("");
   };
-  const onSubmit = (values) => {
-    
+
+  const dateFormater = (date) => {
+    var dateTemp = '01/01/2022'.split('')
+    dateTemp[0] = date[8]
+    dateTemp[1] = date[9]
+    dateTemp[2] = '/'
+    dateTemp[3] = date[5]
+    dateTemp[4] = date[6]
+    dateTemp[5] = '/'
+    dateTemp[6] = date[0]
+    dateTemp[7] = date[1]
+    dateTemp[8] = date[2]
+    dateTemp[9] = date[3]
+
+    dateTemp = dateTemp.join('')
+    console.log(dateTemp, 'dateTemp:::::::::');
+    return dateTemp
+
+  }
+
+  const checkDateForZeroes = (tempDate) => {
+    if (!Number.isInteger(parseInt(tempDate.charAt(1)))) {
+      tempDate='0'+tempDate.slice(0,tempDate.length)
+    }
+    if (!Number.isInteger(parseInt(tempDate.charAt(4)))) {
+      tempDate=tempDate.slice(0,3)+'0'+tempDate.slice(3,tempDate.length)
+    }
+    console.log(tempDate);
+    return tempDate
+
+  }
+
+
+  const onSubmit = async (values) => {
+
+    var tempFileContract
+    if(toUploadContractFile?.target){
+      tempFileContract = await uploadFile(toUploadContractFile)
+    }
+    else{
+      tempFileContract=toUploadContractFile
+    }
+   
+
     if (!!initVal) {
       axios
         .post("http://localhost:3001/editContract", {
           id: location?.state?.contract?._id,
           oldOfficeNumber: location?.state?.contract?.officeNumber,
           officeNumber: values.officeNumber,
-          startDate: values.startDate,
-          endDate: values.endDate,
+          startDate: checkDateForZeroes(values.startDate),
+          endDate: checkDateForZeroes(values.endDate),
           totalPayment: values.totalPayment,
           paymentPeriod: values.paymentPeriod,
+          contractDocument: tempFileContract
         })
         .then((res) => {
           console.log(res);
@@ -68,22 +120,27 @@ const ContractManagment = () => {
           setMsg(err.message);
         });
     } else {
+      var tempFileId=''
+      if(newRenter){
+        tempFileId= await uploadFile(toUploadIDFile)
+      }
 
       axios
         .post("http://localhost:3001/addContract", {
           officeNumber: values.officeNumber,
-          startDate: values.startDate,
-          endDate: values.endDate,
+          startDate: checkDateForZeroes(values.startDate),
+          endDate: checkDateForZeroes(values.endDate),
           totalPayment: values.totalPayment,
           paymentPeriod: values.paymentPeriod,
+          contractDocument: tempFileContract
         })
         .then((res) => {
           if (res.data.success) {
             axios.post('http://localhost:3001/addRenter', {
               name: values?.renterName,
-              phone: newRenter?values?.renterPhone:values?.renterInfo,
+              phone: newRenter ? values?.renterPhone : values?.renterInfo,
               email: values?.renterEmail,
-              idDocument: 'todo',
+              idDocument: tempFileId,
               officeNumber: values?.officeNumber,
             }).then(() => {
               setMsg(res.data.message);
@@ -108,13 +165,21 @@ const ContractManagment = () => {
     }
   };
 
-  useEffect(()=>{
-    axios.get('http://localhost:3001/get_Renters').then(res=>{
+  const formatDoc = () => {
+
+  }
+
+
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/get_Renters').then(res => {
       setRenters(res.data.data)
-    }).catch(err=>{
+      console.log(res.data.data, 'lalalalal');
+    }).catch(err => {
       setMsg(err.message);
     })
-  })
+
+  }, [])
 
   return (
     <Container sx={{ backgroundColor: "white", padding: "100px" }}>
@@ -127,9 +192,14 @@ const ContractManagment = () => {
         </Dialog>
       )}
       <Form
-        initialValues={{
+        initialValues={initVal?{
           ...initVal,
-        }}
+        }:
+        {
+          startDate:checkDateForZeroes(`${defaultStartEndDate.getDate()}/${defaultStartEndDate.getMonth()+1}/${defaultStartEndDate.getFullYear()}`),
+          endDate:checkDateForZeroes(`${defaultStartEndDate.getDate()}/${defaultStartEndDate.getMonth()+1}/${defaultStartEndDate.getFullYear()+1}`)
+        }
+      }
         onSubmit={onSubmit}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
@@ -141,7 +211,7 @@ const ContractManagment = () => {
                 <TextField
                   required
                   name="officeNumber"
-                  label="office number"
+                  label="Property number"
                 ></TextField>
               </Grid>
               <Grid item xs={12}>
@@ -149,10 +219,17 @@ const ContractManagment = () => {
                   required
                   name="startDate"
                   label="Start Date"
+                //type="date"
                 ></TextField>
               </Grid>
               <Grid item xs={12}>
-                <TextField required name="endDate" label="End Date"></TextField>
+                <TextField
+                  //type="date" 
+                  required
+                  name="endDate"
+                  label="End Date"
+                ></TextField>
+
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -171,11 +248,7 @@ const ContractManagment = () => {
               <Grid item xs={12}>
                 <FormLabel>Contract:</FormLabel>
                 <Container>
-                  <input
-                    type="file"
-                    //onChange={uploadFile}
-                    name="contractDoc"
-                  ></input>
+                  <input type="file" name="contractDoc" onChange={(e) => { setToUploadContractFile(e) }} />
                 </Container>
               </Grid>
 
@@ -187,8 +260,8 @@ const ContractManagment = () => {
                   <Typography variant="h4">Renter's Information</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button endIcon={!newRenter?<Add/>:null} onClick={()=>{setNewRenter(!newRenter)}}>{newRenter?'Select from existing renters':'New renter'}</Button>
-                  </Grid>
+                  <Button endIcon={!newRenter ? <Add /> : null} onClick={() => { setNewRenter(!newRenter) }}>{newRenter ? 'Select from existing renters' : 'New renter'}</Button>
+                </Grid>
                 {newRenter ? <><Grid item xs={12}>
                   <TextField
                     required
@@ -215,9 +288,9 @@ const ContractManagment = () => {
                     <Container>
                       <input
                         type="file"
-                        //onChange={uploadFile}
                         name="renterID"
-                      ></input>
+                        onChange={(e) => { setToUploadIDFile(e) }}
+                      />
                     </Container>
                   </Grid>
                 </> :
@@ -229,8 +302,8 @@ const ContractManagment = () => {
                     <Grid item xs={12}>
                       <Select label='Choose from existing renters:' name="renterInfo" >
                         {
-                          renters.map((item,idx)=>{
-                            return <MenuItem key={idx} value={item.phone}>name: {item.name} phone: {item.phone}</MenuItem>
+                          renters.map((item, idx) => {
+                            return <MenuItem key={idx} value={item.phone}> {item.name} - {item.phone}</MenuItem>
                           })
                         }
                       </Select>

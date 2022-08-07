@@ -7,14 +7,14 @@ const RentersSummary = ({ data }) => {
 
     const nav=useNavigate()
     return (
-        <Box sx={{ backgroundColor: 'white' }}>
-            <Grid container spacing={2}>
+        <Box border={1} sx={{ backgroundColor: 'white',mb:'30px', border:'1',borderColor:'black' }}>
+           <Box border={1} > <Grid mt={3} container spacing={2}>
                 {
                     data.map((item) => {
                         return <>{RentersSchema.map((schema) => {
                             return <Grid item xs={4}>
                                 <Container><Typography color='#73777B'>{schema.label}</Typography></Container>
-                                <Container>{schema?.valueFun ? schema.valueFun(item[schema.name]) : item[schema.name]}</Container>
+                                <Container>{schema?.valueFun ? schema.valueFun(item) : item[schema.name]}</Container>
                             </Grid>
                         })}
                             <Grid textAlign='right' item xs={12}>
@@ -30,6 +30,7 @@ const RentersSummary = ({ data }) => {
                 }
 
             </Grid>
+            </Box>
         </Box>
     )
 }

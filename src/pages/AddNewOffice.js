@@ -1,6 +1,6 @@
 import { Container } from "@mui/system";
 import { Form } from "react-final-form";
-import { TextField } from "mui-rff";
+import { TextField,Select } from "mui-rff";
 import {
   Alert,
   Button,
@@ -8,6 +8,7 @@ import {
   DialogActions,
   DialogContent,
   Grid,
+  MenuItem,
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -23,8 +24,9 @@ const AddNewOffice = () => {
       nav("/offices");
     else setMsg("");
   };
+  
   const onSubmit = (values) => {
-    console.log(values);
+    console.log(values.sold);
     if (initVal) {
       axios
         .post("http://localhost:3001/editOffice", {
@@ -34,6 +36,7 @@ const AddNewOffice = () => {
           officeArea: values.officeArea,
           officePrice: values.officePrice,
           officeOwner: values.officeOwner,
+          sold: values.sold,
           rented: location?.state?.office?.rented,
         })
         .then((res) => {
@@ -51,6 +54,8 @@ const AddNewOffice = () => {
           officeArea: values.officeArea,
           officePrice: values.officePrice,
           officeOwner: values.officeOwner,
+          sold: false,
+
         })
         .then((res) => {
           console.log(res);
@@ -63,7 +68,10 @@ const AddNewOffice = () => {
     }
   };
   return (
-    <>
+    <>{
+  console.log(location?.state?.office,'kkkkkkkkkkkk')
+
+    }
       <Container sx={{ backgroundColor: "white", padding: "100px" }}>
         {msg && (
           <Dialog open={msg ? true : false} onClose={handleClose} fullWidth>
@@ -76,6 +84,7 @@ const AddNewOffice = () => {
         <Form
           initialValues={{
             ...initVal,
+            officeOwner:location?.state?.office?.owner
           }}
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
@@ -109,6 +118,16 @@ const AddNewOffice = () => {
                     label="office owner"
                   ></TextField>
                 </Grid>
+                {initVal&&<Grid  item xs={12}>
+                  <Select
+                    required
+                    name="sold"
+                    label="Sold"
+                  >
+                    <MenuItem value={true}>yes</MenuItem>
+                    <MenuItem value={false}>no</MenuItem>
+                  </Select>
+                </Grid>}
                 <Grid textAlign="right" item xs={12}>
                   <Button type="submit" variant="outlined">
                     {!initVal ? "Add" : "Save"}
