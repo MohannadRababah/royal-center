@@ -37,7 +37,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
 
 
   const getOwner = async (officeNum) => {
-    const res = await axios.post("http://localhost:3001/getOwner", { officeNumber: officeNum })
+    const res = await axios.post("https://pure-meadow-98451.herokuapp.com/getOwner", { officeNumber: officeNum })
     console.log(res?.data?.data?.officeOwner,'kkkkkkkkkkkkkk');
     
     return res?.data?.data?.officeOwner
@@ -53,14 +53,14 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
 
   const addPayment = (officeNumber, payed) => {
     axios
-      .post("http://localhost:3001/addPayment", {
+      .post("https://pure-meadow-98451.herokuapp.com/addPayment", {
         officeNumber: officeNumber,
         payed: payed
       })
       .then((res) => {
         if (res.data.success) {
           axios
-            .get("http://localhost:3001/get_Contracts")
+            .get("https://pure-meadow-98451.herokuapp.com/get_Contracts")
             .then((res) => {
 
               console.log(res);

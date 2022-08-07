@@ -31,7 +31,7 @@ const AddNewReciept = () => {
        
 
         if(!initVal){
-            axios.post('http://localhost:3001/addReciept', {
+            axios.post('https://pure-meadow-98451.herokuapp.com/addReciept', {
                 officeNumber:'random reciept',
                 name: values.name,
                 amount: values.amount,
@@ -41,7 +41,7 @@ const AddNewReciept = () => {
             }).then((res) => {
                 if (res.data.success) {
     
-                    axios.post('http://localhost:3001/increase_reciept_number', { recieptNumber: recieptNumber + 1 }).then(response => {
+                    axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { recieptNumber: recieptNumber + 1 }).then(response => {
                         console.log(response);
                         setRecieptNumber(recieptNumber + 1)
                         nav('/reciepts')
@@ -61,7 +61,7 @@ const AddNewReciept = () => {
             })
         }
         else{
-            axios.post('http://localhost:3001/editReciept', {
+            axios.post('https://pure-meadow-98451.herokuapp.com/editReciept', {
                 officeNumber:'random reciept',
                 name: values.name,
                 amount: values.amount,
@@ -78,7 +78,7 @@ const AddNewReciept = () => {
         
     }
     useEffect(() => {
-        axios.get('http://localhost:3001/get_reciept_number').then(response => {
+        axios.get('https://pure-meadow-98451.herokuapp.com/get_reciept_number').then(response => {
             setRecieptNumber(response.data.data)
             console.log(response.data.data);
         })

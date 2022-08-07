@@ -10,7 +10,7 @@ const Login = ({setEmail}) => {
     const [errMsg,setErrMsg]=useState('')
   const onSubmit = (values) => {
     axios
-      .post("http://localhost:3001/login", {
+      .post("https://pure-meadow-98451.herokuapp.com/login", {
         email: values.email.toLowerCase().trim(),
         password: values.password,
       })

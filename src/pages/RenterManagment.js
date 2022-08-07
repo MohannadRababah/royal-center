@@ -50,7 +50,7 @@ const RenterManagment = () => {
         }
 
         axios
-            .post("http://localhost:3001/editRenter", {
+            .post("https://pure-meadow-98451.herokuapp.com/editRenter", {
                 _id: values._id,
                 name: values.name,
                 phone: values.phone,

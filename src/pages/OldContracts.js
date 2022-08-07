@@ -15,7 +15,7 @@ const OldContracts = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/get_Old_Contracts")
+      .get("https://pure-meadow-98451.herokuapp.com/get_Old_Contracts")
       .then((res) => {
         if (res.data.success) {
           console.log(res);

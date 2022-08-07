@@ -9,7 +9,7 @@ const OfficePayments = () => {
 
   useEffect(()=>{
     axios
-      .get("http://localhost:3001/get_Required_Payments")
+      .get("https://pure-meadow-98451.herokuapp.com/get_Required_Payments")
       .then((res) => {
         if(res.data.success){
           setRequiredPayments(res.data.data)

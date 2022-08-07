@@ -23,7 +23,7 @@ const Reciepts = () => {
         var officesTemp = []
         var rentersNamesTemp = []
         var recieptNumsTemp = []
-        axios.get('http://localhost:3001/get_reciepts').then(res => {
+        axios.get('https://pure-meadow-98451.herokuapp.com/get_reciepts').then(res => {
             setReciepts(res.data.data)
             res.data.data.map((item, idx) => {
                 console.log(!offices.includes(item.officeNumber));

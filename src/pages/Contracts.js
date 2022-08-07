@@ -16,12 +16,12 @@ const Contracts = () => {
   const removeContract = (officeNumber) => {
     console.log(officeNumber);
     axios
-      .post("http://localhost:3001/deleteContract", { officeNumber: officeNumber })
+      .post("https://pure-meadow-98451.herokuapp.com/deleteContract", { officeNumber: officeNumber })
       .then((res) => {
         console.log(res, 'res::removeContract');
         if (res.data.success) {
           axios
-            .get("http://localhost:3001/get_Contracts")
+            .get("https://pure-meadow-98451.herokuapp.com/get_Contracts")
             .then((res) => {
               console.log(res);
               setContracts(res.data.data);
@@ -46,7 +46,7 @@ const Contracts = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/get_Contracts")
+      .get("https://pure-meadow-98451.herokuapp.com/get_Contracts")
       .then((res) => {
         if (res.data.success) {
           console.log(res);
@@ -65,7 +65,7 @@ const Contracts = () => {
 
 
 
-    axios.get('http://localhost:3001/get_Renters').then(response => {
+    axios.get('https://pure-meadow-98451.herokuapp.com/get_Renters').then(response => {
       if (response.data.success) {
         setRenters(response.data.data)
         setErrMsg('')

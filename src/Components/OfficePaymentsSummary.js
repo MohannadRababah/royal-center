@@ -36,10 +36,10 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments }) => {
     const [addPaymentFormData, setAddPaymentFormData] = useState({})
 
     useEffect(() => {
-        axios.get('http://localhost:3001/get_Renters').then(res => {
+        axios.get('https://pure-meadow-98451.herokuapp.com/get_Renters').then(res => {
             console.log(res.data.data);
             setRentersInfo(res.data.data)
-            axios.get('http://localhost:3001/get_reciept_number').then(response => {
+            axios.get('https://pure-meadow-98451.herokuapp.com/get_reciept_number').then(response => {
                 setRecieptNumber(response.data.data)
                 console.log(response.data.data);
             })
@@ -53,7 +53,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments }) => {
 
     const onSubmit = (values) => {
         console.log(values, 'kkkkkkkkkkk');
-        axios.post('http://localhost:3001/addReciept', {
+        axios.post('https://pure-meadow-98451.herokuapp.com/addReciept', {
             officeNumber: officeNumber,
             name: values.name,
             amount: values.amount,
@@ -64,18 +64,18 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments }) => {
         }).then((res) => {
             if (res.data.success) {
                 axios
-                    .post("http://localhost:3001/addPayment", {
+                    .post("https://pure-meadow-98451.herokuapp.com/addPayment", {
                         officeNumber: officeNumber,
                         payed: payments
                     })
                     .then((res) => {
                         if (res.data.success) {
                             axios
-                                .get("http://localhost:3001/get_Required_Payments")
+                                .get("https://pure-meadow-98451.herokuapp.com/get_Required_Payments")
                                 .then((res) => {
                                     if (res.data.success) {
                                         setRequiredPayments(res.data.data)
-                                        axios.post('http://localhost:3001/increase_reciept_number', { recieptNumber: recieptNumber + 1 }).then(response => {
+                                        axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { recieptNumber: recieptNumber + 1 }).then(response => {
                                             console.log(response);
                                             setRecieptNumber(recieptNumber+1)
                                         })

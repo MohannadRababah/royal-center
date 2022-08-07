@@ -36,7 +36,7 @@ const ContractManagment = () => {
     if (res)
       return res;
     //   axios
-    //     .post("http://localhost:3001/uploadFile", {
+    //     .post("https://pure-meadow-98451.herokuapp.com/uploadFile", {
     //       file: fileToUpload,
     //     })
     //     .then((res) => {
@@ -101,7 +101,7 @@ console.log(location?.state?.contract?.contractDocument );
 
     if (!!initVal) {
       axios
-        .post("http://localhost:3001/editContract", {
+        .post("https://pure-meadow-98451.herokuapp.com/editContract", {
           id: location?.state?.contract?._id,
           oldOfficeNumber: location?.state?.contract?.officeNumber,
           officeNumber: values.officeNumber,
@@ -126,7 +126,7 @@ console.log(location?.state?.contract?.contractDocument );
       }
 
       axios
-        .post("http://localhost:3001/addContract", {
+        .post("https://pure-meadow-98451.herokuapp.com/addContract", {
           officeNumber: values.officeNumber,
           startDate: checkDateForZeroes(values.startDate),
           endDate: checkDateForZeroes(values.endDate),
@@ -136,7 +136,7 @@ console.log(location?.state?.contract?.contractDocument );
         })
         .then((res) => {
           if (res.data.success) {
-            axios.post('http://localhost:3001/addRenter', {
+            axios.post('https://pure-meadow-98451.herokuapp.com/addRenter', {
               name: values?.renterName,
               phone: newRenter ? values?.renterPhone : values?.renterInfo,
               email: values?.renterEmail,
@@ -172,7 +172,7 @@ console.log(location?.state?.contract?.contractDocument );
 
 
   useEffect(() => {
-    axios.get('http://localhost:3001/get_Renters').then(res => {
+    axios.get('https://pure-meadow-98451.herokuapp.com/get_Renters').then(res => {
       setRenters(res.data.data)
       console.log(res.data.data, 'lalalalal');
     }).catch(err => {

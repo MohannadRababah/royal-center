@@ -29,7 +29,7 @@ const AddNewOffice = () => {
     console.log(values.sold);
     if (initVal) {
       axios
-        .post("http://localhost:3001/editOffice", {
+        .post("https://pure-meadow-98451.herokuapp.com/editOffice", {
           id: location?.state?.office?._id,
           oldOfficeNumber: location?.state?.office?.officeNumber,
           officeNumber: values.officeNumber,
@@ -49,7 +49,7 @@ const AddNewOffice = () => {
         });
     } else {
       axios
-        .post("http://localhost:3001/addOffice", {
+        .post("https://pure-meadow-98451.herokuapp.com/addOffice", {
           officeNumber: values.officeNumber,
           officeArea: values.officeArea,
           officePrice: values.officePrice,
