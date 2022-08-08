@@ -23,7 +23,7 @@ const RenterManagment = () => {
     const nav = useNavigate()
     const [toUploadIDFile, setToUploadIDFile] = useState(location?.state?.renter?.idDocument ? location?.state?.renter?.idDocument : '');
 
-    console.log(location?.state?.renter);
+    console.log(location?.state?.renter,'lllllalalala');
 
 
     const uploadFile = async (file) => {
@@ -44,6 +44,7 @@ const RenterManagment = () => {
         var tempFileContract
         if(toUploadIDFile?.target){
         tempFileContract = await uploadFile(toUploadIDFile)
+        console.log(tempFileContract);
         }
         else{
         tempFileContract=toUploadIDFile
@@ -53,6 +54,7 @@ const RenterManagment = () => {
             .post("https://pure-meadow-98451.herokuapp.com/editRenter", {
                 _id: values._id,
                 name: values.name,
+                oldPhone:location?.state?.renter?.phone,
                 phone: values.phone,
                 email: values.email,
                 idDocument: tempFileContract, 

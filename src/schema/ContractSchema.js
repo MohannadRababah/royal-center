@@ -46,7 +46,7 @@ const schema= [
     label: "Next Payment:",
     name: "nextPayment",
     attFun:(item)=>{
-      var date=new Date(parseInt(item.startDate.slice(6,10)),parseInt(item.startDate.slice(3,5))-1+(12/(item.paymentPeriod))+(item.payed)*(12/(item.paymentPeriod)),parseInt(item.startDate.slice(0,3)));
+      var date=new Date(parseInt(item.startDate.slice(6,10)),parseInt(item.startDate.slice(3,5))-1+(item.payed)*(12/(item.paymentPeriod)),parseInt(item.startDate.slice(0,3)));
       return date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()//item.startDate.slice(0,3)+(parseInt(item.startDate.slice(3,5))+)// parseInt(totalPayment)/parseInt(paymentPeriod)paymentPeriod,payed,startDate
   }
   },
