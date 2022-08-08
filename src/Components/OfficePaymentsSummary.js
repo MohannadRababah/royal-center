@@ -174,7 +174,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments }) => {
             <Container sx={{border:1}}>
                 {
                     requiredPayments ? requiredPayments.map((item, idx) => {
-                        var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (12 / (item.paymentPeriod)) + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
+                        var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
                         console.log(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
                         return <Box key={idx}><Grid container spacing={3} mt={2}>
                             <Grid item xs={4} ><FormLabel sx={{ display: 'block' }}> Property Number : </FormLabel>{item.officeNumber}</Grid>
