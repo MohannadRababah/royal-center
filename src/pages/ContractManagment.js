@@ -123,7 +123,7 @@ console.log(location?.state?.contract?.contractDocument );
     } else {
       var tempFileId=''
       if(newRenter){
-        tempFileId= await uploadFile(toUploadIDFile)
+        if(!!toUploadIDFile) tempFileId= await uploadFile(toUploadIDFile)
       }
 
       axios

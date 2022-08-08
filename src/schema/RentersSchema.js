@@ -22,7 +22,7 @@ const schema= [
     id: uuid(),
     label: "ID Document:",
     name: "idDocument",
-    valueFun:(value)=> {console.log(value); return <a download={`ID for renter ${value?.name}`} target='_blank' href={value?.idDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a> }
+    valueFun:(value)=> {console.log(value); return value?.idDocument?<a download={`ID for renter ${value?.name}`} target='_blank' href={value?.idDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a>:'Document not uploaded' }
   },
   {
     id: uuid(),
