@@ -1,7 +1,9 @@
 import { Alert, Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
+import CardsSkeleton from "../Components/CardsSkeleton";
 import ContractsSummary from "../Components/ContractsSummary"
+import TableSkeleton from "../Components/TableSkeleton";
 
 
 const OldContracts = () => {
@@ -9,11 +11,13 @@ const OldContracts = () => {
   const [contracts, setContracts] = useState([])
   const [renters, setRenters] = useState([])
   const [errMsg, setErrMsg] = useState('')
+  const [dataLoaded, setDataLoaded] = useState(false);
 
 
 
 
   useEffect(() => {
+    
     axios
       .post("https://pure-meadow-98451.herokuapp.com/get_Old_Contracts",{ token :localStorage.getItem('token')})
       .then((res) => {
@@ -21,6 +25,7 @@ const OldContracts = () => {
           console.log(res);
           setContracts(res.data.data);
           setErrMsg('')
+          setDataLoaded(true)
         }
         else {
           setErrMsg(res.data.message)
@@ -37,7 +42,7 @@ const OldContracts = () => {
       <Box textAlign='center' margin={3}>
         <Typography variant="h4">Old Contracts</Typography>
       </Box>
-      <ContractsSummary rentersData={contracts} edit={false} data={contracts} />
+      {dataLoaded?<ContractsSummary rentersData={contracts} edit={false} data={contracts} />:<CardsSkeleton/>}
     </>
   )
 }

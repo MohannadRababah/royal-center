@@ -2,6 +2,7 @@ import { Alert, Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
 import ContractsSummary from "../Components/ContractsSummary"
+import TableSkeleton from "../Components/TableSkeleton";
 
 
 const Contracts = () => {
@@ -10,11 +11,14 @@ const Contracts = () => {
   const [owners, setOwners] = useState(['ahmad', 'mohammad'])
   const [renters, setRenters] = useState([])
   const [errMsg, setErrMsg] = useState('')
+  const [dataLoaded, setDataLoaded] = useState(false);
+
 
 
 
   const removeContract = (officeNumber) => {
     console.log(officeNumber);
+    setDataLoaded(false)
     axios
       .post("https://pure-meadow-98451.herokuapp.com/deleteContract", { officeNumber: officeNumber, token :localStorage.getItem('token') })
       .then((res) => {
@@ -25,6 +29,7 @@ const Contracts = () => {
             .then((res) => {
               console.log(res);
               setContracts(res.data.data);
+              setDataLoaded(true)
             })
             .catch((err) => {
               console.log(err.message);
@@ -69,6 +74,8 @@ const Contracts = () => {
       if (response.data.success) {
         setRenters(response.data.data)
         setErrMsg('')
+        setDataLoaded(true)
+
       }
       else {
         setErrMsg(response.data.message)
@@ -89,7 +96,7 @@ const Contracts = () => {
       <Box textAlign='center' margin={3}>
         <Typography variant="h4">Contracts</Typography>
       </Box>
-      <ContractsSummary rentersData={renters} edit={true} removeContract={removeContract} data={contracts} setContracts={setContracts} />
+      {dataLoaded?<ContractsSummary rentersData={renters} edit={true} removeContract={removeContract} data={contracts} setContracts={setContracts} />:<TableSkeleton/>}
     </>
   )
 }

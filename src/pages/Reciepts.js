@@ -1,8 +1,9 @@
 import { Add } from "@mui/icons-material"
-import { Box, Typography, Container, Grid, TextField, Select, Menu, MenuItem, FormControl, FormLabel, InputLabel, Button } from "@mui/material"
+import { Box, Typography, Container, Grid, TextField, Select, Menu, MenuItem, FormControl, FormLabel, InputLabel, Button, Skeleton, Divider } from "@mui/material"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
+import CardsSkeleton from "../Components/CardsSkeleton"
 import RecieptsSummary from "../Components/RecieptsSummary"
 
 
@@ -17,13 +18,16 @@ const Reciepts = () => {
     const [selectedNumberFilter, setSelectedNumberFilter] = useState('')
     var filteredDataTemp = []
 
-    const nav=useNavigate()
+    const [dataLoaded, setDataLoaded] = useState(false);
+
+
+    const nav = useNavigate()
 
     useEffect(() => {
         var officesTemp = []
         var rentersNamesTemp = []
         var recieptNumsTemp = []
-        axios.post('https://pure-meadow-98451.herokuapp.com/get_reciepts',{ token :localStorage.getItem('token')}).then(res => {
+        axios.post('https://pure-meadow-98451.herokuapp.com/get_reciepts', { token: localStorage.getItem('token') }).then(res => {
             setReciepts(res.data.data)
             res.data.data.map((item, idx) => {
                 console.log(!offices.includes(item.officeNumber));
@@ -39,6 +43,7 @@ const Reciepts = () => {
             setOffices(officesTemp)
             setRentersNames(rentersNamesTemp)
             setRecieptNums(recieptNumsTemp)
+            setDataLoaded(true)
 
         }).catch(err => {
             console.log(err);
@@ -52,16 +57,16 @@ const Reciepts = () => {
 
 
     return (
-        <Container  sx={{mb:'30px'}}>
+        <Container sx={{ mb: '30px' }}>
 
             <Box textAlign='center' margin={3}>
                 <Typography variant="h4">Receipts</Typography>
             </Box>
             <Box>
-                <Button endIcon={<Add/>} onClick={()=>{nav('/recieptManagment')}}>New Receipt</Button>
+                <Button endIcon={<Add />} onClick={() => { nav('/recieptManagment') }}>New Receipt</Button>
             </Box>
             <Container>
-                <Grid container spacing={3} mt={3} sx={{ backgroundColor: 'white',borderRadius:'10px',paddingRight:'25px',border:1 }} >
+                <Grid container spacing={3} mt={3} sx={{ backgroundColor: 'white', borderRadius: '10px', paddingRight: '25px', border: 1 }} >
                     <Grid item xs={4}>
                         <FormControl fullWidth>
                             <InputLabel >office number</InputLabel>
@@ -81,7 +86,7 @@ const Reciepts = () => {
                                         </MenuItem>
                                     })
                                 }
-                                <MenuItem value='إظهار الجميع' onClick={()=>{setSelectedOfficeFilter('إظهار الجميع')}}>إظهار الجميع</MenuItem>
+                                <MenuItem value='إظهار الجميع' onClick={() => { setSelectedOfficeFilter('إظهار الجميع') }}>إظهار الجميع</MenuItem>
 
                             </Select>
                         </FormControl>
@@ -107,7 +112,7 @@ const Reciepts = () => {
                                         </MenuItem>
                                     })
                                 }
-                                <MenuItem value='إظهار الجميع' onClick={()=>{setSelectedNameFilter('إظهار الجميع')}}>إظهار الجميع</MenuItem>
+                                <MenuItem value='إظهار الجميع' onClick={() => { setSelectedNameFilter('إظهار الجميع') }}>إظهار الجميع</MenuItem>
 
                             </Select>
                         </FormControl>
@@ -119,7 +124,7 @@ const Reciepts = () => {
                             setSelectedNameFilter('إظهار الجميع')
 
                             reciepts.map(reciept => {
-                                if (reciept.recieptNumber.toString()===(e.target.value.toString()))
+                                if (reciept.recieptNumber.toString() === (e.target.value.toString()))
                                     filteredDataTemp.push(reciept)
                             })
                             setFilteredData(filteredDataTemp)
@@ -127,9 +132,51 @@ const Reciepts = () => {
                     </Grid>
 
 
-                   {console.log(recieptNums,'lllllll')}
-                    <RecieptsSummary reciepts={recieptNums.includes(parseInt(selectedNumberFilter))||selectedNumberFilter===''?!filteredData.length ? reciepts : filteredData:[]} setReciepts={setReciepts} />
-                   
+                    {console.log(recieptNums, 'lllllll')}
+                    {dataLoaded ? <RecieptsSummary reciepts={recieptNums.includes(parseInt(selectedNumberFilter)) || selectedNumberFilter === '' ? !filteredData.length ? reciepts : filteredData : []} setReciepts={setReciepts} /> :
+                        <Container>
+                            <Grid container spacing={3} mt={1} mb={1} >
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={12}><Divider /></Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Skeleton variant='rectangular' />
+                                </Grid>
+                                <Grid item xs={12}><Divider /></Grid>
+                            </Grid>
+                        </Container>}
+
                 </Grid>
             </Container>
         </Container>

@@ -15,11 +15,15 @@ import {
 import { Container } from "@mui/system";
 import { useNavigate } from "react-router";
 import { Add } from "@mui/icons-material";
+import TableSkeleton from "../Components/TableSkeleton";
 const Offices = () => {
   const [offices, setOffices] = useState([]);
   const nav = useNavigate();
+  const [dataLoaded, setDataLoaded] = useState(false);
+
 
   const removeOffice = (officeNumber) => {
+    setDataLoaded(false)
     console.log(officeNumber);
     axios
       .post("https://pure-meadow-98451.herokuapp.com/deleteOffice", { officeNumber: officeNumber, token :localStorage.getItem('token') })
@@ -31,6 +35,7 @@ const Offices = () => {
               if (res.data.success) {
                 console.log(res);
                 setOffices(res.data.data);
+                setDataLoaded(true)
               }
               else {
                 console.log(res.data.message);
@@ -57,6 +62,8 @@ const Offices = () => {
         if (res.data.success) {
           console.log(res);
           setOffices(res.data.data)
+          setDataLoaded(true)
+
         }
         else {
           console.log(res.data.message);
@@ -75,13 +82,13 @@ const Offices = () => {
           }}>new Office</Button>
         </Grid>
         <Grid item xs={12}>
-          <OfficesSummary
+          {dataLoaded?<OfficesSummary
             data={offices}
             show={false}
             removeOffice={(officeNumber) => {
               removeOffice(officeNumber);
             }}
-          />
+          />:<TableSkeleton showPagination/>}
         </Grid>
       </Grid>
     </Box>

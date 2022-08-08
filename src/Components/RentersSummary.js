@@ -10,7 +10,7 @@ const RentersSummary = ({ data }) => {
         <Box border={1} sx={{ backgroundColor: 'white',mb:'30px', border:'1',borderColor:'black' }}>
            <Box border={1} > <Grid mt={3} container spacing={2}>
                 {
-                    data.map((item) => {
+                    data.length!==0?data.map((item) => {
                         return <>{RentersSchema.map((schema) => {
                             return <Grid item xs={4}>
                                 <Container><Typography color='#73777B'>{schema.label}</Typography></Container>
@@ -26,7 +26,7 @@ const RentersSummary = ({ data }) => {
                                 <Divider sx={{ margin: "10px" }} />
                             </Grid>
                         </>
-                    })
+                    }):<Grid item xs={12} textAlign='center'>لا يوجد مستأجرين</Grid>
                 }
 
             </Grid>

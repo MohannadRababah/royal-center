@@ -3,18 +3,22 @@ import { Container } from "@mui/system"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import RentersSummary from "../Components/RentersSummary"
+import TableSkeleton from "../Components/TableSkeleton"
 
 
 const Renters = () => {
 
     const [renters, setRenters] = useState([])
     const [errMsg, setErrMsg] = useState('')
+    const [dataLoaded, setDataLoaded] = useState(false);
+
 
     useEffect(() => {
         axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{token :localStorage.getItem('token')}).then(response => {
             if (response.data.success) {
                 setRenters(response.data.data)
                 setErrMsg('')
+                setDataLoaded(true)
             }
             else{
                 setErrMsg(response.data.message)
@@ -31,7 +35,7 @@ const Renters = () => {
             <Box textAlign='center' margin={3} mb='70px'>
                 <Typography variant="h4">Renters Information</Typography>
             </Box>
-            <RentersSummary data={renters} />
+            {dataLoaded?<RentersSummary data={renters} />:<TableSkeleton />}
         </Container>
     )
 }

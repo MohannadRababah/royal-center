@@ -127,9 +127,10 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
           minWidth: "350px",
           overflow: "auto",
           backgroundColor: "white",
+          minHeight:'100px'
         }}
       >
-        {data.map((item, idx) => {
+        {data.length!==0?data.map((item, idx) => {
           // {
           //   console.log(getOwner(data?.[idx]?.officeNumber).then(res => {
           //     console.log(res, 'kkkkkkkkkkkkk');
@@ -200,7 +201,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
 
 
 
-        })}
+        }):<Box textAlign='center'>لا يوجد عقود للعرض</Box>}
       </Box>
     </Box>
   );

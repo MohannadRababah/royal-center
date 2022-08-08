@@ -1,4 +1,5 @@
 import { Button, Container, Divider, Grid, Typography } from "@mui/material"
+import { Box } from "@mui/system";
 import { useNavigate } from "react-router";
 import RecieptSchema from "../schema/RecieptSchema"
 
@@ -10,7 +11,7 @@ const RecieptsSummary = ({ reciepts, setReciepts }) => {
         <>
 
             {
-                reciepts.map((item, idx) => (
+                reciepts.length!==0?reciepts.map((item, idx) => (
                     <>
                         {
                             RecieptSchema.map((schema) => (
@@ -29,7 +30,7 @@ const RecieptsSummary = ({ reciepts, setReciepts }) => {
                         </Grid>
 
                         <Grid item xs={12}><Divider /></Grid></>
-                ))
+                )):<Grid item xs={12} textAlign='center'>لا يوجد وصولات</Grid>
             }
 
         </>

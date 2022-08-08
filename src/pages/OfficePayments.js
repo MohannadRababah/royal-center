@@ -1,11 +1,14 @@
 import { Box, Container, Grid, Typography } from "@mui/material"
 import axios from "axios";
 import { useEffect, useState } from "react";
+import CardsSkeleton from "../Components/CardsSkeleton";
 import OfficePaymentsSummary from "../Components/OfficePaymentsSummary"
 
 
 const OfficePayments = () => {
   const [requiredPayments, setRequiredPayments] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
 
   useEffect(()=>{
     axios
@@ -31,7 +34,7 @@ const OfficePayments = () => {
                           Property Payments
                         </Typography>
                     </Grid>
-                    <OfficePaymentsSummary requiredPayments={requiredPayments} setRequiredPayments={setRequiredPayments} />
+                    <OfficePaymentsSummary requiredPayments={requiredPayments} setRequiredPayments={setRequiredPayments} dataLoaded={dataLoaded} setDataLoaded={setDataLoaded}/>
                 </Grid>
             </Box>
         </Container>

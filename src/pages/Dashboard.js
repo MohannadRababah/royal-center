@@ -15,12 +15,15 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  CircularProgress,
+  Skeleton,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import OfficesSummary from "../Components/OfficesSummary";
+import TableSkeleton from "../Components/TableSkeleton";
 import createBackUp from "../utils/createBackUp";
 
 const Dashboard = () => {
@@ -28,18 +31,19 @@ const Dashboard = () => {
 
   const [offices, setOffices] = useState([]);
   const [requiredPayments, setRequiredPayments] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const addPayment = (officeNumber, payed) => {
     axios
       .post("https://pure-meadow-98451.herokuapp.com/addPayment", {
         officeNumber: officeNumber,
-        payed: payed, 
-        token :localStorage.getItem('token')
+        payed: payed,
+        token: localStorage.getItem('token')
       })
       .then((res) => {
         if (res.data.success) {
           axios
-            .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments",{ token :localStorage.getItem('token')})
+            .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments", { token: localStorage.getItem('token') })
             .then((res) => {
               if (res.data.success) {
                 setRequiredPayments(res.data.data)
@@ -62,8 +66,9 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    setDataLoaded(false)
     axios
-      .post("https://pure-meadow-98451.herokuapp.com/get_Offices",{ token :localStorage.getItem('token')})
+      .post("https://pure-meadow-98451.herokuapp.com/get_Offices", { token: localStorage.getItem('token') })
       .then((res) => {
         if (res.data.success) {
           console.log(res);
@@ -78,10 +83,11 @@ const Dashboard = () => {
       });
 
     axios
-      .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments",{ token :localStorage.getItem('token')})
+      .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments", { token: localStorage.getItem('token') })
       .then((res) => {
         if (res.data.success) {
           setRequiredPayments(res.data.data)
+          setDataLoaded(true)
         }
         else {
           console.log(res.data.message);
@@ -100,7 +106,7 @@ const Dashboard = () => {
 
       <Box sx={{ display: "flex" }}>
         <Container >
-          <OfficesSummary data={offices} show={true} />
+          {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination/> }
         </Container>
         <Box sx={{ position: 'fixed', left: '0' }}>
           <MenuList
@@ -151,24 +157,24 @@ const Dashboard = () => {
             </MenuItem>
 
             <MenuItem
-              sx={{ color: "#e9ce7f", margin: "15px", marginTop: '100px',border:1 }}
-              onClick={  async() => {
+              sx={{ color: "#e9ce7f", margin: "15px", marginTop: '100px', border: 1 }}
+              onClick={async () => {
                 createBackUp()
               }}
             >
-                 CREATE BACKUP 
+              CREATE BACKUP
             </MenuItem>
-            
+
 
           </MenuList>
         </Box>
       </Box>
       <Container sx={{ marginTop: '100px' }}>
-        <Box border={1} sx={{ backgroundColor: 'white', width: '60%', minWidth: '350px', margin: 'auto', mb: '30px' }}>
+        {dataLoaded?<Box border={1} sx={{ backgroundColor: 'white', width: '60%', minWidth: '350px', margin: 'auto', mb: '30px' }}>
           <Container sx={{ textAlign: 'center' }}>
             <Typography variant="h4">Property Payments</Typography>
           </Container>
-          <Table>
+          {requiredPayments.length!==0?<Table>
             <TableHead>
               <TableRow>
                 <TableCell> Property Number : </TableCell>
@@ -179,7 +185,7 @@ const Dashboard = () => {
             <TableBody>
               {
                 requiredPayments.map(item => {
-                  var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1  + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
+                  var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
                   return <TableRow>
                     <TableCell>{item.officeNumber}</TableCell>
                     <TableCell>{item.totalPayment / item.paymentPeriod}</TableCell>
@@ -196,9 +202,9 @@ const Dashboard = () => {
                 })
               }
             </TableBody>
-          </Table>
+          </Table>:<Box sx={{minHeight: '100px',marginTop:'80px'}}  textAlign='center'>لا يوجد دفعات حالية</Box>}
 
-        </Box>
+        </Box> : <TableSkeleton/> }
       </Container>
     </div>
   );

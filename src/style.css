@@ -4,3 +4,7 @@ h4{
 body{
     background-color:antiquewhite;
 }
+.MuiPagination-ul{
+    justify-content:center;
+    margin-left: 1000px;
+}
