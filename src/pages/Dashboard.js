@@ -179,7 +179,7 @@ const Dashboard = () => {
             <TableBody>
               {
                 requiredPayments.map(item => {
-                  var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (12 / (item.paymentPeriod)) + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
+                  var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1  + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
                   return <TableRow>
                     <TableCell>{item.officeNumber}</TableCell>
                     <TableCell>{item.totalPayment / item.paymentPeriod}</TableCell>
