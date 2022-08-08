@@ -43,10 +43,7 @@ const Login = ({setEmail}) => {
         }}
       >
         <Form
-        initialValues={{
-          'email':'royal',
-          'password':'1234'
-        }}
+        
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
