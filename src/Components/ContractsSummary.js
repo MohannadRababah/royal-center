@@ -37,11 +37,11 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
 
 
   const getOwner = async (officeNum) => {
-    const res = await axios.post("https://pure-meadow-98451.herokuapp.com/getOwner", { officeNumber: officeNum })
-    console.log(res?.data?.data?.officeOwner,'kkkkkkkkkkkkkk');
-    
+    const res = await axios.post("https://pure-meadow-98451.herokuapp.com/getOwner", { officeNumber: officeNum, token: localStorage.getItem('token') })
+    console.log(res?.data?.data?.officeOwner, 'kkkkkkkkkkkkkk');
+
     return res?.data?.data?.officeOwner
-    
+
   }
   console.log(data, 'response.data.officeOwner::');
 
@@ -55,12 +55,13 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
     axios
       .post("https://pure-meadow-98451.herokuapp.com/addPayment", {
         officeNumber: officeNumber,
-        payed: payed
+        payed: payed,
+        token: localStorage.getItem('token')
       })
       .then((res) => {
         if (res.data.success) {
           axios
-            .get("https://pure-meadow-98451.herokuapp.com/get_Contracts")
+            .post("https://pure-meadow-98451.herokuapp.com/get_Contracts", { token: localStorage.getItem('token') })
             .then((res) => {
 
               console.log(res);

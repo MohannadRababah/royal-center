@@ -16,12 +16,12 @@ const Contracts = () => {
   const removeContract = (officeNumber) => {
     console.log(officeNumber);
     axios
-      .post("https://pure-meadow-98451.herokuapp.com/deleteContract", { officeNumber: officeNumber })
+      .post("https://pure-meadow-98451.herokuapp.com/deleteContract", { officeNumber: officeNumber, token :localStorage.getItem('token') })
       .then((res) => {
         console.log(res, 'res::removeContract');
         if (res.data.success) {
           axios
-            .get("https://pure-meadow-98451.herokuapp.com/get_Contracts")
+            .post("https://pure-meadow-98451.herokuapp.com/get_Contracts",{ token :localStorage.getItem('token')})
             .then((res) => {
               console.log(res);
               setContracts(res.data.data);
@@ -46,7 +46,7 @@ const Contracts = () => {
 
   useEffect(() => {
     axios
-      .get("https://pure-meadow-98451.herokuapp.com/get_Contracts")
+      .post("https://pure-meadow-98451.herokuapp.com/get_Contracts",{ token :localStorage.getItem('token')})
       .then((res) => {
         if (res.data.success) {
           console.log(res);
@@ -65,7 +65,7 @@ const Contracts = () => {
 
 
 
-    axios.get('https://pure-meadow-98451.herokuapp.com/get_Renters').then(response => {
+    axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{ token :localStorage.getItem('token')}).then(response => {
       if (response.data.success) {
         setRenters(response.data.data)
         setErrMsg('')

@@ -11,7 +11,7 @@ const Renters = () => {
     const [errMsg, setErrMsg] = useState('')
 
     useEffect(() => {
-        axios.get('https://pure-meadow-98451.herokuapp.com/get_Renters').then(response => {
+        axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{token :localStorage.getItem('token')}).then(response => {
             if (response.data.success) {
                 setRenters(response.data.data)
                 setErrMsg('')

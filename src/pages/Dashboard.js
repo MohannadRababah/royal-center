@@ -33,12 +33,13 @@ const Dashboard = () => {
     axios
       .post("https://pure-meadow-98451.herokuapp.com/addPayment", {
         officeNumber: officeNumber,
-        payed: payed
+        payed: payed, 
+        token :localStorage.getItem('token')
       })
       .then((res) => {
         if (res.data.success) {
           axios
-            .get("https://pure-meadow-98451.herokuapp.com/get_Required_Payments")
+            .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments",{ token :localStorage.getItem('token')})
             .then((res) => {
               if (res.data.success) {
                 setRequiredPayments(res.data.data)
@@ -62,7 +63,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://pure-meadow-98451.herokuapp.com/get_Offices")
+      .post("https://pure-meadow-98451.herokuapp.com/get_Offices",{ token :localStorage.getItem('token')})
       .then((res) => {
         if (res.data.success) {
           console.log(res);
@@ -77,7 +78,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("https://pure-meadow-98451.herokuapp.com/get_Required_Payments")
+      .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments",{ token :localStorage.getItem('token')})
       .then((res) => {
         if (res.data.success) {
           setRequiredPayments(res.data.data)

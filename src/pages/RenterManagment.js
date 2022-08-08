@@ -55,7 +55,8 @@ const RenterManagment = () => {
                 name: values.name,
                 phone: values.phone,
                 email: values.email,
-                idDocument: tempFileContract
+                idDocument: tempFileContract, 
+                token :localStorage.getItem('token')
 
             })
             .then((res) => {

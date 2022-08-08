@@ -4,7 +4,7 @@ import { utils, writeFile } from "xlsx";
 
 
 const createBackUp=async()=>{
-    var a=await axios.post('https://pure-meadow-98451.herokuapp.com/createBackUp', {}).then(res => {
+    var a=await axios.post('https://pure-meadow-98451.herokuapp.com/createBackUp', {token :localStorage.getItem('token')}).then(res => {
         console.log(res);
         var text=new Text()
         var workBook = utils.book_new()

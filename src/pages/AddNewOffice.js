@@ -38,6 +38,7 @@ const AddNewOffice = () => {
           officeOwner: values.officeOwner,
           sold: values.sold,
           rented: location?.state?.office?.rented,
+          token :localStorage.getItem('token')
         })
         .then((res) => {
           console.log(res);
@@ -55,7 +56,7 @@ const AddNewOffice = () => {
           officePrice: values.officePrice,
           officeOwner: values.officeOwner,
           sold: false,
-
+          token :localStorage.getItem('token')
         })
         .then((res) => {
           console.log(res);

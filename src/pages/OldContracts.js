@@ -15,7 +15,7 @@ const OldContracts = () => {
 
   useEffect(() => {
     axios
-      .get("https://pure-meadow-98451.herokuapp.com/get_Old_Contracts")
+      .post("https://pure-meadow-98451.herokuapp.com/get_Old_Contracts",{ token :localStorage.getItem('token')})
       .then((res) => {
         if (res.data.success) {
           console.log(res);

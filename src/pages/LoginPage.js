@@ -17,6 +17,7 @@ const Login = ({setEmail}) => {
       .then((res) => {
         console.log(res);
         if(res.data.success){
+          localStorage.setItem('token',res.data.data.token)
           setEmail(values.email.toLowerCase().trim())
           nav('/dashboard',{state:{email:values.email.toLowerCase().trim()}})
         }

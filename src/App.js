@@ -25,7 +25,7 @@ const App = () => {
 
   useEffect(()=>{
     console.log(email,'email::::login validation');
-    if(email === undefined && window.location.pathname !== '/'){
+    if(!localStorage.getItem('token') && window.location.pathname !== '/'){
       nav('/') 
     }
         
@@ -58,6 +58,7 @@ const App = () => {
                 color="error"
                 sx={{color:'#e9ce7f'}}
                 onClick={() => {
+                  localStorage.clear()
                   nav("/");
                 }}
               >

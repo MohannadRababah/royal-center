@@ -109,7 +109,8 @@ console.log(location?.state?.contract?.contractDocument );
           endDate: checkDateForZeroes(values.endDate),
           totalPayment: values.totalPayment,
           paymentPeriod: values.paymentPeriod,
-          contractDocument: tempFileContract
+          contractDocument: tempFileContract, 
+          token :localStorage.getItem('token')
         })
         .then((res) => {
           console.log(res);
@@ -132,7 +133,8 @@ console.log(location?.state?.contract?.contractDocument );
           endDate: checkDateForZeroes(values.endDate),
           totalPayment: values.totalPayment,
           paymentPeriod: values.paymentPeriod,
-          contractDocument: tempFileContract
+          contractDocument: tempFileContract, 
+          token :localStorage.getItem('token')
         })
         .then((res) => {
           if (res.data.success) {
@@ -141,7 +143,8 @@ console.log(location?.state?.contract?.contractDocument );
               phone: newRenter ? values?.renterPhone : values?.renterInfo,
               email: values?.renterEmail,
               idDocument: tempFileId,
-              officeNumber: values?.officeNumber,
+              officeNumber: values?.officeNumber, 
+              token :localStorage.getItem('token')
             }).then(() => {
               setMsg(res.data.message);
             }).catch(err => {
@@ -172,7 +175,7 @@ console.log(location?.state?.contract?.contractDocument );
 
 
   useEffect(() => {
-    axios.get('https://pure-meadow-98451.herokuapp.com/get_Renters').then(res => {
+    axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{ token :localStorage.getItem('token')}).then(res => {
       setRenters(res.data.data)
       console.log(res.data.data, 'lalalalal');
     }).catch(err => {

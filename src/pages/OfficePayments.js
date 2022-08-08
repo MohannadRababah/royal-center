@@ -9,7 +9,7 @@ const OfficePayments = () => {
 
   useEffect(()=>{
     axios
-      .get("https://pure-meadow-98451.herokuapp.com/get_Required_Payments")
+      .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments",{ token :localStorage.getItem('token')})
       .then((res) => {
         if(res.data.success){
           setRequiredPayments(res.data.data)

@@ -22,11 +22,11 @@ const Offices = () => {
   const removeOffice = (officeNumber) => {
     console.log(officeNumber);
     axios
-      .post("https://pure-meadow-98451.herokuapp.com/deleteOffice", { officeNumber: officeNumber })
+      .post("https://pure-meadow-98451.herokuapp.com/deleteOffice", { officeNumber: officeNumber, token :localStorage.getItem('token') })
       .then((res) => {
         if (res.data.success) {
           axios
-            .get("https://pure-meadow-98451.herokuapp.com/get_All_Offices")
+            .post("https://pure-meadow-98451.herokuapp.com/get_All_Offices",{ token :localStorage.getItem('token')})
             .then((res) => {
               if (res.data.success) {
                 console.log(res);
@@ -52,7 +52,7 @@ const Offices = () => {
 
   useEffect(() => {
     axios
-      .get("https://pure-meadow-98451.herokuapp.com/get_All_Offices")
+      .post("https://pure-meadow-98451.herokuapp.com/get_All_Offices",{ token :localStorage.getItem('token')})
       .then((res) => {
         if (res.data.success) {
           console.log(res);
