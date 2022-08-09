@@ -82,10 +82,11 @@ console.log(values.recieptNumber,oldRecieptNumber,'lalaalalalkkakkakakaak');
         
     }
     useEffect(() => {
-        setOldRecieptNumber(initVal?initVal?.recieptNumber:null)
+        
 
         axios.post('https://pure-meadow-98451.herokuapp.com/get_reciept_number',{ token :localStorage.getItem('token')}).then(response => {
             setRecieptNumber(response.data.data)
+            setOldRecieptNumber(initVal?initVal?.recieptNumber:response.data.data)
             console.log(response.data.data);
         })
     }, [])

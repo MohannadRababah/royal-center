@@ -119,24 +119,28 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
         >
           add contract
         </Button></>}
-      <Box
-        border={1}
-        width="70%"
-        sx={{
-          margin: "auto",
-          minWidth: "350px",
-          overflow: "auto",
-          backgroundColor: "white",
-          minHeight:'100px'
-        }}
-      >
-        {data.length!==0?data.map((item, idx) => {
-          // {
-          //   console.log(getOwner(data?.[idx]?.officeNumber).then(res => {
-          //     console.log(res, 'kkkkkkkkkkkkk');
-          //   }), 'kkkkk')
-          // }
-          return (
+
+      {data.length !== 0 ? data.map((item, idx) => {
+        // {
+        //   console.log(getOwner(data?.[idx]?.officeNumber).then(res => {
+        //     console.log(res, 'kkkkkkkkkkkkk');
+        //   }), 'kkkkk')
+        // }
+        return (
+          <Box
+            border={1}
+            width="70%"
+            sx={{
+              margin: "auto",
+              marginBottom: '30px',
+              borderRadius: '50px',
+              boxShadow: '10px 10px 5px 5px  #b3b3b3',
+              minWidth: "350px",
+              overflow: "auto",
+              backgroundColor: "white",
+              minHeight: '100px'
+            }}
+          >
             <Container key={idx} sx={{ mt: "30px" }}>
               <Typography variant="h5" marginBottom={3}>
                 Contract info for Property: {item.officeNumber}
@@ -197,12 +201,12 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
                 </Grid>
               </Grid>
             </Container>
-          );
+          </Box>);
 
 
 
-        }):<Box textAlign='center'>لا يوجد عقود للعرض</Box>}
-      </Box>
+      }) : <Box textAlign='center'>لا يوجد عقود للعرض</Box>}
+
     </Box>
   );
 };

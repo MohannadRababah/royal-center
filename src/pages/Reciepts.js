@@ -66,7 +66,7 @@ const Reciepts = () => {
                 <Button endIcon={<Add />} onClick={() => { nav('/recieptManagment') }}>New Receipt</Button>
             </Box>
             <Container>
-                <Grid container spacing={3} mt={3} sx={{ backgroundColor: 'white', borderRadius: '10px', paddingRight: '25px', border: 1 }} >
+                <Grid container spacing={3} mt={3} sx={{ backgroundColor: '#F0E3CA', borderRadius: '10px', paddingRight: '25px', border: 1 }} >
                     <Grid item xs={4}>
                         <FormControl fullWidth>
                             <InputLabel >office number</InputLabel>
@@ -131,9 +131,9 @@ const Reciepts = () => {
                         }} fullWidth label='reciept number' variant='outlined'></TextField>
                     </Grid>
 
-
+                  
                     {console.log(recieptNums, 'lllllll')}
-                    {dataLoaded ? <RecieptsSummary reciepts={recieptNums.includes(parseInt(selectedNumberFilter)) || selectedNumberFilter === '' ? !filteredData.length ? reciepts : filteredData : []} setReciepts={setReciepts} /> :
+                    {dataLoaded ?  <Grid container spacing={3} mt={5} mb={1} ><RecieptsSummary reciepts={recieptNums.includes(parseInt(selectedNumberFilter)) || selectedNumberFilter === '' ? !filteredData.length ? reciepts : filteredData : []} setReciepts={setReciepts} /></Grid> :
                         <Container>
                             <Grid container spacing={3} mt={1} mb={1} >
                                 <Grid item xs={4}>
@@ -177,7 +177,7 @@ const Reciepts = () => {
                             </Grid>
                         </Container>}
 
-                </Grid>
+                        </Grid>
             </Container>
         </Container>
     )

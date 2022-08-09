@@ -6,12 +6,21 @@ import RentersSchema from "../schema/RentersSchema"
 const RentersSummary = ({ data }) => {
 
     const nav=useNavigate()
-    return (
-        <Box border={1} sx={{ backgroundColor: 'white',mb:'30px', border:'1',borderColor:'black' }}>
-           <Box border={1} > <Grid mt={3} container spacing={2}>
-                {
-                    data.length!==0?data.map((item) => {
-                        return <>{RentersSchema.map((schema) => {
+    return data.length!==0?data.map((item) => {
+                        return <Box
+                        border={1}
+                        width="70%"
+                        sx={{
+                          margin: "auto",
+                          marginBottom: '30px',
+                          borderRadius: '50px',
+                          boxShadow: '5px 5px 5px 5px  #b3b3b3',
+                          minWidth: "350px",
+                          overflow: "auto",
+                          backgroundColor: "white",
+                          minHeight: '100px'
+                        }}
+                      ><Grid mt={3} container spacing={2}>{RentersSchema.map((schema) => {
                             return <Grid item xs={4}>
                                 <Container><Typography color='#73777B'>{schema.label}</Typography></Container>
                                 <Container>{schema?.valueFun ? schema.valueFun(item) : item[schema.name]}</Container>
@@ -25,14 +34,14 @@ const RentersSummary = ({ data }) => {
                             <Grid item xs={12}>
                                 <Divider sx={{ margin: "10px" }} />
                             </Grid>
-                        </>
+                            </Grid>
+                        </Box>
                     }):<Grid item xs={12} textAlign='center'>لا يوجد مستأجرين</Grid>
-                }
+                
 
-            </Grid>
-            </Box>
-        </Box>
-    )
+           
+            
+    
 }
 
 export default RentersSummary

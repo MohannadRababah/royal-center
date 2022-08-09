@@ -119,7 +119,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
 
 
 
-    return dataLoaded?<Box sx={{ backgroundColor: 'white', minHeight: '100px', minWidth: '700px', margin: 'auto',mb:'30px' }}>
+    return dataLoaded?<>
             <Form
                 initialValues={{
                     recieptNumber: recieptNumber,
@@ -176,12 +176,24 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
 
                 )}
             />
-            <Container sx={{border:1}}>
                 {
                      requiredPayments.length!==0?requiredPayments.map((item, idx) => {
                         var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
                         console.log(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
-                        return <Box key={idx}><Grid container spacing={3} mt={2}>
+                        return <Box key={idx}
+                        border={1}
+                        width="70%"
+                        sx={{
+                          margin: "auto",
+                          marginBottom: '30px',
+                          borderRadius: '50px',
+                          boxShadow: '5px 5px 5px 5px  #b3b3b3',
+                          minWidth: "350px",
+                          overflow: "auto",
+                          backgroundColor: "white",
+                          minHeight: '100px'
+                        }}
+                      ><Container><Grid container spacing={3} mt={2}>
                             <Grid item xs={4} ><FormLabel sx={{ display: 'block' }}> Property Number : </FormLabel>{item.officeNumber}</Grid>
                             <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Required Payment : </FormLabel> {item.totalPayment / item.paymentPeriod}</Grid>
                             <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Payment Date : </FormLabel> {date.getDate()}/{date.getMonth()+1}/{date.getFullYear()}</Grid>
@@ -206,14 +218,11 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                                     </> : null
                                 })
                             }
-                        </Grid>
+                        </Grid></Container>
 
                             <Divider /></Box>
                     }):<Box sx={{minHeight: '100px',marginTop:'80px'}}  textAlign='center'>لا يوجد دفعات حالية</Box>
-                }
-            </Container>
-
-        </Box> : <CardsSkeleton/>
+                }</>: <CardsSkeleton/>
     
 }
 
