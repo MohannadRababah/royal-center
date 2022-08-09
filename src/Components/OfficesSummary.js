@@ -26,7 +26,6 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
   const [open, setOpen] = useState(false);
   const [paginationPage, setPaginationPage] = useState(1);
   const [paginationData, setPaginationData] = useState(data.slice((paginationPage - 1) * 5, paginationPage * 5));
-  console.log(paginationData);
   const [officeNumber, setOfficeNumber] = useState();
 
   const handleClose = () => {
@@ -35,7 +34,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
 
   useEffect(() => {
     setPaginationData(data.slice((paginationPage - 1) * 5, paginationPage * 5))
-  })
+  },[paginationPage])
 
 
   return (

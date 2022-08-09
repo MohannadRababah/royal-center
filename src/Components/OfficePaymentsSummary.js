@@ -33,6 +33,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
     const [open, setOpen] = useState(false)
     const [rentersInfo, setRentersInfo] = useState([])
     const [recieptNumber, setRecieptNumber] = useState()
+    const [oldRecieptNumber, setOldRecieptNumber] = useState()
     const [renterName, setRenterName] = useState('')
     const [addPaymentFormData, setAddPaymentFormData] = useState({})
 
@@ -44,6 +45,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
 
             axios.post('https://pure-meadow-98451.herokuapp.com/get_reciept_number',{ token :localStorage.getItem('token')}).then(response => {
                 setRecieptNumber(response.data.data)
+                setOldRecieptNumber(response.data.data)
                 console.log(response.data.data);
             })
         }).catch(err => {
@@ -64,7 +66,6 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
             recieptNumber: values.recieptNumber,
             desc: values.desc,
             date: values.date,
-            recieptNumber: values.recieptNumber, 
             token :localStorage.getItem('token')
         }).then((res) => {
             if (res.data.success) {
@@ -82,7 +83,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                                     if (res.data.success) {
                                         setRequiredPayments(res.data.data)
                                         setDataLoaded(true)
-                                        axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { recieptNumber: recieptNumber + 1, token :localStorage.getItem('token') }).then(response => {
+                                        axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { oldRecieptNumber:oldRecieptNumber,recieptNumber: values.recieptNumber, token :localStorage.getItem('token') }).then(response => {
                                             console.log(response);
                                             setRecieptNumber(recieptNumber+1)
                                         })
@@ -148,7 +149,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                                 </Container>
 
                                 <Grid item xs={12} margin={3}>
-                                    <TextField disabled required label='Reciept Number' name="recieptNumber"></TextField>{/*retrieved*/}
+                                    <TextField  required label='Reciept Number' name="recieptNumber"></TextField>{/*retrieved*/}
                                 </Grid>
                                 <Grid item xs={12} margin={3}>
                                     <TextField disabled required label='Renter Name' name="name"></TextField>{/*retrieved*/}

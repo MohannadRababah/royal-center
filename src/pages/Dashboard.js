@@ -73,6 +73,21 @@ const Dashboard = () => {
         if (res.data.success) {
           console.log(res);
           setOffices(res.data.data);
+         
+          axios
+            .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments", { token: localStorage.getItem('token') })
+            .then((res) => {
+              if (res.data.success) {
+                setRequiredPayments(res.data.data)
+                setDataLoaded(true)
+              }
+              else {
+                console.log(res.data.message);
+              }
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
         }
         else {
           console.log(res.data.message);
@@ -82,20 +97,8 @@ const Dashboard = () => {
         console.log(err.message);
       });
 
-    axios
-      .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments", { token: localStorage.getItem('token') })
-      .then((res) => {
-        if (res.data.success) {
-          setRequiredPayments(res.data.data)
-          setDataLoaded(true)
-        }
-        else {
-          console.log(res.data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+
+
 
 
   }, []);
@@ -104,11 +107,11 @@ const Dashboard = () => {
   return (
     <div>
 
-      <Box sx={{ display: "flex" }}>
-        <Container >
-          {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination/> }
-        </Container>
-        <Box sx={{ position: 'fixed', left: '0' }}>
+      <Grid container spacing={3}>
+        <Grid item  lg={6} md={12} >
+          {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination />}
+        </Grid>
+        {/* <Box sx={{ position: 'fixed', left: '0' }}>
           <MenuList
             sx={{
               backgroundColor: "#121212",
@@ -167,45 +170,46 @@ const Dashboard = () => {
 
 
           </MenuList>
-        </Box>
-      </Box>
-      <Container sx={{ marginTop: '100px' }}>
-        {dataLoaded?<Box border={1} sx={{ backgroundColor: 'white', width: '60%', minWidth: '350px', margin: 'auto', mb: '30px' }}>
-          <Container sx={{ textAlign: 'center' }}>
-            <Typography variant="h4">Property Payments</Typography>
-          </Container>
-          {requiredPayments.length!==0?<Table>
-            <TableHead>
-              <TableRow>
-                <TableCell> Property Number : </TableCell>
-                <TableCell> Required Payment : </TableCell>
-                <TableCell> Payment Date : </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                requiredPayments.map(item => {
-                  var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
-                  return <TableRow>
-                    <TableCell>{item.officeNumber}</TableCell>
-                    <TableCell>{item.totalPayment / item.paymentPeriod}</TableCell>
-                    <TableCell>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</TableCell>
-                  </TableRow>
+        </Box> */}
+
+        <Grid item lg={6} md={12}>
+          {dataLoaded ? <Box border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
+            <Container sx={{ textAlign: 'center' }}>
+              <Typography variant="h4">Property Payments</Typography>
+            </Container>
+            {requiredPayments.length !== 0 ? <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell> Property Number : </TableCell>
+                  <TableCell> Required Payment : </TableCell>
+                  <TableCell> Payment Date : </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  requiredPayments.map(item => {
+                    var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
+                    return <TableRow>
+                      <TableCell>{item.officeNumber}</TableCell>
+                      <TableCell>{item.totalPayment / item.paymentPeriod}</TableCell>
+                      <TableCell>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</TableCell>
+                    </TableRow>
 
 
-                  {/* <Container sx={{ textAlign: 'right', marginBottom: '10px' }}>
+                    {/* <Container sx={{ textAlign: 'right', marginBottom: '10px' }}>
                   <Button variant="outlined" sx={{ height: '20px' }} onClick={() => {
                     addPayment(item.officeNumber, item.payed)
                   }}>Add Payment</Button>
                 </Container> */}
-                  <Divider />
-                })
-              }
-            </TableBody>
-          </Table>:<Box sx={{minHeight: '100px',marginTop:'80px'}}  textAlign='center'>لا يوجد دفعات حالية</Box>}
+                    <Divider />
+                  })
+                }
+              </TableBody>
+            </Table> : <Box sx={{ minHeight: '100px', marginTop: '80px' }} textAlign='center'>لا يوجد دفعات حالية</Box>}
 
-        </Box> : <TableSkeleton/> }
-      </Container>
+          </Box> : <TableSkeleton />}
+        </Grid>
+      </Grid>
     </div>
   );
 };

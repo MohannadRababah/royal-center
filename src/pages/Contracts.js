@@ -1,4 +1,4 @@
-import { Alert, Box, Typography } from "@mui/material";
+import { Alert, Box, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
 import ContractsSummary from "../Components/ContractsSummary"
@@ -96,6 +96,7 @@ const Contracts = () => {
       <Box textAlign='center' margin={3}>
         <Typography variant="h4">Contracts</Typography>
       </Box>
+      
       {dataLoaded?<ContractsSummary rentersData={renters} edit={true} removeContract={removeContract} data={contracts} setContracts={setContracts} />:<TableSkeleton/>}
     </>
   )

@@ -24,12 +24,13 @@ const AddNewReciept = () => {
     const location = useLocation()
 
     const [recieptNumber, setRecieptNumber] = useState()
+    const [oldRecieptNumber, setOldRecieptNumber] = useState()
     const initVal=location?.state?.initVal
     console.log(initVal);
 
     const onSubmit = (values) => {
        
-
+console.log(values.recieptNumber,oldRecieptNumber,'lalaalalalkkakkakakaak');
         if(!initVal){
             axios.post('https://pure-meadow-98451.herokuapp.com/addReciept', {
                 officeNumber:'random reciept',
@@ -41,10 +42,10 @@ const AddNewReciept = () => {
                 token :localStorage.getItem('token')
             }).then((res) => {
                 if (res.data.success) {
-    
-                    axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { recieptNumber: recieptNumber + 1, token :localStorage.getItem('token') }).then(response => {
-                        console.log(response);
-                        setRecieptNumber(recieptNumber + 1)
+                        
+                    axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { oldRecieptNumber: oldRecieptNumber,recieptNumber:values.recieptNumber, token :localStorage.getItem('token') }).then(response => {
+                        console.log(response,'log increase');
+                        
                         nav('/reciepts')
                     })
     
@@ -66,6 +67,7 @@ const AddNewReciept = () => {
                 officeNumber:'random reciept',
                 name: values.name,
                 amount: values.amount,
+                oldRecieptNumber:oldRecieptNumber,
                 recieptNumber: values.recieptNumber,
                 desc: values.desc,
                 date: values.date, 
@@ -80,6 +82,8 @@ const AddNewReciept = () => {
         
     }
     useEffect(() => {
+        setOldRecieptNumber(initVal?initVal?.recieptNumber:null)
+
         axios.post('https://pure-meadow-98451.herokuapp.com/get_reciept_number',{ token :localStorage.getItem('token')}).then(response => {
             setRecieptNumber(response.data.data)
             console.log(response.data.data);
@@ -106,7 +110,7 @@ const AddNewReciept = () => {
                     <form onSubmit={handleSubmit}>
 
                         <Grid item xs={12} margin={3} >
-                            <TextField disabled required label='Reciept Number' name="recieptNumber"></TextField>{/*retrieved*/}
+                            <TextField  required label='Reciept Number' name="recieptNumber"></TextField>{/*retrieved*/}
                         </Grid>
                         <Grid item xs={12} margin={3}>
                             <TextField required label='Name' name="name"></TextField>{/*retrieved*/}
