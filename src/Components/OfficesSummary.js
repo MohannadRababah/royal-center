@@ -95,11 +95,10 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
 
 
             <TableRow sx={{ display: !show ? "none" : null }}>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell>
+              
+              <TableCell sx={{textAlign:'right'}} colSpan={4}>
                 <Button
+                  
                   variant="outlined"
                   onClick={() => {
                     nav("/offices");

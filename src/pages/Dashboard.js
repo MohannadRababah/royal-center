@@ -204,6 +204,11 @@ const Dashboard = () => {
                     <Divider />
                   })
                 }
+
+                <TableRow>
+                  <TableCell sx={{textAlign:'right'}} colSpan={3}><Button variant="outlined" onClick={()=>{nav('/officesPayments')}}> الذهاب الى الخدمة</Button></TableCell>
+
+                </TableRow>
               </TableBody>
             </Table> : <Box sx={{ minHeight: '100px', marginTop: '80px' }} textAlign='center'>لا يوجد دفعات حالية</Box>}
 
