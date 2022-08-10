@@ -6,6 +6,7 @@ import {
     Alert,
     Box,
     Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -24,14 +25,16 @@ const AddNewReciept = () => {
     const location = useLocation()
 
     const [recieptNumber, setRecieptNumber] = useState()
+    const [submitting, setSubmitting] = useState(false)
+    const [errMsg, setErrMsg] = useState('')
     const [oldRecieptNumber, setOldRecieptNumber] = useState()
     const initVal = location?.state?.initVal
-    const nav=useNavigate()
+    const nav = useNavigate()
     console.log(initVal);
-   
+
 
     const onSubmit = (values) => {
-
+        setSubmitting(true)
         console.log(values.recieptNumber, oldRecieptNumber, 'lalaalalalkkakkakakaak');
         if (!initVal) {
             axios.post('https://pure-meadow-98451.herokuapp.com/addReciept', {
@@ -52,7 +55,7 @@ const AddNewReciept = () => {
                     axios.post('https://pure-meadow-98451.herokuapp.com/increase_reciept_number', { oldRecieptNumber: oldRecieptNumber, recieptNumber: values.recieptNumber, token: localStorage.getItem('token') }).then(response => {
 
                         console.log(response, 'log increase');
-
+                        setSubmitting(false)
                         nav('/reciepts')
                     })
 
@@ -61,13 +64,18 @@ const AddNewReciept = () => {
                         });
                 }
                 else {
-                    console.log(res.data.message);
+                    setErrMsg(res.data.message)
+                setSubmitting(false)
+
                 }
 
 
             }).catch(err => {
-                console.log(err.message);
+                setErrMsg(err.message);
+                setSubmitting(false)
+
             })
+
         }
         else {
             axios.post('https://pure-meadow-98451.herokuapp.com/editReciept', {
@@ -81,15 +89,24 @@ const AddNewReciept = () => {
                 token: localStorage.getItem('token')
             })
                 .then((res) => {
+                    if (!res.data.success) {
+                        setErrMsg(res.data.message)
+                setSubmitting(false)
+
+                    }
+                    setSubmitting(false)
                     if (res.data.message === 'user is not verified') {
                         nav('/')
                         return
                     }
                     else { nav('/reciepts') }
                 })
-                .catch(err => console.log(err.message))
-        }
+                .catch(err => {
+                    setErrMsg(err.message)
+                    setSubmitting(false)
 
+                })
+        }
 
     }
     useEffect(() => {
@@ -99,6 +116,10 @@ const AddNewReciept = () => {
             if (response.data.message === 'user is not verified') {
                 nav('/')
                 return
+            }
+            if (!response.data.success) {
+                setErrMsg(response.data.message)
+                setSubmitting(false)
             }
             setRecieptNumber(response.data.data)
             setOldRecieptNumber(initVal ? initVal?.recieptNumber : response.data.data)
@@ -111,6 +132,7 @@ const AddNewReciept = () => {
             Receipts
         </Typography>
         <Container sx={{ backgroundColor: 'white', mt: '50px', marginBottom: '50px', paddingTop: '30px', border: 1, borderRadius: '10px' }}>
+            {errMsg && <Alert severity="error" variant="outlined">{errMsg}</Alert>}
             <Form
                 initialValues={!initVal ? {
                     recieptNumber: recieptNumber,
@@ -140,8 +162,8 @@ const AddNewReciept = () => {
                             <TextField required label='That`s For' name="desc"></TextField>{/*retrieved as a structure*/}
                         </Grid>
                         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: '60px' }}>
-                            <Button onClick={() => nav('/reciepts')}>Cancel</Button>
-                            <Button type='submit'>Confirm</Button>
+                            <Button disabled={submitting} onClick={() => nav('/reciepts')}>Cancel</Button>
+                            <Button disabled={submitting} endIcon={submitting ? <CircularProgress size='15px' sx={{ color: 'GrayText' }} /> : null} type='submit'>Confirm</Button>
                         </Grid>
 
 
