@@ -45,7 +45,7 @@ const nav=useNavigate()
     <>
       {errMsg && <Alert variant='outlined' severity="error">{errMsg}</Alert>}
       <Box textAlign='center' margin={3}>
-        <Typography variant="h4">Old Contracts</Typography>
+        <Typography variant="h4" color='black'>Old Contracts</Typography>
       </Box>
       {dataLoaded?<ContractsSummary rentersData={contracts} edit={false} data={contracts} />:
       <CircularProgress

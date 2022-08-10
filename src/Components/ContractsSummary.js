@@ -110,6 +110,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
         </DialogActions>
       </Dialog>
         <Button
+          color='success'
           sx={{ marginLeft: "17%" }}
           onClick={() => {
             nav("/contractManagment");

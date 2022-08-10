@@ -107,7 +107,7 @@ const AddNewReciept = () => {
     }, [])
 
     return <Box textAlign='center' >
-        <Typography variant="h4">
+        <Typography variant="h4" color='black'>
             Receipts
         </Typography>
         <Container sx={{ backgroundColor: 'white', mt: '50px', marginBottom: '50px', paddingTop: '30px', border: 1, borderRadius: '10px' }}>

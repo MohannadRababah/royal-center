@@ -64,10 +64,10 @@ const Reciepts = () => {
         <Container sx={{ mb: '30px' }}>
 
             <Box textAlign='center' margin={3}>
-                <Typography variant="h4">Receipts</Typography>
+                <Typography variant="h4" color='black'>Receipts</Typography>
             </Box>
             <Box>
-                <Button endIcon={<Add />} onClick={() => { nav('/recieptManagment') }}>New Receipt</Button>
+                <Button color='success' endIcon={<Add />} onClick={() => { nav('/recieptManagment') }}>New Receipt</Button>
             </Box>
             <Container>
                 <Grid container spacing={3} mt={3} sx={{ backgroundColor: '#F0E3CA', borderRadius: '10px', paddingRight: '25px', border: 1 }} >

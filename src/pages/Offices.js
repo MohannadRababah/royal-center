@@ -85,7 +85,7 @@ const Offices = () => {
     <Box >
       <Grid container spacing={3}>
         <Grid item xs={6} textAlign='center'>
-          <Button startIcon={<Add />} onClick={() => {
+          <Button color="success" startIcon={<Add />} onClick={() => {
             nav('/officeManagment')
           }}>new Office</Button>
         </Grid>

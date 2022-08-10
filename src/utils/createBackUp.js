@@ -5,7 +5,7 @@ import { utils, writeFile } from "xlsx";
 
 const createBackUp=async()=>{
     var a=await axios.post('https://pure-meadow-98451.herokuapp.com/createBackUp', {token :localStorage.getItem('token')}).then(res => {
-        if(res.data.message!=='user is not verified'){
+        if(res.data.message==='user is not verified'){
             window.location.assign('/')
             return
         }

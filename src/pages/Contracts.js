@@ -106,7 +106,7 @@ const Contracts = () => {
     <Box >
       {errMsg && <Alert variant='outlined' severity="error">{errMsg}</Alert>}
       <Box textAlign='center' margin={3}>
-        <Typography variant="h4">Contracts</Typography>
+        <Typography variant="h4" color="black">Contracts</Typography>
       </Box>
 
       {dataLoaded ? <ContractsSummary rentersData={renters} edit={true} removeContract={removeContract} data={contracts} setContracts={setContracts} /> :

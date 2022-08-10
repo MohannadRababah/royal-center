@@ -40,7 +40,7 @@ const Renters = () => {
                 errMsg && <Alert variant='outlined' severity='error'>{errMsg}</Alert>
             }
             <Box textAlign='center' margin={3} mb='70px'>
-                <Typography variant="h4">Renters Information</Typography>
+                <Typography variant="h4" color='black'>Renters Information</Typography>
             </Box>
             <Box display='flex'>
                 <FormLabel> renters with active contracts</FormLabel>
