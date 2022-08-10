@@ -5,32 +5,32 @@ import { v4 as uuid } from "uuid";
 const schema= [
   {
     id: uuid(),
-    label: "Property Number:",
+    label: "رقم الممتلك :",
     name: "officeNumber",
   },
   {
     id: uuid(),
-    label: "Start Date:",
+    label: "تاريخ بداية العقد :",
     name: "startDate",
   },
   {
     id: uuid(),
-    label: "End Date:",
+    label: "تاريخ نهاية العقد :",
     name: "endDate",
   },
   {
     id: uuid(),
-    label: "Total Payment:",
+    label: "قيمة العقد الكلية :",
     name: "totalPayment",
   },
   {
     id: uuid(),
-    label: "Payment Period:",
+    label: "عدد الدفعات :",
     name: "paymentPeriod",
   },
   {
     id: uuid(),
-    label: "Each Payment:",
+    label: "قيمة الدفعه الواحدة :",
     name: "eachPayment",
     attFun:(item)=>{
         return parseInt(item.totalPayment)/parseInt(item.paymentPeriod)
@@ -38,12 +38,12 @@ const schema= [
   },
   {
     id: uuid(),
-    label: "Payed:",
+    label: "عدد الدفعات المدفوعة :",
     name: "payed"
   },
   {
     id: uuid(),
-    label: "Next Payment:",
+    label: "تاريخ الدفعة القادمة :",
     name: "nextPayment",
     attFun:(item)=>{
       var date=new Date(parseInt(item.startDate.slice(6,10)),parseInt(item.startDate.slice(3,5))-1+(item.payed)*(12/(item.paymentPeriod)),parseInt(item.startDate.slice(0,3)));
@@ -52,13 +52,13 @@ const schema= [
   },
   {
     id: uuid(),
-    label: "Contract Document:",
+    label: "صورة عن العقد :",
     name: "contractDocument",
-    attFun:(value)=> value?.contractDocument?<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a>:'Document not uploaded'//<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}>Open</a>
+    attFun:(value)=> value?.contractDocument?<a download={`صورة عن عقد ممتلك رقم ${value.officeNumber}`} target='_blank' href={value?.contractDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a>:'لم يتم رفع المستند'//<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}>Open</a>
   },
   {
     id: uuid(),
-    label: "Office Owner:",
+    label: "المالك :",
     name: "owner",
   },
 ];
@@ -66,17 +66,17 @@ const schema= [
 const renterFields=[
   {
     id: uuid(),
-    label: "Name:",
+    label: "اسم المستأجر :",
     name: "name",
   },
   {
     id: uuid(),
-    label: "Phone number:",
+    label: "هاتف المستأجر :",
     name: "phone",
   },
   {
     id: uuid(),
-    label: "Email:",
+    label: "البريد الألكتروني للمستأجر :",
     name: "email",
   },
 ]

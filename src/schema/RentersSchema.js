@@ -5,33 +5,33 @@ import { v4 as uuid } from "uuid";
 const schema= [
   {
     id: uuid(),
-    label: "Name:",
+    label: "الأسم :",
     name: "name",
   },
   {
     id: uuid(),
-    label: "Phone number:",
+    label: "رقم الهاتف :",
     name: "phone",
   },
   {
     id: uuid(),
-    label: "Email:",
+    label: "عنوان البريد الألكتروني :",
     name: "email",
   },
   {
     id: uuid(),
-    label: "ID Document:",
+    label: "صورة هوية المستأجر :",
     name: "idDocument",
-    valueFun:(value)=> {console.log(value); return value?.idDocument?<a download={`ID for renter ${value?.name}`} target='_blank' href={value?.idDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a>:'Document not uploaded' }
+    valueFun:(value)=> {console.log(value); return value?.idDocument?<a download={`صورة الهوية للمستأجر ${value?.name}`} target='_blank' href={value?.idDocument}><Button variant="outlined" endIcon={<CloudDownload sx={{marginRight:'10px'}}/>}>تحميل</Button></a>:'لم يتم رفع المستند' }
   },
   {
     id: uuid(),
-    label: "Rented Properties:",
+    label: "الممتلكات المستأجرة :",
     name: "offices",
     valueFun:(data)=>{
         console.log(data,'lalalala');
-        if(data)return data?.offices.map((item)=>(
-            item+','
+        if(data)return data?.offices.map((item,idx)=>(
+          idx!==data.offices.length-1?(item+' ,'):item
         ))
     }
   },

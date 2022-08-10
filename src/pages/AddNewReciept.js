@@ -127,9 +127,9 @@ const AddNewReciept = () => {
         })
     }, [])
 
-    return <Box textAlign='center' >
+    return <Box textAlign='center' sx={{direction:'rtl'}} >
         <Typography variant="h4" color='black'>
-            Receipts
+            اضافة وصل
         </Typography>
         <Container sx={{ backgroundColor: 'white', mt: '50px', marginBottom: '50px', paddingTop: '30px', border: 1, borderRadius: '10px' }}>
             {errMsg && <Alert severity="error" variant="outlined">{errMsg}</Alert>}
@@ -147,23 +147,23 @@ const AddNewReciept = () => {
                     <form onSubmit={handleSubmit}>
 
                         <Grid item xs={12} margin={3} >
-                            <TextField required label='Reciept Number' name="recieptNumber"></TextField>{/*retrieved*/}
+                            <TextField required label='رقم الوصل' name="recieptNumber"></TextField>{/*retrieved*/}
                         </Grid>
                         <Grid item xs={12} margin={3}>
-                            <TextField required label='Name' name="name"></TextField>{/*retrieved*/}
+                            <TextField required label='الأسم' name="name"></TextField>{/*retrieved*/}
                         </Grid>
                         <Grid item xs={12} margin={3}>
-                            <TextField required label='amount' name="amount"></TextField>{/*retrieved*/}
+                            <TextField required label='القيمة' name="amount"></TextField>{/*retrieved*/}
                         </Grid>
                         <Grid item xs={12} margin={3}>
-                            <TextField label='Today`s Date' required name="date"></TextField>{/*generated from todays date*/}
+                            <TextField label='تاريخ الوصل' required name="date"></TextField>{/*generated from todays date*/}
                         </Grid>
                         <Grid item xs={12} margin={3}>
-                            <TextField required label='That`s For' name="desc"></TextField>{/*retrieved as a structure*/}
+                            <TextField required label='وذلك عن' name="desc"></TextField>{/*retrieved as a structure*/}
                         </Grid>
-                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: '60px' }}>
-                            <Button disabled={submitting} onClick={() => nav('/reciepts')}>Cancel</Button>
-                            <Button disabled={submitting} endIcon={submitting ? <CircularProgress size='15px' sx={{ color: 'GrayText' }} /> : null} type='submit'>Confirm</Button>
+                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', mt: '60px',mb:'10px' }}>
+                            <Button disabled={submitting} onClick={() => nav('/reciepts')}>الغاء</Button>
+                            <Button disabled={submitting} endIcon={submitting ? <CircularProgress size='15px' sx={{ color: 'GrayText' }} /> : null} type='submit'>حفظ</Button>
                         </Grid>
 
 

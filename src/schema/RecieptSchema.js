@@ -3,33 +3,33 @@ import { v4 as uuid } from "uuid";
 const schema= [
   {
     id: uuid(),
-    label: "Property number:",
+    label: "رقم الممتلك :",
     name: "officeNumber",
   },
   {
     id: uuid(),
-    label: "Name:",
+    label: "الاسم :",
     name: "name",
   },
   
   {
     id: uuid(),
-    label: "Date:",
+    label: "التاريخ :",
     name: "date",
   },
   {
     id: uuid(),
-    label: "That`s For:",
+    label: "وذلك عن :",
     name: "desc",
   },
   {
     id: uuid(),
-    label: "Payment Amount:",
+    label: "قيمة الدفعة :",
     name: "amount",
   },
   {
     id: uuid(),
-    label: "Reciept Number:",
+    label: "رقم الوصل :",
     name: "recieptNumber",
   },
  

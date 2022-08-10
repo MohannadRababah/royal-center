@@ -23,14 +23,14 @@ const RenterManagment = () => {
     const nav = useNavigate()
     const [toUploadIDFile, setToUploadIDFile] = useState(location?.state?.renter?.idDocument ? location?.state?.renter?.idDocument : '');
 
-    console.log(location?.state?.renter,'lllllalalala');
+    console.log(location?.state?.renter, 'lllllalalala');
 
 
     const uploadFile = async (file) => {
         console.log(file);
         const res = await uploadDocument(file?.target?.files[0])
         if (res)
-          return res;
+            return res;
     }
     const handleClose = () => {
         if (msg === "Renters Data Updated")
@@ -42,27 +42,27 @@ const RenterManagment = () => {
     const onSubmit = async (values) => {
         console.log(values, 'values');
         var tempFileContract
-        if(toUploadIDFile?.target){
-        tempFileContract = await uploadFile(toUploadIDFile)
-        console.log(tempFileContract);
+        if (toUploadIDFile?.target) {
+            tempFileContract = await uploadFile(toUploadIDFile)
+            console.log(tempFileContract);
         }
-        else{
-        tempFileContract=toUploadIDFile
+        else {
+            tempFileContract = toUploadIDFile
         }
 
         axios
             .post("https://pure-meadow-98451.herokuapp.com/editRenter", {
                 _id: values._id,
                 name: values.name,
-                oldPhone:location?.state?.renter?.phone,
+                oldPhone: location?.state?.renter?.phone,
                 phone: values.phone,
                 email: values.email,
-                idDocument: tempFileContract, 
-                token :localStorage.getItem('token')
+                idDocument: tempFileContract,
+                token: localStorage.getItem('token')
 
             })
             .then((res) => {
-                if(res.data.message==='user is not verified'){
+                if (res.data.message === 'user is not verified') {
                     nav('/')
                     return
                 }
@@ -70,7 +70,7 @@ const RenterManagment = () => {
                     console.log(res);
                     setMsg(res.data.message);
                 }
-                else{
+                else {
                     setMsg(res.data.message)
                 }
             })
@@ -81,9 +81,10 @@ const RenterManagment = () => {
 
 
     }
-    return (
-        <Container sx={{ backgroundColor: 'white', padding: '30px' }}>
-            <Typography variant="h4" marginBottom={3} textAlign='center'>Edit Renter</Typography>
+    return (<>
+        <Typography variant="h4" marginBottom={7} textAlign='center' color='black'>التعديل على معلومات المستأجر</Typography>
+
+        <Container sx={{ backgroundColor: 'white', padding: '30px',paddingTop:'60px',borderRadius:'10px',direction:'rtl' }}>
             {
                 msg && (
                     <Dialog open={msg ? true : false} onClose={handleClose} fullWidth>
@@ -107,36 +108,36 @@ const RenterManagment = () => {
                                     <TextField
                                         required
                                         name="name"
-                                        label="Name"
+                                        label="الأسم"
                                     ></TextField>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         required
                                         name="phone"
-                                        label="Phone Number"
+                                        label="رقم الهاتف"
                                     ></TextField>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         required
                                         name="email"
-                                        label="Email"
+                                        label="البريد الألكتروني"
                                     ></TextField>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <FormLabel>ID</FormLabel>
+                                    <FormLabel>صورة عن هوية المستأجر :</FormLabel>
                                     <Container>
-                                        <input 
+                                        <input
                                             type='file'
                                             name="renterID"
                                             onChange={(e) => { setToUploadIDFile(e) }}
                                         />
                                     </Container>
                                 </Grid>
-                                <Grid textAlign="right" item xs={12}>
+                                <Grid textAlign="left" item xs={12}>
                                     <Button type="submit" variant="outlined">
-                                        Save
+                                        حفظ
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -144,7 +145,7 @@ const RenterManagment = () => {
                     )}
                 />
             </Box>
-        </Container>
+        </Container></>
     )
 }
 

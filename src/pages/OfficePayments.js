@@ -37,7 +37,7 @@ const OfficePayments = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} textAlign='center' mb='30px'>
                         <Typography variant="h4" color='black'>
-                          Property Payments
+                          الدفعات المستحقة للممتلكات  
                         </Typography>
                     </Grid>
                     <OfficePaymentsSummary requiredPayments={requiredPayments} setRequiredPayments={setRequiredPayments} dataLoaded={dataLoaded} setDataLoaded={setDataLoaded}/>

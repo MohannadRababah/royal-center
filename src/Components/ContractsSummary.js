@@ -101,12 +101,12 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
       </Dialog> */}
 
       {edit && <><Dialog fullWidth open={open} onClose={handleClose}>
-        <DialogContent>
-          Are you sure you want to delete the Contract?
+        <DialogContent sx={{textAlign:'center'}}>
+          الرجاء التأكيد على عملية حذف العقد
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Button onClick={handleClose}>cancel</Button>
-          <Button onClick={() => { removeContract(officeNumber); handleClose() }}>Delete</Button>
+          <Button onClick={handleClose}>الغاء</Button>
+          <Button onClick={() => { removeContract(officeNumber); handleClose() }}>حذف</Button>
         </DialogActions>
       </Dialog>
         <Button
@@ -115,10 +115,10 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
           onClick={() => {
             nav("/contractManagment");
           }}
-          endIcon={<Add />}
+          startIcon={<Add />}
           variant="text"
         >
-          add contract
+          اضافة عقد
         </Button></>}
 
       {data.length !== 0 ? data.map((item, idx) => {
@@ -132,19 +132,19 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
             border={1}
             width="70%"
             sx={{
+              direction:'rtl',
               margin: "auto",
               marginBottom: '30px',
               borderRadius: '50px',
               boxShadow: '5px 7px 5px 2px  #545151',
               minWidth: "350px",
-              overflow: "auto",
               backgroundColor: "white",
               minHeight: '100px'
             }}
           >
             <Container key={idx} sx={{ mt: "30px" }}>
-              <Typography variant="h5" marginBottom={3}>
-                Contract info for Property: {item.officeNumber}
+              <Typography variant="h5" marginBottom={3} textAlign='right'>
+                معلومات عقد رقم: {item.officeNumber}
               </Typography>
               <Grid container spacing={4}>
                 {ContractSchema.map((schema, index) => {
@@ -180,7 +180,7 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
                     Office Owner: {getOwner(data?.[idx]?.officeNumber).finally((res)=>{return res})}
                   </Typography>
                 } */}
-                {edit && <Grid item xs={12} marginTop={5} display='flex' justifyContent='space-evenly'>
+                {edit && <Grid item xs={12} marginTop={5} display='flex' justifyContent='space-evenly' mb={5}>
                   {/* <Button sx={{ marginRight: "70px" }} variant="outlined" onClick={() => {
                     setOfficeNumber(item.officeNumber)
                     setPayed(item.payed)
@@ -188,18 +188,16 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
                   }}>
                     add payment
                   </Button> */}
-                  <Button sx={{ marginRight: "70px" }} variant="outlined" onClick={() => {
+                  <Button variant="outlined" onClick={() => {
                     nav('/contractManagment', { state: { contract: item } })
                   }}>
-                    Edit contract
+                    نعديل العقد
                   </Button>
-                  <Button color="error" variant="outlined" onClick={() => { setOpen(true); setOfficeNumber(item.officeNumber) }}>
-                    Delete contract
+                  <Button color="error" variant="outlined"  onClick={() => { setOpen(true); setOfficeNumber(item.officeNumber) }}>
+                    حذف العقد
                   </Button>
                 </Grid>}
-                <Grid item xs={12}>
-                  <Divider sx={{ margin: "10px" }} />
-                </Grid>
+                
               </Grid>
             </Container>
           </Box>);

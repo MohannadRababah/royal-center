@@ -9,6 +9,7 @@ import {
   DialogContent,
   Grid,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ const AddNewOffice = () => {
   const location = useLocation();
   const nav = useNavigate();
   const [msg, setMsg] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [initVal, setInitVal] = useState(location?.state?.office);
   const handleClose = () => {
     if (msg === "Office has been added" || msg === "Office data updated")
@@ -26,6 +28,8 @@ const AddNewOffice = () => {
   };
   
   const onSubmit = (values) => {
+    setSubmitting(false)
+
     console.log(values.sold);
     if (initVal) {
       axios
@@ -77,11 +81,13 @@ const AddNewOffice = () => {
     }
   };
   return (
-    <>{
+    <>
+    <Typography textAlign='center' marginBottom={6} variant="h4"  color='black'>اضافة ممتلك</Typography>{
   console.log(location?.state?.office,'kkkkkkkkkkkk')
 
     }
-      <Container sx={{ backgroundColor: "white", padding: "100px" }}>
+      <Container sx={{ backgroundColor: "white",borderRadius:'10px',marginBottom:'30px', padding: "100px" , direction:'rtl'}}>
+        
         {msg && (
           <Dialog open={msg ? true : false} onClose={handleClose} fullWidth>
             <DialogContent>{msg}</DialogContent>
@@ -103,43 +109,43 @@ const AddNewOffice = () => {
                   <TextField
                     required
                     name="officeNumber"
-                    label="office number"
+                    label="رقم الممتلك"
                   ></TextField>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     name="officeArea"
-                    label="office area"
+                    label="مساحة الممتلك"
                   ></TextField>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     name="officePrice"
-                    label="office price"
+                    label="سعر الممتلك"
                   ></TextField>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     name="officeOwner"
-                    label="office owner"
+                    label="مالك الممتلك"
                   ></TextField>
                 </Grid>
                 {initVal&&<Grid  item xs={12}>
                   <Select
                     required
                     name="sold"
-                    label="Sold"
+                    label="مباع"
                   >
-                    <MenuItem value={true}>yes</MenuItem>
-                    <MenuItem value={false}>no</MenuItem>
+                    <MenuItem value={true}>نعم</MenuItem>
+                    <MenuItem value={false}>لا</MenuItem>
                   </Select>
                 </Grid>}
-                <Grid textAlign="right" item xs={12}>
+                <Grid textAlign="left" item xs={12}>
                   <Button type="submit" variant="outlined">
-                    {!initVal ? "Add" : "Save"}
+                    {!initVal ? "اضافة" : "حفظ"}
                   </Button>
                 </Grid>
               </Grid>

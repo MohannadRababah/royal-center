@@ -61,20 +61,20 @@ const Reciepts = () => {
 
 
     return (
-        <Container sx={{ mb: '30px' }}>
+        <Container  sx={{direction:'rtl', mb: '30px' }}>
 
             <Box textAlign='center' margin={3}>
-                <Typography variant="h4" color='black'>Receipts</Typography>
+                <Typography variant="h4" color='black'>الوصولات</Typography>
             </Box>
-            <Box>
-                <Button color='success' endIcon={<Add />} onClick={() => { nav('/recieptManagment') }}>New Receipt</Button>
+            <Box textAlign='left'>
+                <Button color='success' endIcon={<Add sx={{marginRight:'5px'}}/>} onClick={() => { nav('/recieptManagment') }}> اضافة وصل </Button>
             </Box>
             <Container>
                 <Grid container spacing={3} mt={3} sx={{ backgroundColor: '#F0E3CA', borderRadius: '10px', paddingRight: '25px', border: 1 }} >
                     <Grid item xs={4}>
                         <FormControl fullWidth>
-                            <InputLabel >office number</InputLabel>
-                            <Select label='office number' value={selectedOfficeFilter} onChange={(e) => {
+                            <InputLabel >رقم الممتلك</InputLabel>
+                            <Select label='رقم الممتلك' value={selectedOfficeFilter} onChange={(e) => {
                                 setSelectedNameFilter('إظهار الجميع')
                                 setSelectedNumberFilter('')
                                 reciepts.map(reciept => {
@@ -97,8 +97,8 @@ const Reciepts = () => {
                     </Grid>
                     <Grid item xs={4}>
                         <FormControl fullWidth>
-                            <InputLabel >renter name</InputLabel>
-                            <Select fullWidth label='renter name' value={selectedNameFilter} onChange={(e) => {
+                            <InputLabel >اسم المستأجر</InputLabel>
+                            <Select fullWidth label='اسم المستأجر' value={selectedNameFilter} onChange={(e) => {
                                 setSelectedOfficeFilter('إظهار الجميع')
                                 setSelectedNumberFilter('')
                                 reciepts.map(reciept => {
@@ -132,7 +132,7 @@ const Reciepts = () => {
                                     filteredDataTemp.push(reciept)
                             })
                             setFilteredData(filteredDataTemp)
-                        }} fullWidth label='reciept number' variant='outlined'></TextField>
+                        }} fullWidth label='رقم الوصل' variant='outlined'></TextField>
                     </Grid>
 
                   

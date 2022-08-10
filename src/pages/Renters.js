@@ -40,12 +40,12 @@ const Renters = () => {
                 errMsg && <Alert variant='outlined' severity='error'>{errMsg}</Alert>
             }
             <Box textAlign='center' margin={3} mb='70px'>
-                <Typography variant="h4" color='black'>Renters Information</Typography>
+                <Typography variant="h4" color='black'>معلومات المستأجرين</Typography>
             </Box>
             <Box display='flex'>
-                <FormLabel> renters with active contracts</FormLabel>
+                <FormLabel> مستأجرين بعقود فعالة</FormLabel>
                 <Switch disabled={!dataLoaded} onClick={() => { setToggle(!toggle) }} />
-                <FormLabel>all renters</FormLabel>
+                <FormLabel>جميع المستأجرين</FormLabel>
             </Box>
             {dataLoaded ? <RentersSummary toggle={toggle} data={renters} /> : 
             <CircularProgress

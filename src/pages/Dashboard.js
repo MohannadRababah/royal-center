@@ -112,7 +112,7 @@ const Dashboard = () => {
   return (
     <div>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} >
         <Grid item  lg={6} xs={12} margin='auto' >
           {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination />}
         </Grid>
@@ -180,14 +180,14 @@ const Dashboard = () => {
         <Grid item lg={6} xs={12}  >
           {dataLoaded ? <Box  border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
             <Container sx={{ textAlign: 'center',mb:'30px' }}>
-              <Typography variant="h4">Property Payments</Typography>
+              <Typography variant="h4">الدفعات المستحقة للممتلكات</Typography>
             </Container>
             {requiredPayments.length !== 0 ? <Table >
               <TableHead>
                 <TableRow>
-                  <TableCell> Property Number : </TableCell>
-                  <TableCell> Required Payment : </TableCell>
-                  <TableCell> Payment Date : </TableCell>
+                  <TableCell> رقم الممتلك : </TableCell>
+                  <TableCell> القيمة المستحقة : </TableCell>
+                  <TableCell> تاريخ الأستحقاق : </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -211,7 +211,7 @@ const Dashboard = () => {
                 }
 
                 <TableRow >
-                  <TableCell sx={{textAlign:'right',borderBottom:'0'}} colSpan={3}><Button variant="outlined" onClick={()=>{nav('/officesPayments')}}> الذهاب الى الخدمة</Button></TableCell>
+                  <TableCell sx={{textAlign:'left',borderBottom:'0'}} colSpan={3}><Button variant="outlined" onClick={()=>{nav('/officesPayments')}}> الذهاب الى خدمة الدفعات المستحقة</Button></TableCell>
 
                 </TableRow>
               </TableBody>

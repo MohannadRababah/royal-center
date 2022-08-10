@@ -159,36 +159,36 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                         <form onSubmit={handleSubmit}>
                             <Grid item xs={12} textAlign='center'>
                                 <Typography variant="h4">
-                                    Property Payments
+                                    الدفعات المستحقة للممتلكات
                                 </Typography>
                             </Grid>
                             <Container>
-                                <Grid item xs={12}>
-                                    <Typography color='#73777B'>Property Number:</Typography>
+                                <Grid item xs={12} textAlign='right'>
+                                    <Typography color='#73777B'>:رقم الممتلك</Typography>
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} textAlign='right'>
                                     {officeNumber}
                                 </Grid>
                             </Container>
 
                             <Grid item xs={12} margin={3}>
-                                <TextField required label='Reciept Number' name="recieptNumber"></TextField>{/*retrieved*/}
+                                <TextField required dir="rtl" InputLabelProps={{dir:'rtl'}} label='رقم الوصل' name="recieptNumber"></TextField>{/*retrieved*/}
                             </Grid>
                             <Grid item xs={12} margin={3}>
-                                <TextField disabled required label='Renter Name' name="name"></TextField>{/*retrieved*/}
+                                <TextField disabled dir="rtl" InputLabelProps={{dir:'rtl'}} required label='أسم المستأجر' name="name"></TextField>{/*retrieved*/}
                             </Grid>
                             <Grid item xs={12} margin={3}>
-                                <TextField disabled required label='amount' name="amount"></TextField>{/*retrieved*/}
+                                <TextField disabled dir="rtl" InputLabelProps={{dir:'rtl'}} required label='القيمة' name="amount"></TextField>{/*retrieved*/}
                             </Grid>
                             <Grid item xs={12} margin={3}>
-                                <TextField label='Today`s Date' required name="date"></TextField>{/*generated from todays date*/}
+                                <TextField dir="rtl" InputLabelProps={{dir:'rtl'}} label='تاريخ الوصل' required name="date"></TextField>{/*generated from todays date*/}
                             </Grid>
                             <Grid item xs={12} margin={3}>
-                                <TextField required label='That`s For' name="desc"></TextField>{/*retrieved as a structure*/}
+                                <TextField dir="rtl" InputLabelProps={{dir:'rtl'}} required label='وذلك عن' name="desc"></TextField>{/*retrieved as a structure*/}
                             </Grid>
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button onClick={() => setOpen(false)}>Cancel</Button>
-                                <Button type='submit'>Confirm</Button>
+                                <Button onClick={() => setOpen(false)}>الغاء</Button>
+                                <Button type='submit'>حفظ</Button>
                             </Grid>
 
 
@@ -216,27 +216,27 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                         backgroundColor: "white",
                         minHeight: '100px'
                     }}
-                ><Container><Grid container spacing={3} mt={2}>
-                    <Grid item xs={4} ><FormLabel sx={{ display: 'block' }}> Property Number : </FormLabel>{item.officeNumber}</Grid>
-                    <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Required Payment : </FormLabel> {item.totalPayment / item.paymentPeriod}</Grid>
-                    <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Payment Date : </FormLabel> {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Grid>
+                ><Container><Grid container spacing={3} mt={2} sx={{direction:'rtl'}}>
+                    <Grid item xs={4} ><FormLabel sx={{ display: 'block' }}>  رقم الممتلك :  </FormLabel>{item.officeNumber}</Grid>
+                    <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> القيمة المستحقة : </FormLabel> {item.totalPayment / item.paymentPeriod}</Grid>
+                    <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> تاريخ الاستحقاق : </FormLabel> {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Grid>
 
 
                     {
                         rentersInfo.map(renter => {
                             return renter.offices.includes(item.officeNumber) ? <>
-                                <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Renter name : </FormLabel>{renter.name}</Grid>
-                                <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Renter email : </FormLabel>{renter.email}</Grid>
-                                <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> Renter phone : </FormLabel>{renter.phone}</Grid>
-                                <Grid item xs={12} sx={{ textAlign: 'right', marginBottom: '10px', marginTop: '20px' }}>
-                                    <Button variant="outlined" sx={{ height: '20px' }} onClick={() => {
+                                <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> أسم المستأجر : </FormLabel>{renter.name}</Grid>
+                                <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> بريد المستأجر الألكتروني : </FormLabel>{renter.email}</Grid>
+                                <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> هاتف المستأجر : </FormLabel>{renter.phone}</Grid>
+                                <Grid item xs={12} sx={{ textAlign: 'left', marginBottom: '10px', marginTop: '20px' }}>
+                                    <Button variant="outlined" sx={{ height: '30px',minWidth:'100px' }} onClick={() => {
                                         setPayments(item.payed)
                                         setRenterName(renter.name)
-                                        setAddPaymentFormData({ amount: item.totalPayment / item.paymentPeriod, recieptNumber: recieptNumber, name: renterName, desc: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} payment for office number ${item.officeNumber}` })
+                                        setAddPaymentFormData({ amount: item.totalPayment / item.paymentPeriod, recieptNumber: recieptNumber, name: renterName, desc: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} دفعة عن مكتب رقم ${item.officeNumber}` })
                                         console.log(addPaymentFormData);
                                         setOfficeNumber(item.officeNumber)
                                         setOpen(true)
-                                    }}>Add Payment</Button>
+                                    }}>إضافة دفعة</Button>
                                 </Grid>
                             </> : null
                         })

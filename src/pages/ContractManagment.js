@@ -197,7 +197,7 @@ const ContractManagment = () => {
   }, [])
 
   return (
-    <Container sx={{ backgroundColor: "white", padding: "100px" }}>
+    <Container sx={{ backgroundColor: "white", padding: "100px",direction:'rtl' }}>
       {msg && (
         <Dialog open={msg ? true : false} onClose={handleClose} fullWidth>
           <DialogContent>{msg}</DialogContent>
@@ -220,20 +220,20 @@ const ContractManagment = () => {
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid textAlign='center' item xs={12}>
-                <Typography variant="h4">Contract's Information</Typography>
+                <Typography variant="h4">معلومات العقد</Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   name="officeNumber"
-                  label="Property number"
+                  label="رقم الممتلك"
                 ></TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   name="startDate"
-                  label="Start Date"
+                  label="تاريخ بدأ العقد"
                 //type="date"
                 ></TextField>
               </Grid>
@@ -242,7 +242,7 @@ const ContractManagment = () => {
                   //type="date" 
                   required
                   name="endDate"
-                  label="End Date"
+                  label="تاريخ نهاية العقد"
                 ></TextField>
 
               </Grid>
@@ -250,18 +250,18 @@ const ContractManagment = () => {
                 <TextField
                   required
                   name="totalPayment"
-                  label="Total Payment"
+                  label="قيمة العقد الكلية"
                 ></TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   name="paymentPeriod"
-                  label="Payment Period"
+                  label="عدد الدفعات"
                 ></TextField>
               </Grid>
               <Grid item xs={12}>
-                <FormLabel>Contract:</FormLabel>
+                <FormLabel>صورة عن العقد :</FormLabel>
                 <Container>
                   <input type="file" name="contractDoc" onChange={(e) => { setToUploadContractFile(e) }} />
                 </Container>
@@ -272,34 +272,34 @@ const ContractManagment = () => {
 
               {!initVal && <>
                 <Grid item xs={12} textAlign='center'>
-                  <Typography variant="h4">Renter's Information</Typography>
+                  <Typography variant="h4">معلومات المستأجر</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Button endIcon={!newRenter ? <Add /> : null} onClick={() => { setNewRenter(!newRenter) }}>{newRenter ? 'Select from existing renters' : 'New renter'}</Button>
+                  <Button endIcon={!newRenter ? <Add sx={{marginRight:'10px'}} /> : null} onClick={() => { setNewRenter(!newRenter) }}>{newRenter ? 'مستأجر قديم' : 'مستأجر جديد'}</Button>
                 </Grid>
                 {newRenter ? <><Grid item xs={12}>
                   <TextField
                     required
                     name="renterName"
-                    label="Renter's name:"
+                    label="اسم المستأجر"
                   ></TextField>
                 </Grid>
                   <Grid item xs={12}>
                     <TextField
                       required
                       name="renterPhone"
-                      label="Renter's Phone Number:"
+                      label="هاتف المستأجر"
                     ></TextField>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       required
                       name="renterEmail"
-                      label="Renter's Email:"
+                      label="البريد الألكتروني للمستأجر"
                     ></TextField>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormLabel>Renter's ID:</FormLabel>
+                    <FormLabel>صورة الهوية الشخصية للمستأجر :</FormLabel>
                     <Container>
                       <input
                         type="file"
@@ -315,7 +315,7 @@ const ContractManagment = () => {
                   // />
                   <>
                     <Grid item xs={12}>
-                      <Select label='Choose from existing renters:' name="renterInfo" >
+                      <Select label='المستأجرين' name="renterInfo" >
                         {
                           renters.map((item, idx) => {
                             return <MenuItem key={idx} value={item.phone}> {item.name} - {item.phone}</MenuItem>
@@ -329,9 +329,9 @@ const ContractManagment = () => {
 
 
 
-              <Grid textAlign="right" item xs={12}>
+              <Grid textAlign="left" item xs={12} mt='10px'>
                 <Button type="submit" variant="outlined">
-                  {!initVal ? "Add" : "Save"}
+                  {!initVal ? "اضافة" : "حفظ"}
                 </Button>
               </Grid>
             </Grid>

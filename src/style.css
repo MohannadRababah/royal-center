@@ -3,7 +3,7 @@ h4{
 }
 body{
     background-color:#F0E3CA;
-    background-image: linear-gradient(to bottom left,rgb(233, 206, 127) , rgba(0, 0, 0, 0.8));
+    background-image: linear-gradient(to bottom right,rgb(233, 206, 127), rgba(0, 0, 0, 0.8));
     min-height:120vh;
 }
 .MuiPagination-ul{

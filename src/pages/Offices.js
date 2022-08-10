@@ -87,7 +87,7 @@ const Offices = () => {
         <Grid item xs={6} textAlign='center'>
           <Button color="success" startIcon={<Add />} onClick={() => {
             nav('/officeManagment')
-          }}>new Office</Button>
+          }}>اضافة ممتلك</Button>
         </Grid>
         <Grid item xs={12}>
           {dataLoaded?<OfficesSummary
