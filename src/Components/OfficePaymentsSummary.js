@@ -36,17 +36,26 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
     const [oldRecieptNumber, setOldRecieptNumber] = useState()
     const [renterName, setRenterName] = useState('')
     const [addPaymentFormData, setAddPaymentFormData] = useState({})
+    const nav=useNavigate()
 
     useEffect(() => {
         axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{ token :localStorage.getItem('token')}).then(res => {
             console.log(res.data.data);
             setRentersInfo(res.data.data)
             setDataLoaded(true)
+            if(res.data.message==='user is not verified'){
+                nav('/')
+                return
+            }
 
             axios.post('https://pure-meadow-98451.herokuapp.com/get_reciept_number',{ token :localStorage.getItem('token')}).then(response => {
                 setRecieptNumber(response.data.data)
                 setOldRecieptNumber(response.data.data)
                 console.log(response.data.data);
+                if(res.data.message==='user is not verified'){
+                    nav('/')
+                    return
+                }
             })
         }).catch(err => {
             console.log(err.message);
@@ -68,6 +77,10 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
             date: values.date,
             token :localStorage.getItem('token')
         }).then((res) => {
+            if(res.data.message==='user is not verified'){
+                nav('/')
+                return
+            }
             if (res.data.success) {
                 axios
                     .post("https://pure-meadow-98451.herokuapp.com/addPayment", {
@@ -76,10 +89,19 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                         token :localStorage.getItem('token')
                     })
                     .then((res) => {
+                        if(res.data.message==='user is not verified'){
+                            nav('/')
+                            return
+                        }
                         if (res.data.success) {
+                            
                             axios
                                 .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments",{ token :localStorage.getItem('token')})
                                 .then((res) => {
+                                    if(res.data.message==='user is not verified'){
+                                        nav('/')
+                                        return
+                                    }
                                     if (res.data.success) {
                                         setRequiredPayments(res.data.data)
                                         setDataLoaded(true)

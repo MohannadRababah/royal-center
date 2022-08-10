@@ -41,6 +41,10 @@ const AddNewOffice = () => {
           token :localStorage.getItem('token')
         })
         .then((res) => {
+          if(res.data.message==='user is not verified'){
+            nav('/')
+            return
+        }
           console.log(res);
           setMsg(res.data.message);
         })
@@ -59,6 +63,10 @@ const AddNewOffice = () => {
           token :localStorage.getItem('token')
         })
         .then((res) => {
+          if(res.data.message==='user is not verified'){
+            nav('/')
+            return
+        }
           console.log(res);
           setMsg(res.data.message);
         })

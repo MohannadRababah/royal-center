@@ -28,6 +28,10 @@ const Offices = () => {
     axios
       .post("https://pure-meadow-98451.herokuapp.com/deleteOffice", { officeNumber: officeNumber, token :localStorage.getItem('token') })
       .then((res) => {
+        if(res.data.message==='user is not verified'){
+          nav('/')
+          return
+      }
         if (res.data.success) {
           axios
             .post("https://pure-meadow-98451.herokuapp.com/get_All_Offices",{ token :localStorage.getItem('token')})
@@ -59,6 +63,10 @@ const Offices = () => {
     axios
       .post("https://pure-meadow-98451.herokuapp.com/get_All_Offices",{ token :localStorage.getItem('token')})
       .then((res) => {
+        if(res.data.message==='user is not verified'){
+          nav('/')
+          return
+      }
         if (res.data.success) {
           console.log(res);
           setOffices(res.data.data)
@@ -74,7 +82,7 @@ const Offices = () => {
       });
   }, []);
   return (
-    <Box>
+    <Box >
       <Grid container spacing={3}>
         <Grid item xs={6} textAlign='center'>
           <Button startIcon={<Add />} onClick={() => {

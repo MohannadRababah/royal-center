@@ -3,6 +3,8 @@ h4{
 }
 body{
     background-color:#F0E3CA;
+    background-image: linear-gradient(rgb(233, 206, 127), rgba(0, 0, 0, 0.8));
+    min-height:120vh;
 }
 .MuiPagination-ul{
     justify-content:center;

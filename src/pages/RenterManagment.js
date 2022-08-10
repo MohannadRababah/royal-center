@@ -62,6 +62,10 @@ const RenterManagment = () => {
 
             })
             .then((res) => {
+                if(res.data.message==='user is not verified'){
+                    nav('/')
+                    return
+                }
                 if (res.data.success) {
                     console.log(res);
                     setMsg(res.data.message);

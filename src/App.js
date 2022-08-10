@@ -29,7 +29,7 @@ const App = () => {
     if (!localStorage.getItem('token') && window.location.pathname !== '/') {
       nav('/')
     }
-
+    
 
   })
 
@@ -41,14 +41,14 @@ const App = () => {
           <Toolbar sx={{ height: "90px" }}>
 
             <Grid item xs={2} textAlign='center'>
-              <img src='/logo-removebg-preview.png' style={{ height: '100px', width: '100px', marginRight: '65px' }}></img>
+              <Box width='100px' marginTop='15px' marginLeft='40px' onClick={()=>{nav('/dashboard')}} sx={{":hover":{cursor:'pointer'}}}><img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img></Box>
 
 
             </Grid>
 
             <Grid textAlign='center' item xs={8}>
-              <div style={{ textAlign: 'center' }} onClick={() => { nav('/dashboard') }}>
-                <Container sx={{ padding: '0', ":hover": { cursor: 'pointer' }, fontSize: "30px", color: "#e9ce7f" }}>
+              <div style={{ textAlign: 'center' }} >
+                <Container onClick={() => { nav('/dashboard') }} sx={{ padding: '0', ":hover": { cursor: 'pointer' }, fontSize: "30px", color: "#e9ce7f",width:'300px' }}>
                   ♛ Royal Center ♛
                 </Container>
               </div>
@@ -68,16 +68,16 @@ const App = () => {
             </Grid>
           </Toolbar>
         </AppBar>
-          <Box sx={{mt:'130px'}}>
-            <Grid container spacing={3}>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/dashboard')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/dashboard'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>Dashboard</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/offices')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/offices'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>PROPERTIES</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/contracts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/contracts'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>CONTRACTS</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/Renters')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/Renters'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>RENTER`S INFO</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/oldContratcs')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/oldContratcs'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>OLD CONTRACTS</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/officesPayments')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/officesPayments'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>PROPERTY PAYMENTS</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{nav('/reciepts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/reciepts'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>RECIEPTS</Button></Grid>
-            <Grid item lg={3} sm={4}  ><Button onClick={()=>{
+          <Box sx={{paddingTop:'130px',position:'sticky'}}>
+            <Grid container spacing={3} margin='auto'>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/dashboard')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/dashboard'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>Dashboard</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/offices')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/offices'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>PROPERTIES</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/contracts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/contracts'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>CONTRACTS</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/Renters')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/Renters'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>RENTER`S INFO</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/oldContratcs')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/oldContratcs'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>OLD CONTRACTS</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/officesPayments')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/officesPayments'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>PROPERTY PAYMENTS</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/reciepts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/reciepts'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>RECIEPTS</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{
               createBackUp()
             }} sx={{backgroundColor:'white',color:'green',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'green'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>CREATE BACKUP</Button></Grid>
             </Grid>    

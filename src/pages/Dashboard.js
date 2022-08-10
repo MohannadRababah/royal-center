@@ -70,6 +70,10 @@ const Dashboard = () => {
     axios
       .post("https://pure-meadow-98451.herokuapp.com/get_Offices", { token: localStorage.getItem('token') })
       .then((res) => {
+        if(res.data.message==='user is not verified'){
+          nav('/')
+          return
+      }
         if (res.data.success) {
           console.log(res);
           setOffices(res.data.data);
@@ -174,7 +178,7 @@ const Dashboard = () => {
 
         <Grid item lg={6} md={12}>
           {dataLoaded ? <Box border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
-            <Container sx={{ textAlign: 'center' }}>
+            <Container sx={{ textAlign: 'center',mb:'30px' }}>
               <Typography variant="h4">Property Payments</Typography>
             </Container>
             {requiredPayments.length !== 0 ? <Table>

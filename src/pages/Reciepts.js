@@ -28,7 +28,11 @@ const Reciepts = () => {
         var rentersNamesTemp = []
         var recieptNumsTemp = []
         axios.post('https://pure-meadow-98451.herokuapp.com/get_reciepts', { token: localStorage.getItem('token') }).then(res => {
-            setReciepts(res.data.data)
+            if(res.data.message==='user is not verified'){
+                nav('/')
+                return
+            }    
+        setReciepts(res.data.data)
             res.data.data.map((item, idx) => {
                 console.log(!offices.includes(item.officeNumber));
                 console.log(!rentersNames.includes(item.name));

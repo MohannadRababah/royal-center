@@ -1,6 +1,7 @@
 import { Alert, Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router";
 import CardsSkeleton from "../Components/CardsSkeleton";
 import ContractsSummary from "../Components/ContractsSummary"
 import TableSkeleton from "../Components/TableSkeleton";
@@ -12,7 +13,7 @@ const OldContracts = () => {
   const [renters, setRenters] = useState([])
   const [errMsg, setErrMsg] = useState('')
   const [dataLoaded, setDataLoaded] = useState(false);
-
+const nav=useNavigate()
 
 
 
@@ -21,6 +22,10 @@ const OldContracts = () => {
     axios
       .post("https://pure-meadow-98451.herokuapp.com/get_Old_Contracts",{ token :localStorage.getItem('token')})
       .then((res) => {
+        if(res.data.message==='user is not verified'){
+          nav('/')
+          return
+      }
         if (res.data.success) {
           console.log(res);
           setContracts(res.data.data);

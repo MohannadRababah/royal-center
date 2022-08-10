@@ -28,7 +28,7 @@ const ContractManagment = () => {
   const [toUploadContractFile, setToUploadContractFile] = useState(location?.state?.contract?.contractDocument ? location?.state?.contract?.contractDocument : '');
   const [toUploadIDFile, setToUploadIDFile] = useState();
 
-  const defaultStartEndDate=new Date()
+  const defaultStartEndDate = new Date()
 
   const uploadFile = async (file) => {
     console.log(file);
@@ -49,7 +49,7 @@ const ContractManagment = () => {
     //     });
 
   };
-console.log(location?.state?.contract?.contractDocument );
+  console.log(location?.state?.contract?.contractDocument);
   const handleClose = () => {
     if (msg === "Contract has been added" || msg === "Contract data updated")
       nav("/contracts");
@@ -77,10 +77,10 @@ console.log(location?.state?.contract?.contractDocument );
 
   const checkDateForZeroes = (tempDate) => {
     if (!Number.isInteger(parseInt(tempDate.charAt(1)))) {
-      tempDate='0'+tempDate.slice(0,tempDate.length)
+      tempDate = '0' + tempDate.slice(0, tempDate.length)
     }
     if (!Number.isInteger(parseInt(tempDate.charAt(4)))) {
-      tempDate=tempDate.slice(0,3)+'0'+tempDate.slice(3,tempDate.length)
+      tempDate = tempDate.slice(0, 3) + '0' + tempDate.slice(3, tempDate.length)
     }
     console.log(tempDate);
     return tempDate
@@ -91,13 +91,13 @@ console.log(location?.state?.contract?.contractDocument );
   const onSubmit = async (values) => {
 
     var tempFileContract
-    if(toUploadContractFile?.target){
+    if (toUploadContractFile?.target) {
       tempFileContract = await uploadFile(toUploadContractFile)
     }
-    else{
-      tempFileContract=toUploadContractFile
+    else {
+      tempFileContract = toUploadContractFile
     }
-   
+
 
     if (!!initVal) {
       axios
@@ -109,10 +109,14 @@ console.log(location?.state?.contract?.contractDocument );
           endDate: checkDateForZeroes(values.endDate),
           totalPayment: values.totalPayment,
           paymentPeriod: values.paymentPeriod,
-          contractDocument: tempFileContract, 
-          token :localStorage.getItem('token')
+          contractDocument: tempFileContract,
+          token: localStorage.getItem('token')
         })
         .then((res) => {
+          if (res.data.message === 'user is not verified') {
+            nav('/')
+            return
+          }
           console.log(res);
           setMsg(res?.data?.message);
         })
@@ -121,9 +125,9 @@ console.log(location?.state?.contract?.contractDocument );
           setMsg(err.message);
         });
     } else {
-      var tempFileId=''
-      if(newRenter){
-        if(!!toUploadIDFile) tempFileId= await uploadFile(toUploadIDFile)
+      var tempFileId = ''
+      if (newRenter) {
+        if (!!toUploadIDFile) tempFileId = await uploadFile(toUploadIDFile)
       }
 
       axios
@@ -133,18 +137,22 @@ console.log(location?.state?.contract?.contractDocument );
           endDate: checkDateForZeroes(values.endDate),
           totalPayment: values.totalPayment,
           paymentPeriod: values.paymentPeriod,
-          contractDocument: tempFileContract, 
-          token :localStorage.getItem('token')
+          contractDocument: tempFileContract,
+          token: localStorage.getItem('token')
         })
         .then((res) => {
+          if (res.data.message === 'user is not verified') {
+            nav('/')
+            return
+          }
           if (res.data.success) {
             axios.post('https://pure-meadow-98451.herokuapp.com/addRenter', {
               name: values?.renterName,
               phone: newRenter ? values?.renterPhone : values?.renterInfo,
               email: values?.renterEmail,
               idDocument: tempFileId,
-              officeNumber: values?.officeNumber, 
-              token :localStorage.getItem('token')
+              officeNumber: values?.officeNumber,
+              token: localStorage.getItem('token')
             }).then(() => {
               setMsg(res.data.message);
             }).catch(err => {
@@ -175,7 +183,11 @@ console.log(location?.state?.contract?.contractDocument );
 
 
   useEffect(() => {
-    axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{ token :localStorage.getItem('token')}).then(res => {
+    axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters', { token: localStorage.getItem('token') }).then(res => {
+      if (res.data.message === 'user is not verified') {
+        nav('/')
+        return
+      }
       setRenters(res.data.data)
       console.log(res.data.data, 'lalalalal');
     }).catch(err => {
@@ -195,14 +207,14 @@ console.log(location?.state?.contract?.contractDocument );
         </Dialog>
       )}
       <Form
-        initialValues={initVal?{
+        initialValues={initVal ? {
           ...initVal,
-        }:
-        {
-          startDate:checkDateForZeroes(`${defaultStartEndDate.getDate()}/${defaultStartEndDate.getMonth()+1}/${defaultStartEndDate.getFullYear()}`),
-          endDate:checkDateForZeroes(`${defaultStartEndDate.getDate()}/${defaultStartEndDate.getMonth()+1}/${defaultStartEndDate.getFullYear()+1}`)
+        } :
+          {
+            startDate: checkDateForZeroes(`${defaultStartEndDate.getDate()}/${defaultStartEndDate.getMonth() + 1}/${defaultStartEndDate.getFullYear()}`),
+            endDate: checkDateForZeroes(`${defaultStartEndDate.getDate()}/${defaultStartEndDate.getMonth() + 1}/${defaultStartEndDate.getFullYear() + 1}`)
+          }
         }
-      }
         onSubmit={onSubmit}
         render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>

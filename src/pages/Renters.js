@@ -3,6 +3,7 @@ import { Alert, Box, Button, FormControlLabel, FormLabel, Switch, Typography } f
 import { Container } from "@mui/system"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import RentersSummary from "../Components/RentersSummary"
 import TableSkeleton from "../Components/TableSkeleton"
 
@@ -13,10 +14,14 @@ const Renters = () => {
     const [errMsg, setErrMsg] = useState('')
     const [dataLoaded, setDataLoaded] = useState(false);
     const [toggle, setToggle] = useState(false);
-
+    const nav = useNavigate()
 
     useEffect(() => {
         axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters', { token: localStorage.getItem('token') }).then(response => {
+            if (response.data.message === 'user is not verified') {
+                nav('/')
+                return
+            }
             if (response.data.success) {
                 setRenters(response.data.data)
                 setErrMsg('')
@@ -39,7 +44,7 @@ const Renters = () => {
             </Box>
             <Box display='flex'>
                 <FormLabel> renters with active contracts</FormLabel>
-                <Switch onClick={()=>{setToggle(!toggle)}}/>
+                <Switch onClick={() => { setToggle(!toggle) }} />
                 <FormLabel>all renters</FormLabel>
             </Box>
             {dataLoaded ? <RentersSummary toggle={toggle} data={renters} /> : <TableSkeleton />}
