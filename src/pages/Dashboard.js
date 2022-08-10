@@ -178,7 +178,7 @@ const Dashboard = () => {
         </Box> */}
 
         <Grid item lg={6} xs={12}  >
-          {dataLoaded ? <Box  border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
+          {dataLoaded ? <Box  border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px',direction:'rtl' }}>
             <Container sx={{ textAlign: 'center',mb:'30px' }}>
               <Typography variant="h4">الدفعات المستحقة للممتلكات</Typography>
             </Container>
