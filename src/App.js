@@ -64,7 +64,7 @@ const App = () => {
                   nav("/");
                 }}
               >
-                Logout
+                تسجيل الخروج
               </Button>
             </Grid>
           </Toolbar>
