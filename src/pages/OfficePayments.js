@@ -35,7 +35,7 @@ const OfficePayments = () => {
         <Container >
             <Box>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} textAlign='center'>
+                    <Grid item xs={12} textAlign='center' mb='30px'>
                         <Typography variant="h4">
                           Property Payments
                         </Typography>

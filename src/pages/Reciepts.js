@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material"
-import { Box, Typography, Container, Grid, TextField, Select, Menu, MenuItem, FormControl, FormLabel, InputLabel, Button, Skeleton, Divider } from "@mui/material"
+import { Box, Typography, Container, Grid, TextField, Select, Menu, MenuItem, FormControl, FormLabel, InputLabel, Button, Skeleton, Divider, CircularProgress } from "@mui/material"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
@@ -138,48 +138,16 @@ const Reciepts = () => {
                   
                     {console.log(recieptNums, 'lllllll')}
                     {dataLoaded ?  <Grid container spacing={3} mt={5} mb={1} ><RecieptsSummary reciepts={recieptNums.includes(parseInt(selectedNumberFilter)) || selectedNumberFilter === '' ? !filteredData.length ? reciepts : filteredData : []} setReciepts={setReciepts} /></Grid> :
-                        <Container>
-                            <Grid container spacing={3} mt={1} mb={1} >
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={12}><Divider /></Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Skeleton variant='rectangular' />
-                                </Grid>
-                                <Grid item xs={12}><Divider /></Grid>
-                            </Grid>
-                        </Container>}
+                        <CircularProgress
+                        size="15rem"
+                        style={{
+                          marginTop:'100px',
+                          display: 'block',
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          color: '#999696'
+                        }}
+                      />}
 
                         </Grid>
             </Container>

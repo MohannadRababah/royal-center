@@ -66,6 +66,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+   
     setDataLoaded(false)
     axios
       .post("https://pure-meadow-98451.herokuapp.com/get_Offices", { token: localStorage.getItem('token') })
@@ -112,7 +113,7 @@ const Dashboard = () => {
     <div>
 
       <Grid container spacing={3}>
-        <Grid item  lg={6} md={12} >
+        <Grid item  lg={6} md={12} margin='auto' >
           {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination />}
         </Grid>
         {/* <Box sx={{ position: 'fixed', left: '0' }}>
@@ -176,12 +177,12 @@ const Dashboard = () => {
           </MenuList>
         </Box> */}
 
-        <Grid item lg={6} md={12}>
-          {dataLoaded ? <Box border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
+        <Grid item lg={6} md={12} margin='auto'>
+          {dataLoaded ? <Box  border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
             <Container sx={{ textAlign: 'center',mb:'30px' }}>
               <Typography variant="h4">Property Payments</Typography>
             </Container>
-            {requiredPayments.length !== 0 ? <Table>
+            {requiredPayments.length !== 0 ? <Table >
               <TableHead>
                 <TableRow>
                   <TableCell> Property Number : </TableCell>
@@ -209,8 +210,8 @@ const Dashboard = () => {
                   })
                 }
 
-                <TableRow>
-                  <TableCell sx={{textAlign:'right'}} colSpan={3}><Button variant="outlined" onClick={()=>{nav('/officesPayments')}}> الذهاب الى الخدمة</Button></TableCell>
+                <TableRow >
+                  <TableCell sx={{textAlign:'right',borderBottom:'0'}} colSpan={3}><Button variant="outlined" onClick={()=>{nav('/officesPayments')}}> الذهاب الى الخدمة</Button></TableCell>
 
                 </TableRow>
               </TableBody>

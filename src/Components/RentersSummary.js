@@ -14,7 +14,7 @@ const RentersSummary = ({ data,toggle }) => {
                           margin: "auto",
                           marginBottom: '30px',
                           borderRadius: '50px',
-                          boxShadow: '5px 5px 5px 5px  #b3b3b3',
+                          boxShadow: '5px 7px 5px 2px  #545151',
                           minWidth: "350px",
                           overflow: "auto",
                           backgroundColor: "white",

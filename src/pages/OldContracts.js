@@ -1,4 +1,4 @@
-import { Alert, Box, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router";
@@ -47,7 +47,17 @@ const nav=useNavigate()
       <Box textAlign='center' margin={3}>
         <Typography variant="h4">Old Contracts</Typography>
       </Box>
-      {dataLoaded?<ContractsSummary rentersData={contracts} edit={false} data={contracts} />:<CardsSkeleton/>}
+      {dataLoaded?<ContractsSummary rentersData={contracts} edit={false} data={contracts} />:
+      <CircularProgress
+      size="15rem"
+      style={{
+        marginTop:'100px',
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        color: '#999696'
+      }}
+    />}
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { Label } from "@mui/icons-material"
-import { Alert, Box, Button, FormControlLabel, FormLabel, Switch, Typography } from "@mui/material"
+import { Alert, Box, Button, CircularProgress, FormControlLabel, FormLabel, Switch, Typography } from "@mui/material"
 import { Container } from "@mui/system"
 import axios from "axios"
 import { useEffect, useState } from "react"
@@ -44,10 +44,20 @@ const Renters = () => {
             </Box>
             <Box display='flex'>
                 <FormLabel> renters with active contracts</FormLabel>
-                <Switch onClick={() => { setToggle(!toggle) }} />
+                <Switch disabled={!dataLoaded} onClick={() => { setToggle(!toggle) }} />
                 <FormLabel>all renters</FormLabel>
             </Box>
-            {dataLoaded ? <RentersSummary toggle={toggle} data={renters} /> : <TableSkeleton />}
+            {dataLoaded ? <RentersSummary toggle={toggle} data={renters} /> : 
+            <CircularProgress
+            size="15rem"
+            style={{
+              marginTop:'100px',
+              display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              color: '#999696'
+            }}
+          />}
         </Container>
     )
 }

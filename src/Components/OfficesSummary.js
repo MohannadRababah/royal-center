@@ -88,7 +88,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
             }):<TableRow><TableCell colSpan={show ? 4 : 6} sx={{textAlign:'center'}}>لا يوجد ممتلكات للعرض</TableCell></TableRow>}
             <TableRow >
               <TableCell colSpan={show ? 4 : 6} >
-                <Pagination sx={{justifyContent:'center'}} hideNextButton hidePrevButton onClick={(e) => { console.log(parseInt(e.target.innerText)); setPaginationPage(parseInt(e.target.innerText)) }} count={Math.ceil(data.length / 5)}></Pagination>
+                <Pagination sx={{justifyContent:'center'}} page={paginationPage} hideNextButton hidePrevButton onClick={(e) => { console.log(parseInt(e.target.innerText)); setPaginationPage(parseInt(e.target.innerText)) }} count={Math.ceil(data.length / 5)}></Pagination>
               </TableCell>
             </TableRow>
 
@@ -96,7 +96,7 @@ const OfficesSummary = ({ data, show, removeOffice }) => {
 
             <TableRow sx={{ display: !show ? "none" : null }}>
               
-              <TableCell sx={{textAlign:'right'}} colSpan={4}>
+              <TableCell sx={{textAlign:'right',borderBottom:'0'}} colSpan={4}>
                 <Button
                   
                   variant="outlined"

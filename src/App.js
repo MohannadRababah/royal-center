@@ -25,6 +25,7 @@ const App = () => {
 
 
   useEffect(() => {
+    window.scrollTo(0,0)
     console.log(email, 'email::::login validation');
     if (!localStorage.getItem('token') && window.location.pathname !== '/') {
       nav('/')
@@ -68,7 +69,7 @@ const App = () => {
             </Grid>
           </Toolbar>
         </AppBar>
-          <Box sx={{paddingTop:'130px',position:'sticky'}}>
+          <Box sx={{paddingTop:'130px'}}>
             <Grid container spacing={3} margin='auto'>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/dashboard')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/dashboard'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>Dashboard</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/offices')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/offices'?'black':'#e9ce7f',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#e9ce7f'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>PROPERTIES</Button></Grid>

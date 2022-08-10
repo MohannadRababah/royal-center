@@ -1,4 +1,4 @@
-import { Alert, Box, TextField, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router";
@@ -13,7 +13,7 @@ const Contracts = () => {
   const [renters, setRenters] = useState([])
   const [errMsg, setErrMsg] = useState('')
   const [dataLoaded, setDataLoaded] = useState(false);
-const nav=useNavigate()
+  const nav = useNavigate()
 
 
 
@@ -21,16 +21,16 @@ const nav=useNavigate()
     console.log(officeNumber);
     setDataLoaded(false)
     axios
-      .post("https://pure-meadow-98451.herokuapp.com/deleteContract", { officeNumber: officeNumber, token :localStorage.getItem('token') })
+      .post("https://pure-meadow-98451.herokuapp.com/deleteContract", { officeNumber: officeNumber, token: localStorage.getItem('token') })
       .then((res) => {
-        if(res.data.message==='user is not verified'){
+        if (res.data.message === 'user is not verified') {
           nav('/')
           return
-      }
+        }
         console.log(res, 'res::removeContract');
         if (res.data.success) {
           axios
-            .post("https://pure-meadow-98451.herokuapp.com/get_Contracts",{ token :localStorage.getItem('token')})
+            .post("https://pure-meadow-98451.herokuapp.com/get_Contracts", { token: localStorage.getItem('token') })
             .then((res) => {
               console.log(res);
               setContracts(res.data.data);
@@ -56,12 +56,12 @@ const nav=useNavigate()
 
   useEffect(() => {
     axios
-      .post("https://pure-meadow-98451.herokuapp.com/get_Contracts",{ token :localStorage.getItem('token')})
+      .post("https://pure-meadow-98451.herokuapp.com/get_Contracts", { token: localStorage.getItem('token') })
       .then((res) => {
-        if(res.data.message==='user is not verified'){
+        if (res.data.message === 'user is not verified') {
           nav('/')
           return
-      }
+        }
         if (res.data.success) {
           console.log(res);
           setContracts(res.data.data);
@@ -79,11 +79,11 @@ const nav=useNavigate()
 
 
 
-    axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters',{ token :localStorage.getItem('token')}).then(response => {
-      if(response.data.message==='user is not verified'){
+    axios.post('https://pure-meadow-98451.herokuapp.com/get_Renters', { token: localStorage.getItem('token') }).then(response => {
+      if (response.data.message === 'user is not verified') {
         nav('/')
-    }  
-    if (response.data.success) {
+      }
+      if (response.data.success) {
         setRenters(response.data.data)
         setErrMsg('')
         setDataLoaded(true)
@@ -108,8 +108,18 @@ const nav=useNavigate()
       <Box textAlign='center' margin={3}>
         <Typography variant="h4">Contracts</Typography>
       </Box>
-      
-      {dataLoaded?<ContractsSummary rentersData={renters} edit={true} removeContract={removeContract} data={contracts} setContracts={setContracts} />:<TableSkeleton/>}
+
+      {dataLoaded ? <ContractsSummary rentersData={renters} edit={true} removeContract={removeContract} data={contracts} setContracts={setContracts} /> :
+        <CircularProgress
+          size="15rem"
+          style={{
+            marginTop:'100px',
+            display: 'block',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            color: '#999696'
+          }}
+        />}
     </Box>
   )
 }
