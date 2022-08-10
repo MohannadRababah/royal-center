@@ -113,7 +113,7 @@ const Dashboard = () => {
     <div>
 
       <Grid container spacing={3}>
-        <Grid item  lg={6} md={12} margin='auto' >
+        <Grid item  lg={6} xs={12} margin='auto' >
           {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination />}
         </Grid>
         {/* <Box sx={{ position: 'fixed', left: '0' }}>
@@ -177,7 +177,7 @@ const Dashboard = () => {
           </MenuList>
         </Box> */}
 
-        <Grid item lg={6} md={12} margin='auto'>
+        <Grid item lg={6} xs={12}  >
           {dataLoaded ? <Box  border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px' }}>
             <Container sx={{ textAlign: 'center',mb:'30px' }}>
               <Typography variant="h4">Property Payments</Typography>
