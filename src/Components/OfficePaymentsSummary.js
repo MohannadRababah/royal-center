@@ -232,7 +232,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                                     <Button variant="outlined" sx={{ height: '30px',minWidth:'100px' }} onClick={() => {
                                         setPayments(item.payed)
                                         setRenterName(renter.name)
-                                        setAddPaymentFormData({ amount: item.totalPayment / item.paymentPeriod, recieptNumber: recieptNumber, name: renterName, desc: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} دفعة عن مكتب رقم ${item.officeNumber}` })
+                                        setAddPaymentFormData({ amount: item.totalPayment / item.paymentPeriod, recieptNumber: recieptNumber, name: renterName, desc: `دفعة ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} عن مكتب رقم ${item.officeNumber}` })
                                         console.log(addPaymentFormData);
                                         setOfficeNumber(item.officeNumber)
                                         setOpen(true)

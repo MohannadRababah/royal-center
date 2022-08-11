@@ -3,8 +3,8 @@ import { v4 as uuid } from "uuid";
 const schema= [
   {
     id: uuid(),
-    label: "رقم الممتلك :",
-    name: "officeNumber",
+    label: "رقم الوصل :",
+    name: "recieptNumber",
   },
   {
     id: uuid(),
@@ -27,12 +27,12 @@ const schema= [
     label: "قيمة الدفعة :",
     name: "amount",
   },
+  
   {
     id: uuid(),
-    label: "رقم الوصل :",
-    name: "recieptNumber",
+    label: "رقم الممتلك :",
+    name: "officeNumber",
   },
- 
 ];
 
 export default schema
