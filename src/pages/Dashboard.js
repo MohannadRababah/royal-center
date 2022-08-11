@@ -26,7 +26,7 @@ import OfficesSummary from "../Components/OfficesSummary";
 import TableSkeleton from "../Components/TableSkeleton";
 import createBackUp from "../utils/createBackUp";
 
-const Dashboard = () => {
+const Dashboard = ({ setPaymentsNotif }) => {
   const nav = useNavigate();
 
   const [offices, setOffices] = useState([]);
@@ -66,23 +66,26 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-   
+
     setDataLoaded(false)
     axios
       .post("https://pure-meadow-98451.herokuapp.com/get_Offices", { token: localStorage.getItem('token') })
       .then((res) => {
-        if(res.data.message==='user is not verified'){
+        if (res.data.message === 'user is not verified') {
           nav('/')
           return
-      }
+        }
         if (res.data.success) {
           console.log(res);
           setOffices(res.data.data);
-         
+
           axios
             .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments", { token: localStorage.getItem('token') })
             .then((res) => {
               if (res.data.success) {
+                if (res.data.data.length > 0) {
+                  setPaymentsNotif(true)
+                }
                 setRequiredPayments(res.data.data)
                 setDataLoaded(true)
               }
@@ -113,7 +116,7 @@ const Dashboard = () => {
     <div>
 
       <Grid container spacing={3} >
-        <Grid item  lg={6} xs={12} margin='auto' >
+        <Grid item lg={6} xs={12} margin='auto' >
           {dataLoaded ? <OfficesSummary data={offices} show={true} /> : <TableSkeleton showPagination />}
         </Grid>
         {/* <Box sx={{ position: 'fixed', left: '0' }}>
@@ -178,8 +181,8 @@ const Dashboard = () => {
         </Box> */}
 
         <Grid item lg={6} xs={12}  >
-          {dataLoaded ? <Box  border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px',direction:'rtl' }}>
-            <Container sx={{ textAlign: 'center',mb:'30px' }}>
+          {dataLoaded ? <Box border={1} width={"60%"} sx={{ margin: "auto", minWidth: "550px", backgroundColor: 'white', mb: '30px', borderRadius: '10px', direction: 'rtl' }}>
+            <Container sx={{ textAlign: 'center', mb: '30px' }}>
               <Typography variant="h4">الدفعات المستحقة للممتلكات</Typography>
             </Container>
             {requiredPayments.length !== 0 ? <Table >
@@ -211,7 +214,7 @@ const Dashboard = () => {
                 }
 
                 <TableRow >
-                  <TableCell sx={{textAlign:'left',borderBottom:'0'}} colSpan={3}><Button variant="outlined" onClick={()=>{nav('/officesPayments')}}> الذهاب الى خدمة الدفعات المستحقة</Button></TableCell>
+                  <TableCell sx={{ textAlign: 'left', borderBottom: '0' }} colSpan={3}><Button variant="outlined" onClick={() => { nav('/officesPayments') }}> الذهاب الى خدمة الدفعات المستحقة</Button></TableCell>
 
                 </TableRow>
               </TableBody>

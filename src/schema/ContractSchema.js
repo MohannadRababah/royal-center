@@ -1,6 +1,7 @@
 import { CloudDownload } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
+import downloadDoc from "../utils/downloadDocument";
 
 const schema= [
   {
@@ -54,7 +55,7 @@ const schema= [
     id: uuid(),
     label: "صورة عن العقد :",
     name: "contractDocument",
-    attFun:(value)=> value?.contractDocument?<a download={`صورة عن عقد ممتلك رقم ${value.officeNumber}`} target='_blank' href={value?.contractDocument}><Button variant="outlined" endIcon={<CloudDownload/>}>download</Button></a>:'لم يتم رفع المستند'//<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}>Open</a>
+    attFun:  (value)=> value?.contractDocument?<a download={`صورة عن عقد ممتلك رقم ${value.officeNumber}`} target='_blank' href={ downloadDoc(value?.contractDocument)}><Button variant="outlined" endIcon={<CloudDownload sx={{marginRight:'10px'}}/>}>download</Button></a>:'لم يتم رفع المستند'//<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}>Open</a>
   },
   {
     id: uuid(),

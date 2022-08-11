@@ -15,6 +15,7 @@ import Reciepts from './pages/Reciepts'
 import { createContext, useContext, useEffect, useState } from 'react'
 import AddNewReciept from './pages/AddNewReciept'
 import createBackUp from './utils/createBackUp'
+import { Circle, MarkAsUnread, NotificationImportant, PriorityHigh } from '@mui/icons-material'
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
   const location = useLocation()
   const UserContext = createContext()
   const [email, setEmail] = useState()
+  const [paymentsNotif, setPaymentsNotif] = useState(false)
 
 
   useEffect(() => {
@@ -69,13 +71,13 @@ const App = () => {
             </Grid>
           </Toolbar>
         </AppBar>
-          <Box sx={{paddingTop:'130px'}}>
+          <Box sx={{paddingTop:'130px',direction:'rtl'}} >
             <Grid container spacing={3} margin='auto'>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/dashboard')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/dashboard'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الصفحة الرئيسية</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/offices')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/offices'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الممتلكات</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/contracts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/contracts'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>العقود</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/Renters')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/Renters'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>معلومات المستأجرين</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/officesPayments')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/officesPayments'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الدفعات المستحقة الممتلكات</Button></Grid>
+            <Grid item textAlign='center' lg={3} sm={4}  ><Button endIcon={paymentsNotif?<PriorityHigh color='error' sx={{marginRight:'10px'}}/>:null} onClick={()=>{nav('/officesPayments')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/officesPayments'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الدفعات المستحقة للممتلكات</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/reciepts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/reciepts'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الوصولات</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/oldContratcs')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/oldContratcs'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>العقود المحذوفة</Button></Grid>
             <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{
@@ -89,7 +91,7 @@ const App = () => {
       <UserContext.Provider value={{ email: email }}>
         <Routes>
           <Route path='/' element={<Login setEmail={setEmail} />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard' element={<Dashboard setPaymentsNotif={setPaymentsNotif}/>} />
           <Route path='/offices' element={<Offices />} />
           <Route path='/officeManagment' element={<AddNewOffice />} />
           <Route path='/contracts' element={<Contracts />} />

@@ -1,13 +1,13 @@
+import axios from "axios"
 
-const downloadDoc = (file) => {
-    const link = document.createElement('a');
-    link.style.display = 'none';
-    document.body.appendChild(link);
-console.log(file,'lalallaalalalala');
+const downloadDoc = async (id) => {
+    const tempFile = await axios.post('http://localhost:3001/downloadFile', { fileId: id }).then(res => {
+        return res.data.data.file
+    }).catch(err => {
+        console.log(err);
+    })
 
-    link.href = file;
-    link.target="_blank"
-    link.click();
+    return tempFile
 }
 
 export default downloadDoc

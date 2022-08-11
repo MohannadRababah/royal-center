@@ -34,21 +34,26 @@ const ContractManagment = () => {
     console.log(file);
     const res = await uploadDocument(file?.target?.files[0])
     if (res)
-      return res;
-    //   axios
-    //     .post("https://pure-meadow-98451.herokuapp.com/uploadFile", {
-    //       file: fileToUpload,
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       console.log(fileToUpload, "kkkk");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       // setMsg(err);
-    //     });
+      {
+       return await axios
+        .post("https://pure-meadow-98451.herokuapp.com/uploadFile", {
+          file: res,
+        })
+        .then((res) => {
+          console.log(res);
+          return res.data.data.documentId
+        })
+        .catch((err) => {
+          console.log(err);
+          // setMsg(err);
+        });
+
+      }
 
   };
+
+
+
   console.log(location?.state?.contract?.contractDocument);
   const handleClose = () => {
     if (msg === "Contract has been added" || msg === "Contract data updated")

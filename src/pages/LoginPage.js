@@ -5,11 +5,14 @@ import { TextField } from "mui-rff";
 import { useState } from "react";
 import { Form } from "react-final-form";
 import { useNavigate } from "react-router";
+import downloadDoc from "../utils/downloadDocument";
+import uploadDocument from "../utils/uploadDocument";
 
 const Login = ({ setEmail }) => {
   const nav = useNavigate()
   const [errMsg, setErrMsg] = useState('')
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
+    
     axios
       .post("https://pure-meadow-98451.herokuapp.com/login", {
         email: values.email.toLowerCase().trim(),
@@ -32,19 +35,19 @@ const Login = ({ setEmail }) => {
   };
   return (
     <div >
-      <Box sx={{backgroundColor:'black'}}>
-      <Grid container mt={3} minWidth={'500px'} >
-        
-        <Grid item xs={2} textAlign='right' mt={2}>
-          <img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img>
+      <Box sx={{ backgroundColor: 'black' }}>
+        <Grid container mt={3} minWidth={'500px'} >
+
+          <Grid item xs={2} textAlign='right' mt={2}>
+            <img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography marginTop={5} align='center' variant="h4" color='#e9ce7f'>Royal Center</Typography>
+          </Grid>
+          <Grid item xs={2} mt={2}>
+            <img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img>
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          <Typography marginTop={5} align='center' variant="h4" color='#e9ce7f'>Royal Center</Typography>
-        </Grid>
-        <Grid item xs={2} mt={2}>
-          <img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img>
-        </Grid>
-      </Grid>
       </Box>
       {errMsg && <Alert sx={{ width: '80%', margin: 'auto' }} variant='outlined' severity='error'>{errMsg}</Alert>}
       <Container
@@ -55,8 +58,8 @@ const Login = ({ setEmail }) => {
           width: "40%",
           textAlign: "center",
           padding: "30px",
-          minWidth:'500px',
-          borderRadius:'10px'
+          minWidth: '500px',
+          borderRadius: '10px'
         }}
       >
         <Form
