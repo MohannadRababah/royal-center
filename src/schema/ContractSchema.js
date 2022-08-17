@@ -1,9 +1,9 @@
-import { CloudDownload } from "@mui/icons-material";
+import { CloudDownload, CloudDownloadOutlined } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import downloadDoc from "../utils/downloadDocument";
 
-const schema= [
+const schema = [
   {
     id: uuid(),
     label: "رقم الممتلك :",
@@ -33,8 +33,8 @@ const schema= [
     id: uuid(),
     label: "قيمة الدفعه الواحدة :",
     name: "eachPayment",
-    attFun:(item)=>{
-        return parseInt(item.totalPayment)/parseInt(item.paymentPeriod)
+    attFun: (item) => {
+      return (parseInt(item.totalPayment) / parseInt(item.paymentPeriod)).toFixed(3)
     }
   },
   {
@@ -46,16 +46,25 @@ const schema= [
     id: uuid(),
     label: "تاريخ الدفعة القادمة :",
     name: "nextPayment",
-    attFun:(item)=>{
-      var date=new Date(parseInt(item.startDate.slice(6,10)),parseInt(item.startDate.slice(3,5))-1+(item.payed)*(12/(item.paymentPeriod)),parseInt(item.startDate.slice(0,3)));
-      return date.getDate()+'/'+(date.getMonth()+1)+'/'+date.getFullYear()//item.startDate.slice(0,3)+(parseInt(item.startDate.slice(3,5))+)// parseInt(totalPayment)/parseInt(paymentPeriod)paymentPeriod,payed,startDate
-  }
+    attFun: (item) => {
+      var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()//item.startDate.slice(0,3)+(parseInt(item.startDate.slice(3,5))+)// parseInt(totalPayment)/parseInt(paymentPeriod)paymentPeriod,payed,startDate
+    }
   },
   {
     id: uuid(),
     label: "صورة عن العقد :",
     name: "contractDocument",
-    attFun:  (value)=> value?.contractDocument?<a download={`صورة عن عقد ممتلك رقم ${value.officeNumber}`} target='_blank' href={ downloadDoc(value?.contractDocument)}><Button variant="outlined" endIcon={<CloudDownload sx={{marginRight:'10px'}}/>}>download</Button></a>:'لم يتم رفع المستند'//<a download={`Contract for office number ${value.officeNumber}`} target='_blank' href={value?.contractDocument}>Open</a>
+    attFun: (value) => {
+      return value?.contractDocument ?<Button variant="outlined" endIcon={<CloudDownloadOutlined sx={{ marginRight: '10px' }} />} onClick={async() => {
+        var anchor = document.createElement('a');
+        anchor.href = await downloadDoc(value.contractDocument);
+        anchor.download = `صورة عن عقد ممتلك رقم ${value.officeNumber}`;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+      }}>download</Button>: 'لم يتم رفع المستند'
+      }
   },
   {
     id: uuid(),
@@ -64,7 +73,7 @@ const schema= [
   },
 ];
 
-const renterFields=[
+const renterFields = [
   {
     id: uuid(),
     label: "اسم المستأجر :",
@@ -81,5 +90,5 @@ const renterFields=[
     name: "email",
   },
 ]
-export {renterFields}
+export { renterFields }
 export default schema

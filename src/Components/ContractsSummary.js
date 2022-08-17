@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ContractSchema from "../schema/ContractSchema";
 import { renterFields } from "../schema/ContractSchema";
+import downloadDoc from "../utils/downloadDocument";
 
 const ContractsSummary = ({ data, rentersData, removeContract, edit, setContracts }) => {
   const nav = useNavigate();
@@ -31,9 +32,9 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
   const [officeNumber, setOfficeNumber] = useState();
   //const [officeOwner, setOfficeOwner] = useState([]);
   const [payed, setPayed] = useState();
-  const [owners, setOwners] = useState(['ahmad', 'mohammad'])
+  const [documents, setDocuments] = useState([])
 
-
+console.log(data,'kaksjasgsaagdkas');
 
 
   const getOwner = async (officeNum) => {
@@ -48,7 +49,26 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
 
 
 
+// useEffect(()=>{
+   
+//      data.map( async(item)=>{
+//     if(item?.contractDocument){
+//        const alll= await downloadDoc(item?.contractDocument).then(res=>res)
 
+//       console.log(alll,'aaaaaaa')
+//       setDocuments(alll)
+      
+    
+//     }
+
+    
+
+    
+    
+//   })
+//   console.log(documents,'kakakakakaka');
+
+// },[])
 
 
   const addPayment = (officeNumber, payed) => {
@@ -151,9 +171,9 @@ const ContractsSummary = ({ data, rentersData, removeContract, edit, setContract
                   return (
                     <Grid key={index} item xs={4}>
                       <Typography color='#73777B'>{schema.label}</Typography>
-                      {!schema.attFun
+                      { !schema.attFun
                         ? item[schema.name]
-                        : schema.attFun(item)}
+                        :  schema.attFun(item)}
                     </Grid>
                   );
                 })}

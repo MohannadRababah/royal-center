@@ -16,6 +16,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import uploadDocument from "../utils/uploadDocument";
+import { CloudUploadOutlined, UploadFileOutlined } from "@mui/icons-material";
 const RenterManagment = () => {
 
     const [msg, setMsg] = useState('')
@@ -29,8 +30,21 @@ const RenterManagment = () => {
     const uploadFile = async (file) => {
         console.log(file);
         const res = await uploadDocument(file?.target?.files[0])
-        if (res)
-            return res;
+        if (res) {
+            return await axios
+                .post("https://pure-meadow-98451.herokuapp.com/uploadFile", {
+                    file: res,
+                })
+                .then((res) => {
+                    console.log(res);
+                    return res.data.data.documentId
+                })
+                .catch((err) => {
+                    console.log(err);
+                    // setMsg(err);
+                });
+
+        }
     }
     const handleClose = () => {
         if (msg === "Renters Data Updated")
@@ -41,13 +55,13 @@ const RenterManagment = () => {
 
     const onSubmit = async (values) => {
         console.log(values, 'values');
-        var tempFileContract
+        var tempFileID
         if (toUploadIDFile?.target) {
-            tempFileContract = await uploadFile(toUploadIDFile)
-            console.log(tempFileContract);
+            tempFileID = await uploadFile(toUploadIDFile)
+            console.log(tempFileID);
         }
         else {
-            tempFileContract = toUploadIDFile
+            tempFileID = toUploadIDFile
         }
 
         axios
@@ -57,7 +71,7 @@ const RenterManagment = () => {
                 oldPhone: location?.state?.renter?.phone,
                 phone: values.phone,
                 email: values.email,
-                idDocument: tempFileContract,
+                idDocument: tempFileID,
                 token: localStorage.getItem('token')
 
             })
@@ -84,7 +98,7 @@ const RenterManagment = () => {
     return (<>
         <Typography variant="h4" marginBottom={7} textAlign='center' color='black'>التعديل على معلومات المستأجر</Typography>
 
-        <Container sx={{ backgroundColor: 'white', padding: '30px',paddingTop:'60px',borderRadius:'10px',direction:'rtl' }}>
+        <Container sx={{ backgroundColor: 'white', padding: '30px', paddingTop: '60px', borderRadius: '10px', direction: 'rtl' }}>
             {
                 msg && (
                     <Dialog open={msg ? true : false} onClose={handleClose} fullWidth>
@@ -129,10 +143,17 @@ const RenterManagment = () => {
                                     <FormLabel>صورة عن هوية المستأجر :</FormLabel>
                                     <Container>
                                         <input
+                                            id="hiddenInput"
+                                            style={{display:'none'}}
                                             type='file'
                                             name="renterID"
                                             onChange={(e) => { setToUploadIDFile(e) }}
                                         />
+                                        <label for='hiddenInput'><Button sx={{":disabled":{color:'#1976d2',borderColor:'#1976d2'}}} disabled variant="outlined" endIcon={<><CloudUploadOutlined sx={{marginRight:'10px'}}/></>}> Upload </Button></label>
+                                        <Box><label style={{color:'grey'}}>{toUploadIDFile?'File Choosen':'Choose a file to upload'}</label></Box>
+
+                                        
+                                        
                                     </Container>
                                 </Grid>
                                 <Grid textAlign="left" item xs={12}>

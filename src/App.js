@@ -102,7 +102,7 @@ const App = () => {
           <Route path='/officesPayments' element={<OfficePayments />} />
           <Route path='/reciepts' element={<Reciepts />} />
           <Route path='/recieptManagment' element={<AddNewReciept />} />
-          <Route path='/*' element={<Container sx={{textAlign:'center'}}><Typography variant='h4'>The requested page is not found</Typography><Typography variant='h4'>Error: 404</Typography></Container>} />
+          <Route path='/*' element={<Container sx={{textAlign:'center'}}><Typography variant='h4' color='black'>The requested page is not found</Typography><Typography variant='h4' color='black'>Error: 404</Typography></Container>} />
         </Routes>
       </UserContext.Provider>
     </>

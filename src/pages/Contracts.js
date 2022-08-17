@@ -63,6 +63,8 @@ const Contracts = () => {
           return
         }
         if (res.data.success) {
+          ///add axios call to get documents and send it with contracts
+          
           console.log(res);
           setContracts(res.data.data);
           setErrMsg('')

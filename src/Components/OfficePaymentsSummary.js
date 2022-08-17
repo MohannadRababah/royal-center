@@ -218,7 +218,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                     }}
                 ><Container><Grid container spacing={3} mt={2} sx={{direction:'rtl'}}>
                     <Grid item xs={4} ><FormLabel sx={{ display: 'block' }}>  رقم الممتلك :  </FormLabel>{item.officeNumber}</Grid>
-                    <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> القيمة المستحقة : </FormLabel> {item.totalPayment / item.paymentPeriod}</Grid>
+                    <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> القيمة المستحقة : </FormLabel> {(parseInt(item.totalPayment) / parseInt(item.paymentPeriod)).toFixed(3)}</Grid>
                     <Grid item xs={4}><FormLabel sx={{ display: 'block' }}> تاريخ الاستحقاق : </FormLabel> {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</Grid>
 
 
@@ -232,7 +232,7 @@ const OfficePaymentsSummary = ({ requiredPayments, setRequiredPayments, setDataL
                                     <Button variant="outlined" sx={{ height: '30px',minWidth:'100px' }} onClick={() => {
                                         setPayments(item.payed)
                                         setRenterName(renter.name)
-                                        setAddPaymentFormData({ amount: item.totalPayment / item.paymentPeriod, recieptNumber: recieptNumber, name: renterName, desc: `دفعة ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} عن مكتب رقم ${item.officeNumber}` })
+                                        setAddPaymentFormData({ amount: (parseInt(item.totalPayment) / parseInt(item.paymentPeriod)).toFixed(3), recieptNumber: recieptNumber, name: renterName, desc: `دفعة ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} عن مكتب رقم ${item.officeNumber}` })
                                         console.log(addPaymentFormData);
                                         setOfficeNumber(item.officeNumber)
                                         setOpen(true)

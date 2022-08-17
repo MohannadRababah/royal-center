@@ -28,15 +28,16 @@ const RecieptsSummary = ({ reciepts, setReciepts }) => {
                         <Grid container spacing={3} mt={1} mb={1} >
                             {
                                 RecieptSchema.map((schema) => (
+                                    
                                     item[schema.name] ?
                                         <Grid key={idx} item xs={4}>
                                             <Container><Typography color='#73777B'>{schema.label}</Typography></Container>
-                                            <Container>{item[schema.name]}</Container>
+                                            <Container>{schema.attFunc?schema.attFunc(item): item[schema.name]}</Container>
                                         </Grid>
                                         : null
                                 ))
                             }
-                            <Grid item xs={12} textAlign='right'>
+                            <Grid item xs={12} textAlign='left'>
                                 <Container>
                                     <Button variant="outlined" endIcon={<Edit sx={{marginRight:'5px'}}/>} onClick={() => nav('/recieptManagment', { state: { initVal: item } })}> تعديل </Button>
                                 </Container>

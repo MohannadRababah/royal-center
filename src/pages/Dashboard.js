@@ -199,7 +199,7 @@ const Dashboard = ({ setPaymentsNotif }) => {
                     var date = new Date(parseInt(item.startDate.slice(6, 10)), parseInt(item.startDate.slice(3, 5)) - 1 + (item.payed) * (12 / (item.paymentPeriod)), parseInt(item.startDate.slice(0, 3)));
                     return <TableRow>
                       <TableCell>{item.officeNumber}</TableCell>
-                      <TableCell>{item.totalPayment / item.paymentPeriod}</TableCell>
+                      <TableCell>{(item.totalPayment / item.paymentPeriod).toFixed(3)}</TableCell>
                       <TableCell>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}</TableCell>
                     </TableRow>
 
