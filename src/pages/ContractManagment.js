@@ -14,7 +14,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import uploadDocument from "../utils/uploadDocument";
-import { Add, CloudDownload } from "@mui/icons-material";
+import { Add, CloudDownload, CloudUploadOutlined } from "@mui/icons-material";
 import { OnChange } from "react-final-form-listeners";
 import downloadDoc1 from "../utils/downloadDocument";
 
@@ -33,9 +33,8 @@ const ContractManagment = () => {
   const uploadFile = async (file) => {
     console.log(file);
     const res = await uploadDocument(file?.target?.files[0])
-    if (res)
-      {
-       return await axios
+    if (res) {
+      return await axios
         .post("https://pure-meadow-98451.herokuapp.com/uploadFile", {
           file: res,
         })
@@ -48,7 +47,7 @@ const ContractManagment = () => {
           // setMsg(err);
         });
 
-      }
+    }
 
   };
 
@@ -202,7 +201,7 @@ const ContractManagment = () => {
   }, [])
 
   return (
-    <Container sx={{ backgroundColor: "white", padding: "100px",direction:'rtl' }}>
+    <Container sx={{ backgroundColor: "white", padding: "100px", direction: 'rtl' }}>
       {msg && (
         <Dialog open={msg ? true : false} onClose={handleClose} fullWidth>
           <DialogContent>{msg}</DialogContent>
@@ -268,7 +267,11 @@ const ContractManagment = () => {
               <Grid item xs={12}>
                 <FormLabel>صورة عن العقد :</FormLabel>
                 <Container>
-                  <input type="file" name="contractDoc" onChange={(e) => { setToUploadContractFile(e) }} />
+                  <input id="hiddenInput1" style={{ display: 'none' }} type="file" name="contractDoc" onChange={(e) => { setToUploadContractFile(e); console.log(e); }} />
+                  <label for='hiddenInput1'><Button sx={{ ":disabled": { color: '#1976d2', borderColor: '#1976d2' } }} disabled variant="outlined" endIcon={<><CloudUploadOutlined sx={{ marginRight: '10px' }} /></>}> Upload </Button></label>
+                  <Box><label style={{ color: 'grey' }}>{toUploadContractFile ? 'File Choosen' : 'Choose a file to upload'}</label></Box>
+
+
                 </Container>
               </Grid>
 
@@ -280,7 +283,7 @@ const ContractManagment = () => {
                   <Typography variant="h4">معلومات المستأجر</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Button endIcon={!newRenter ? <Add sx={{marginRight:'10px'}} /> : null} onClick={() => { setNewRenter(!newRenter) }}>{newRenter ? 'مستأجر قديم' : 'مستأجر جديد'}</Button>
+                  <Button endIcon={!newRenter ? <Add sx={{ marginRight: '10px' }} /> : null} onClick={() => { setNewRenter(!newRenter) }}>{newRenter ? 'مستأجر قديم' : 'مستأجر جديد'}</Button>
                 </Grid>
                 {newRenter ? <><Grid item xs={12}>
                   <TextField
@@ -307,10 +310,16 @@ const ContractManagment = () => {
                     <FormLabel>صورة الهوية الشخصية للمستأجر :</FormLabel>
                     <Container>
                       <input
+                        id="hiddenInput2"
+                        style={{ display: 'none' }}
                         type="file"
                         name="renterID"
                         onChange={(e) => { setToUploadIDFile(e) }}
                       />
+                      <label for='hiddenInput2'><Button sx={{ ":disabled": { color: '#1976d2', borderColor: '#1976d2' } }} disabled variant="outlined" endIcon={<><CloudUploadOutlined sx={{ marginRight: '10px' }} /></>}> Upload </Button></label>
+                      <Box><label style={{ color: 'grey' }}>{!!toUploadIDFile ? 'File Choosen' : 'Choose a file to upload'}</label></Box>
+
+
                     </Container>
                   </Grid>
                 </> :
