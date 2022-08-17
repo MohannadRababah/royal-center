@@ -85,6 +85,7 @@ const Dashboard = ({ setPaymentsNotif }) => {
               if (res.data.success) {
                 if (res.data.data.length > 0) {
                   setPaymentsNotif(true)
+                  
                 }
                 setRequiredPayments(res.data.data)
                 setDataLoaded(true)

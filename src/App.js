@@ -15,8 +15,8 @@ import Reciepts from './pages/Reciepts'
 import { createContext, useContext, useEffect, useState } from 'react'
 import AddNewReciept from './pages/AddNewReciept'
 import createBackUp from './utils/createBackUp'
-import { Circle, MarkAsUnread, NotificationImportant, PriorityHigh } from '@mui/icons-material'
-
+import { ReceiptLongOutlined } from '@mui/icons-material'
+import axios from 'axios'
 
 const App = () => {
   const nav = useNavigate()
@@ -27,71 +27,93 @@ const App = () => {
 
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
     console.log(email, 'email::::login validation');
     if (!localStorage.getItem('token') && window.location.pathname !== '/') {
       nav('/')
     }
-    
+
+
+  })
+
+  useEffect(() => {
+
+    axios
+      .post("https://pure-meadow-98451.herokuapp.com/get_Required_Payments", { token: localStorage.getItem('token') })
+      .then((res) => {
+        if (res.data.success) {
+          if (res.data.data.length > 0) {
+            setPaymentsNotif(true)
+
+          }
+        }
+        else {
+          console.log(res.data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
 
   })
 
   return (
     <>
-<Grid container spacing={3}>
-      <Container sx={{ mb: "120px", display: window.location.pathname === '/'? 'none' : null }}>
-        <AppBar sx={{ height: "90px", backgroundColor: "#121212" }}>
-          <Toolbar sx={{ height: "90px" }}>
+      <Grid container spacing={3}>
+        <Container sx={{ mb: "120px", display: window.location.pathname === '/' ? 'none' : null }}>
+          <AppBar sx={{ height: "90px", backgroundColor: "#121212" }}>
+            <Toolbar sx={{ height: "90px" }}>
 
-            <Grid item xs={2} textAlign='center'>
-              <Box width='100px' marginTop='15px' marginLeft='40px' onClick={()=>{nav('/dashboard')}} sx={{":hover":{cursor:'pointer'}}}><img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img></Box>
+              <Grid item xs={2} textAlign='center'>
+                <Box width='100px' marginTop='15px' marginLeft='40px' onClick={() => { nav('/dashboard') }} sx={{ ":hover": { cursor: 'pointer' } }}><img src='/logo-removebg-preview.png' style={{ height: '100px' }}></img></Box>
 
 
-            </Grid>
+              </Grid>
 
-            <Grid textAlign='center' item xs={8}>
-              <div style={{ textAlign: 'center' }} >
-                <Container onClick={() => { nav('/dashboard') }} sx={{ padding: '0', ":hover": { cursor: 'pointer' }, fontSize: "30px", color: "#e9ce7f",width:'300px' }}>
-                  ♛ Royal Center ♛
-                </Container>
-              </div>
-            </Grid>
-            <Grid item xs={2} textAlign='right'>
-              <Button
-                variant='text'
-                color="error"
-                sx={{ color: '#e9ce7f' }}
-                onClick={() => {
-                  localStorage.clear()
-                  nav("/");
-                }}
-              >
-                تسجيل الخروج
-              </Button>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-          <Box sx={{paddingTop:'130px',direction:'rtl'}} >
+              <Grid textAlign='center' item xs={8}>
+                <div style={{ textAlign: 'center' }} >
+                  <Container onClick={() => { nav('/dashboard') }} sx={{ padding: '0', ":hover": { cursor: 'pointer' }, fontSize: "30px", color: "#e9ce7f", width: '300px' }}>
+                    ♛ Royal Center ♛
+                  </Container>
+                </div>
+              </Grid>
+              <Grid item xs={2} textAlign='right'>
+                <Button
+                  variant='text'
+                  color="error"
+                  sx={{ color: '#e9ce7f' }}
+                  onClick={() => {
+                    localStorage.clear()
+                    nav("/");
+                  }}
+                >
+                  تسجيل الخروج
+                </Button>
+              </Grid>
+            </Toolbar>
+          </AppBar>
+          <Box sx={{ paddingTop: '130px', direction: 'rtl' }} >
             <Grid container spacing={3} margin='auto'>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/dashboard')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/dashboard'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الصفحة الرئيسية</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/offices')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/offices'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الممتلكات</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/contracts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/contracts'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>العقود</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/Renters')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/Renters'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>معلومات المستأجرين</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button endIcon={paymentsNotif?<PriorityHigh color='error' sx={{marginRight:'10px'}}/>:null} onClick={()=>{nav('/officesPayments')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/officesPayments'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الدفعات المستحقة للممتلكات</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/reciepts')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/reciepts'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>الوصولات</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{nav('/oldContratcs')}} sx={{backgroundColor:'white',color:window.location.pathname!=='/oldContratcs'?'black':'#E6BD37',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'#E6BD37'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>العقود المحذوفة</Button></Grid>
-            <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={()=>{
-              createBackUp()
-            }} sx={{backgroundColor:'white',color:'green',borderColor:'black',":hover":{backgroundColor:'white',borderColor:'green'},borderRadius:'50px',minWidth:'200px'}} variant='outlined'>تحميل نسخة احتياطية</Button></Grid>
-            </Grid>    
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => { nav('/dashboard') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/dashboard' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>الصفحة الرئيسية</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => { nav('/offices') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/offices' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>الممتلكات</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => { nav('/contracts') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/contracts' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>العقود</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => { nav('/Renters') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/Renters' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>معلومات المستأجرين</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button endIcon={paymentsNotif ? <ReceiptLongOutlined color='error' sx={{ marginRight: '10px' }} /> : null} onClick={() => { nav('/officesPayments') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/officesPayments' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>الدفعات المستحقة للممتلكات</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => { nav('/reciepts') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/reciepts' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>الوصولات</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => { nav('/oldContratcs') }} sx={{ backgroundColor: 'white', color: window.location.pathname !== '/oldContratcs' ? 'black' : '#E6BD37', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: '#E6BD37' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>العقود المحذوفة</Button></Grid>
+              <Grid item textAlign='center' lg={3} sm={4}  ><Button onClick={() => {
+                createBackUp()
+              }} sx={{ backgroundColor: 'white', color: 'green', borderColor: 'black', ":hover": { backgroundColor: 'white', borderColor: 'green' }, borderRadius: '50px', minWidth: '200px' }} variant='outlined'>تحميل نسخة احتياطية</Button></Grid>
+            </Grid>
           </Box>
-        
 
-      </Container></Grid>
+
+        </Container></Grid>
       <UserContext.Provider value={{ email: email }}>
         <Routes>
           <Route path='/' element={<Login setEmail={setEmail} />} />
-          <Route path='/dashboard' element={<Dashboard setPaymentsNotif={setPaymentsNotif}/>} />
+          <Route path='/dashboard' element={<Dashboard setPaymentsNotif={setPaymentsNotif} />} />
           <Route path='/offices' element={<Offices />} />
           <Route path='/officeManagment' element={<AddNewOffice />} />
           <Route path='/contracts' element={<Contracts />} />
@@ -102,7 +124,7 @@ const App = () => {
           <Route path='/officesPayments' element={<OfficePayments />} />
           <Route path='/reciepts' element={<Reciepts />} />
           <Route path='/recieptManagment' element={<AddNewReciept />} />
-          <Route path='/*' element={<Container sx={{textAlign:'center'}}><Typography variant='h4' color='black'>The requested page is not found</Typography><Typography variant='h4' color='black'>Error: 404</Typography></Container>} />
+          <Route path='/*' element={<Container sx={{ textAlign: 'center' }}><Typography variant='h4' color='black'>The requested page is not found</Typography><Typography variant='h4' color='black'>Error: 404</Typography></Container>} />
         </Routes>
       </UserContext.Provider>
     </>
