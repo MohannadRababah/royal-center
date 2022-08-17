@@ -1,4 +1,4 @@
-import { Label } from "@mui/icons-material"
+import { CardGiftcard, Label } from "@mui/icons-material"
 import { Alert, Box, Button, CircularProgress, FormControlLabel, FormLabel, Switch, Typography } from "@mui/material"
 import { Container } from "@mui/system"
 import axios from "axios"
@@ -42,11 +42,10 @@ const Renters = () => {
             <Box textAlign='center' margin={3} mb='70px'>
                 <Typography variant="h4" color='black'>معلومات المستأجرين</Typography>
             </Box>
-            <Box display='flex'>
-                <FormLabel> مستأجرين بعقود فعالة</FormLabel>
+            <label style={{color:'#73777B'}}>جميع المستأجرين</label>
                 <Switch disabled={!dataLoaded} onClick={() => { setToggle(!toggle) }} />
-                <FormLabel>جميع المستأجرين</FormLabel>
-            </Box>
+            <label style={{color:'#73777B'}}>مستأجرين بعقود فعالة</label>
+                
             {dataLoaded ? <RentersSummary toggle={toggle} data={renters} /> : 
             <CircularProgress
             size="15rem"
