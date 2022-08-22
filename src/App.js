@@ -49,6 +49,11 @@ const App = () => {
           }
         }
         else {
+          if(res.data.message==='user is not verified'){
+            localStorage.clear()
+            nav('/login')
+          }
+
           console.log(res.data.message);
         }
       })
@@ -57,7 +62,7 @@ const App = () => {
       });
 
 
-  })
+  },[])
 
   return (
     <>
