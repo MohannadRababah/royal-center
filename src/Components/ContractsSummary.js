@@ -25,16 +25,17 @@ import ContractSchema from "../schema/ContractSchema";
 import { renterFields } from "../schema/ContractSchema";
 import downloadDoc from "../utils/downloadDocument";
 
-const ContractsSummary = ({ data, rentersData, removeContract, edit, setContracts }) => {
+const ContractsSummary = ({ data, rentersData, removeContract, edit, setContracts, renewContract }) => {
   const nav = useNavigate();
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [msg, setMsg] = useState('');
   const [officeNumber, setOfficeNumber] = useState();
-  //const [officeOwner, setOfficeOwner] = useState([]);
+  const [office, setOffice] = useState();
   const [payed, setPayed] = useState();
   const [documents, setDocuments] = useState([])
 
-console.log(data,'kaksjasgsaagdkas');
+  console.log(data, 'kaksjasgsaagdkas');
 
 
   const getOwner = async (officeNum) => {
@@ -49,26 +50,26 @@ console.log(data,'kaksjasgsaagdkas');
 
 
 
-// useEffect(()=>{
-   
-//      data.map( async(item)=>{
-//     if(item?.contractDocument){
-//        const alll= await downloadDoc(item?.contractDocument).then(res=>res)
+  // useEffect(()=>{
 
-//       console.log(alll,'aaaaaaa')
-//       setDocuments(alll)
-      
-    
-//     }
+  //      data.map( async(item)=>{
+  //     if(item?.contractDocument){
+  //        const alll= await downloadDoc(item?.contractDocument).then(res=>res)
 
-    
+  //       console.log(alll,'aaaaaaa')
+  //       setDocuments(alll)
 
-    
-    
-//   })
-//   console.log(documents,'kakakakakaka');
 
-// },[])
+  //     }
+
+
+
+
+
+  //   })
+  //   console.log(documents,'kakakakakaka');
+
+  // },[])
 
 
   const addPayment = (officeNumber, payed) => {
@@ -108,6 +109,8 @@ console.log(data,'kaksjasgsaagdkas');
 
   };
 
+
+
   return (
     <Box mb='30px'>
       {/* <Dialog fullWidth open={msg ? true : false} onClose={handleClose}>
@@ -121,7 +124,7 @@ console.log(data,'kaksjasgsaagdkas');
       </Dialog> */}
 
       {edit && <><Dialog fullWidth open={open} onClose={handleClose}>
-        <DialogContent sx={{textAlign:'center'}}>
+        <DialogContent sx={{ textAlign: 'center' }}>
           الرجاء التأكيد على عملية حذف العقد
         </DialogContent>
         <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -129,6 +132,21 @@ console.log(data,'kaksjasgsaagdkas');
           <Button onClick={() => { removeContract(officeNumber); handleClose() }}>حذف</Button>
         </DialogActions>
       </Dialog>
+
+
+        <Dialog fullWidth open={open2} onClose={() => { setOpen2(false) }}>
+          <DialogContent sx={{ textAlign: 'center' }}>
+            الرجاء التأكيد على عملية تجديد العقد
+          </DialogContent>
+          <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button onClick={() => setOpen2(false)}>الغاء</Button>
+            <Button onClick={() => { setOpen2(false);renewContract(office) }}>تجديد</Button>
+          </DialogActions>
+        </Dialog>
+
+
+
+
         <Button
           color='success'
           sx={{ marginLeft: "17%" }}
@@ -152,7 +170,7 @@ console.log(data,'kaksjasgsaagdkas');
             border={1}
             width="70%"
             sx={{
-              direction:'rtl',
+              direction: 'rtl',
               margin: "auto",
               marginBottom: '30px',
               borderRadius: '50px',
@@ -171,9 +189,9 @@ console.log(data,'kaksjasgsaagdkas');
                   return (
                     <Grid key={index} item xs={4}>
                       <Typography color='#73777B'>{schema.label}</Typography>
-                      { !schema.attFun
+                      {!schema.attFun
                         ? item[schema.name]
-                        :  schema.attFun(item)}
+                        : schema.attFun(item)}
                     </Grid>
                   );
                 })}
@@ -208,16 +226,19 @@ console.log(data,'kaksjasgsaagdkas');
                   }}>
                     add payment
                   </Button> */}
+                  <Button color="success" variant="outlined" onClick={() => { setOpen2(true); setOffice(item) }}>
+                    تجديد العقد
+                  </Button>
                   <Button variant="outlined" onClick={() => {
                     nav('/contractManagment', { state: { contract: item } })
                   }}>
                     نعديل العقد
                   </Button>
-                  <Button color="error" variant="outlined"  onClick={() => { setOpen(true); setOfficeNumber(item.officeNumber) }}>
+                  <Button color="error" variant="outlined" onClick={() => { setOpen(true); setOfficeNumber(item.officeNumber) }}>
                     حذف العقد
                   </Button>
                 </Grid>}
-                
+
               </Grid>
             </Container>
           </Box>);
